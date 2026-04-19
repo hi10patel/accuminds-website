@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accuminds Consulting — FZCO | Accounting, Tax & AI automation in Dubai</title>
+  <meta name="description" content="Accuminds Consulting - FZCO: bookkeeping, VAT, corporate tax, and AI-powered document processing for UAE SMEs and free zone entities. Based in Dubai Silicon Oasis." />
+  <meta name="theme-color" content="#1A2E4A" />
+  <link rel="icon" type="image/png" href="assets/logo-square-blue.png" />
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Accuminds Consulting — FZCO" />
+  <meta property="og:description" content="Accurate books. Automated workflows. Always compliant." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.accumindsconsulting.ae/" />
+  <meta property="og:image" content="assets/logo-square-blue.png" />
+
+  <template id="__bundler_thumbnail">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+      <rect width="400" height="400" fill="#1A2E4A"/>
+      <g transform="translate(140 140) scale(0.9)" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 110 Q 40 40, 80 80 T 140 100 Q 165 110, 165 80 T 115 65 Q 80 70, 100 100 T 130 130"/>
+      </g>
+      <text x="200" y="330" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="-1">Accuminds</text>
+    </svg>
+  </template>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Lucide icons (tiny, CDN) -->
+  <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    /* =========================================================
+       Accuminds Consulting — production stylesheet (inlined)
+       Palette: Navy #1A2E4A primary · Gold #C9972B · Teal #0D8A7F
+       Mark blue #004AAD reserved for logo.
+       Font: Plus Jakarta Sans (display) + Inter (body).
+       ========================================================= */
+    :root {
+      --navy-900: #0B182B;
+      --navy-800: #111F38;
+      --navy-700: #1A2E4A;
+      --navy-600: #2B416A;
+      --navy-500: #415A87;
+      --navy-400: #7286A9;
+      --navy-300: #A9B5CC;
+      --navy-200: #D1D8E4;
+      --navy-100: #E6EAF1;
+      --navy-050: #F1F3F8;
+
+      --mark-blue: #004AAD;
+
+      --gold:    #C9972B;
+      --gold-soft: #F3E6C2;
+      --teal:    #0D8A7F;
+      --teal-soft: #D3EEEB;
+
+      --ink-900: #0A1628;
+      --ink-800: #17243A;
+      --ink-700: #2C3A54;
+      --ink-600: #4A5670;
+      --ink-500: #6B7691;
+      --ink-400: #9AA3BA;
+      --ink-300: #C5CCDB;
+      --ink-200: #E1E5EE;
+      --ink-100: #F0F2F7;
+
+      --bg-page: #F7F5F1;
+
+      --success-600: #0E8A5F;
+
+      --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      --font-body:    'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+      --shadow-xs: 0 1px 2px rgba(10,22,40,0.05);
+      --shadow-sm: 0 2px 6px rgba(10,22,40,0.06), 0 1px 2px rgba(10,22,40,0.04);
+      --shadow-md: 0 6px 20px rgba(10,22,40,0.08), 0 2px 6px rgba(10,22,40,0.05);
+      --shadow-lg: 0 18px 40px rgba(10,22,40,0.10), 0 6px 14px rgba(10,22,40,0.06);
+      --shadow-brand: 0 12px 28px rgba(26,46,74,0.22);
+      --ring-focus: 0 0 0 3px rgba(26,46,74,0.25);
+
+      --ease: cubic-bezier(0.2, 0.0, 0, 1);
+      --dur-fast: 120ms;
+      --dur-med:  220ms;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; scroll-behavior: smooth; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--ink-900);
+      background: var(--bg-page);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: var(--navy-700); text-decoration: underline; text-underline-offset: 2px; transition: color var(--dur-fast) var(--ease); }
+    a:hover { color: var(--navy-800); }
+    ::selection { background: var(--navy-200); color: var(--navy-900); }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    .eyebrow {
+      font-family: var(--font-body); font-weight: 600; font-size: 13px;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--navy-600); margin: 0 0 14px;
+    }
+    .eyebrow-light { color: #A9B5CC !important; }
+    .eyebrow-gold  { color: var(--gold) !important; }
+    .eyebrow-teal  { color: var(--teal) !important; }
+
+    h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; color: var(--navy-900); margin: 0; text-wrap: balance; }
+    p { text-wrap: pretty; }
+
+    /* ================ Header ================ */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(247,245,241,0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: box-shadow var(--dur-med) var(--ease), border-color var(--dur-med), background var(--dur-med);
+    }
+    .site-header.is-scrolled {
+      background: rgba(255,255,255,0.92);
+      box-shadow: var(--shadow-sm);
+      border-bottom-color: var(--ink-200);
+    }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+    .brand img { height: 28px; width: auto; }
+    .wordmark { font-family: var(--font-display); font-weight: 700; font-size: 20px; color: var(--navy-700); letter-spacing: -0.01em; }
+    .nav { display: flex; gap: 28px; }
+    .nav a { color: var(--ink-700); font-weight: 500; font-size: 15px; text-decoration: none; }
+    .nav a:hover { color: var(--navy-700); }
+
+    /* ================ Buttons ================ */
+    .btn {
+      font-family: var(--font-body); font-weight: 600; font-size: 15px;
+      border: 1px solid transparent; border-radius: 10px; padding: 11px 20px;
+      cursor: pointer; transition: all var(--dur-fast) var(--ease);
+      display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+      line-height: 1;
+    }
+    .btn-sm { padding: 9px 14px; font-size: 14px; border-radius: 8px; }
+    .btn-primary { background: var(--navy-700); color: white; }
+    .btn-primary:hover { background: var(--navy-800); box-shadow: var(--shadow-brand); transform: translateY(-1px); }
+    .btn-primary:active { background: var(--navy-900); transform: translateY(0); }
+    .btn-ghost-light { background: transparent; color: white; border-color: rgba(255,255,255,0.28); }
+    .btn-ghost-light:hover { background: rgba(255,255,255,0.08); color: white; }
+
+    /* ================ Hero ================ */
+    .hero {
+      background: linear-gradient(135deg, #1A2E4A 0%, #0B182B 100%);
+      color: white; position: relative; overflow: hidden;
+      padding: 96px 0 112px;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 85% 60%, rgba(143,180,234,0.18), transparent 50%);
+      pointer-events: none;
+    }
+    .hero-inner { display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: center; gap: 48px; position: relative; z-index: 1; }
+    .hero-copy .eyebrow { color: #A9B5CC; }
+    .hero h1 {
+      font-weight: 700;
+      font-size: clamp(40px, 5.2vw, 64px);
+      line-height: 1.05;
+      color: white; margin: 0 0 20px;
+    }
+    .hero h1 .accent { color: #E2C66C; /* gold-tinted highlight on dark */ }
+    .hero .lead { color: rgba(255,255,255,0.82); font-size: 19px; line-height: 1.5; max-width: 520px; margin: 0 0 30px; }
+    .hero-ctas { display: flex; gap: 12px; margin-bottom: 42px; flex-wrap: wrap; }
+    .hero-trust { list-style: none; padding: 0; margin: 0; display: flex; gap: 28px; flex-wrap: wrap; color: rgba(255,255,255,0.72); font-size: 14px; }
+    .hero-trust li { display: inline-flex; align-items: center; gap: 8px; }
+    .hero-trust svg { color: #A9B5CC; width: 18px; height: 18px; }
+    .hero-art { position: relative; display: flex; justify-content: flex-end; }
+    .hero-art img { width: 100%; max-width: 420px; height: auto; }
+
+    /* ================ Sections ================ */
+    .section { padding: 96px 0; }
+    .section-alt { background: #F1EEE7; }
+    .section-dark { background: var(--navy-900); color: white; padding: 96px 0; }
+    .section-head { max-width: 720px; margin: 0 auto 56px; text-align: center; }
+    .section h2 {
+      font-weight: 700;
+      font-size: clamp(32px, 4vw, 44px);
+      line-height: 1.12;
+      color: var(--navy-900);
+    }
+    .section-dark h2 { color: white; }
+
+    /* ================ Services ================ */
+    .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .svc-card {
+      background: white;
+      border: 1px solid var(--ink-200);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex; flex-direction: column; gap: 12px;
+      box-shadow: var(--shadow-xs);
+      transition: all var(--dur-med) var(--ease);
+      text-decoration: none; color: inherit;
+    }
+    .svc-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: var(--navy-200); }
+    .svc-card .icon-wrap {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--navy-050); color: var(--navy-700);
+      display: grid; place-items: center;
+    }
+    .svc-card.ai .icon-wrap { background: var(--teal-soft); color: var(--teal); }
+    .svc-card.advisory .icon-wrap { background: var(--gold-soft); color: var(--gold); }
+    .svc-card .icon-wrap svg { width: 22px; height: 22px; }
+    .svc-card h4 { font-weight: 600; font-size: 19px; color: var(--ink-900); letter-spacing: -0.01em; }
+    .svc-card p { color: var(--ink-700); font-size: 15px; line-height: 1.5; margin: 0; }
+    .svc-card .cta { color: var(--navy-700); font-weight: 600; font-size: 14px; text-decoration: none; margin-top: auto; }
+    .svc-card .cta:hover { color: var(--navy-800); }
+
+    /* ================ About ================ */
+    .about-inner { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: start; }
+    .about-copy .eyebrow { color: var(--navy-600); }
+    .about-copy h2 { margin-bottom: 24px; }
+    .about-copy p { color: var(--ink-700); font-size: 16px; line-height: 1.65; margin: 0 0 16px; max-width: 56ch; }
+    .about-copy .lead { font-size: 20px; color: var(--ink-900); margin-bottom: 20px; line-height: 1.5; }
+    .about-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .fact { background: white; border: 1px solid var(--ink-200); border-radius: 14px; padding: 22px; transition: border-color var(--dur-fast); }
+    .fact:hover { border-color: var(--navy-200); }
+    .fact-n { font-family: var(--font-display); font-weight: 700; font-size: 26px; color: var(--navy-700); letter-spacing: -0.01em; margin-bottom: 6px; }
+    .fact-l { color: var(--ink-700); font-size: 14px; line-height: 1.4; }
+
+    /* ================ Contact ================ */
+    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .contact-inner h2 { color: white; margin-bottom: 20px; }
+    .p-light { color: rgba(255,255,255,0.82); font-size: 17px; line-height: 1.6; }
+    .contact-list { list-style: none; padding: 0; margin: 28px 0 0; display: flex; flex-direction: column; gap: 14px; color: rgba(255,255,255,0.88); font-size: 16px; }
+    .contact-list li { display: flex; align-items: center; gap: 12px; }
+    .contact-list a { color: inherit; text-decoration: none; }
+    .contact-list a:hover { color: white; text-decoration: underline; }
+    .contact-list svg { color: #A9B5CC; width: 20px; height: 20px; flex-shrink: 0; }
+    .contact-form {
+      background: white; border-radius: 20px; padding: 32px;
+      color: var(--ink-900); display: flex; flex-direction: column; gap: 14px;
+      box-shadow: var(--shadow-lg);
+    }
+    .contact-form label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 500; color: var(--ink-900); }
+    .contact-form input, .contact-form select, .contact-form textarea {
+      font-family: inherit; font-size: 15px; color: var(--ink-900);
+      background: white; border: 1px solid var(--ink-300); border-radius: 8px;
+      padding: 10px 12px; outline: none; transition: all var(--dur-fast) var(--ease);
+    }
+    .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus {
+      border-color: var(--navy-700); box-shadow: var(--ring-focus);
+    }
+    .contact-form textarea { resize: vertical; min-height: 70px; }
+    .contact-form .btn { margin-top: 6px; align-self: flex-start; }
+    .sent { text-align: center; padding: 40px 20px; display: none; flex-direction: column; align-items: center; gap: 8px; }
+    .sent svg { width: 40px; height: 40px; color: var(--success-600); }
+    .sent h4 { font-weight: 600; font-size: 20px; margin: 4px 0 0; color: var(--ink-900); }
+    .sent p { color: var(--ink-500); margin: 0; }
+    .contact-form.is-sent .form-body { display: none; }
+    .contact-form.is-sent .sent { display: flex; }
+
+    /* ================ Footer ================ */
+    .site-footer { background: var(--navy-900); color: rgba(255,255,255,0.72); padding: 48px 0; border-top: 1px solid rgba(255,255,255,0.06); }
+    .footer-inner { display: flex; flex-direction: column; gap: 14px; align-items: center; text-align: center; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; }
+    .footer-brand img { height: 22px; }
+    .wordmark-light { font-family: var(--font-display); font-weight: 700; color: white; font-size: 16px; letter-spacing: -0.01em; }
+    .footer-meta { font-size: 13px; max-width: 720px; line-height: 1.7; }
+    .footer-meta a { color: #A9B5CC; text-decoration: none; }
+    .footer-meta a:hover { color: white; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 6px; }
+
+    /* ================ Responsive ================ */
+    @media (max-width: 900px) {
+      .hero-inner, .about-inner, .contact-inner { grid-template-columns: 1fr; }
+      .hero-art { display: none; }
+      .svc-grid { grid-template-columns: 1fr 1fr; }
+      .about-facts { grid-template-columns: 1fr 1fr; }
+      .section { padding: 72px 0; }
+    }
+    @media (max-width: 600px) {
+      .svc-grid, .about-facts { grid-template-columns: 1fr; }
+      .nav { display: none; }
+      .hero { padding: 64px 0 80px; }
+      .section-head { text-align: left; margin-bottom: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ================= HEADER ================= -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top">
+        <img src="assets/logo-mark-blue-transparent.png" alt="Accuminds logo" />
+        <span class="wordmark">Accuminds</span>
+      </a>
+      <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a href="#contact" class="btn btn-primary btn-sm">Book a consultation</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section id="top" class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <div class="eyebrow">Accounting · Tax · AI automation</div>
+          <h1>Accurate books.<br/>Automated workflows.<br/>Always compliant.</h1>
+          <p class="lead">
+            Bookkeeping, VAT, and corporate tax — handled end-to-end for UAE SMEs and
+            free zone entities, with AI that reads every invoice.
+          </p>
+          <div class="hero-ctas">
+            <a href="#contact" class="btn btn-primary">Book a consultation</a>
+            <a href="#services" class="btn btn-ghost-light">View services →</a>
+          </div>
+          <ul class="hero-trust">
+            <li><i data-lucide="shield-check"></i> FTA-aligned filings</li>
+            <li><i data-lucide="landmark"></i> Free zone &amp; mainland</li>
+            <li><i data-lucide="sparkles"></i> AI document intake</li>
+          </ul>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <img src="assets/logo-mark-white.png" alt="" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <section id="services" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Our services</div>
+          <h2>Everything your books need — in one firm.</h2>
+        </div>
+        <div class="svc-grid">
+          <article class="svc-card">
+            <div class="icon-wrap"><i data-lucide="receipt"></i></div>
+            <h4>Bookkeeping &amp; Accounting</h4>
+            <p>Comprehensive bookkeeping services, financial statements, and accounts management.</p>
+            <a class="cta" href="#contact">Discuss this →</a>
+          </article>
+          <article class="svc-card">
+            <div class="icon-wrap"><i data-lucide="calculator"></i></div>
+            <h4>VAT Services</h4>
+            <p>VAT registration, compliance, filing, and strategic planning.</p>
+            <a class="cta" href="#contact">Discuss this →</a>
+          </article>
+          <article class="svc-card">
+            <div class="icon-wrap"><i data-lucide="scale"></i></div>
+            <h4>Corporate Taxation</h4>
+            <p>Tax planning, corporate tax returns, audits, and strategy implementation.</p>
+            <a class="cta" href="#contact">Discuss this →</a>
+          </article>
+          <article class="svc-card">
+            <div class="icon-wrap"><i data-lucide="pie-chart"></i></div>
+            <h4>Management Information Systems</h4>
+            <p>Custom MIS solutions, reporting, and analytics to enhance decision-making.</p>
+            <a class="cta" href="#contact">Discuss this →</a>
+          </article>
+          <article class="svc-card ai">
+            <div class="icon-wrap"><i data-lucide="sparkles"></i></div>
+            <h4>AI Document Processing</h4>
+            <p>Intelligent ingest for invoices and receipts in any language — audit-ready output.</p>
+            <a class="cta" href="#contact">Discuss this →</a>
+          </article>
+          <article class="svc-card advisory">
+            <div class="icon-wrap"><i data-lucide="briefcase"></i></div>
+            <h4>Financial Advisory</h4>
+            <p>Structuring, forecasting, and board-ready reporting for SMEs and free zone entities.</p>
+            <a class="cta" href="#contact">Discuss this →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section id="about" class="section section-alt">
+      <div class="container about-inner">
+        <div class="about-copy">
+          <div class="eyebrow">About us</div>
+          <h2>A Dubai-based firm that takes the mess out of your books.</h2>
+          <p class="lead">
+            At Accuminds Consulting - FZCO, we specialize in providing tailored financial
+            and business solutions to help organizations achieve their goals with confidence
+            and precision.
+          </p>
+          <p>
+            Based in Dubai, UAE, we cater to businesses of all sizes and industries —
+            delivering services that streamline operations, enhance decision-making, and
+            ensure compliance with local and international regulations.
+          </p>
+          <p>
+            Our mission is to empower businesses through professional expertise, innovative
+            solutions, and a dedication to integrity and quality.
+          </p>
+        </div>
+        <aside class="about-facts">
+          <div class="fact"><div class="fact-n">UAE</div><div class="fact-l">VAT &amp; Corporate Tax focus</div></div>
+          <div class="fact"><div class="fact-n">DSO</div><div class="fact-l">IFZA-registered FZCO</div></div>
+          <div class="fact"><div class="fact-n">AI</div><div class="fact-l">Document processing built in</div></div>
+          <div class="fact"><div class="fact-n">SME</div><div class="fact-l">Free zone &amp; mainland clients</div></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section id="contact" class="section section-dark">
+      <div class="container contact-inner">
+        <div>
+          <div class="eyebrow eyebrow-light">Contact us</div>
+          <h2>Let&rsquo;s get your books in order.</h2>
+          <p class="p-light">
+            For inquiries, reach out directly or send us a note — we usually reply the same business day.
+          </p>
+          <ul class="contact-list">
+            <li><i data-lucide="phone"></i> <a href="tel:+971509867247">+971 50 98 67247</a></li>
+            <li><i data-lucide="mail"></i> <a href="mailto:info@accumindsconsulting.ae">info@accumindsconsulting.ae</a></li>
+            <li><i data-lucide="map-pin"></i> DSO – IFZA, IFZA Properties, Dubai Silicon Oasis, UAE</li>
+          </ul>
+        </div>
+        <form class="contact-form" id="contact-form" action="mailto:info@accumindsconsulting.ae" method="post" enctype="text/plain">
+          <div class="form-body">
+            <label>Your name<input name="name" placeholder="Layla Al-Marzooqi" required /></label>
+            <label>Work email<input type="email" name="email" placeholder="you@company.ae" required /></label>
+            <label>What do you need?
+              <select name="service" required>
+                <option value="" disabled selected>Select a service</option>
+                <option>Bookkeeping &amp; Accounting</option>
+                <option>VAT Services</option>
+                <option>Corporate Taxation</option>
+                <option>MIS / Reporting</option>
+                <option>AI Document Processing</option>
+                <option>Financial Advisory</option>
+              </select>
+            </label>
+            <label>A short note (optional)<textarea name="note" rows="3" placeholder="Anything useful we should know"></textarea></label>
+            <button type="submit" class="btn btn-primary">Send inquiry</button>
+          </div>
+          <div class="sent" role="status" aria-live="polite">
+            <i data-lucide="check-circle-2"></i>
+            <h4>Thanks — we&rsquo;ll be in touch.</h4>
+            <p>We reply within one business day, usually much sooner.</p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo-mark-white.png" alt="" />
+        <span class="wordmark-light">Accuminds Consulting - FZCO</span>
+      </div>
+      <div class="footer-meta">
+        DSO – IFZA, IFZA Properties, Dubai Silicon Oasis, UAE ·
+        <a href="mailto:info@accumindsconsulting.ae">info@accumindsconsulting.ae</a> ·
+        <a href="tel:+971509867247">+971 50 98 67247</a> ·
+        <a href="https://www.accumindsconsulting.ae">www.accumindsconsulting.ae</a>
+      </div>
+      <div class="footer-copy">© <span id="yr"></span> Accuminds Consulting - FZCO. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky header shadow on scroll
+    (function () {
+      var h = document.getElementById('site-header');
+      function onScroll() {
+        if (window.scrollY > 40) h.classList.add('is-scrolled');
+        else h.classList.remove('is-scrolled');
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    // Footer year
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // Contact form — shows thank-you state inline. (Keeps mailto fallback for real email delivery.)
+    (function () {
+      var form = document.getElementById('contact-form');
+      if (!form) return;
+      form.addEventListener('submit', function (e) {
+        // Let the mailto: open in the user's email client, then show the thank-you state.
+        setTimeout(function () {
+          form.classList.add('is-sent');
+          if (window.lucide) window.lucide.createIcons();
+        }, 400);
+      });
+    })();
+
+    // Render Lucide icons once loaded
+    window.addEventListener('load', function () {
+      if (window.lucide) window.lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

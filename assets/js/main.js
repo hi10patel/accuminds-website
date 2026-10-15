@@ -3,12 +3,14 @@
 import { createMotion } from './motion/core.js';
 import { initHero } from './motion/hero.js';
 import { initServiceIcons } from './motion/icons.js';
+import { initProcess } from './motion/process.js';
 import { initNav } from './ui/nav.js';
 import { initMagnetic } from './ui/magnetic.js';
 
 const motion = createMotion();
 initHero(motion);
 initServiceIcons(motion);
+initProcess(motion);
 initNav(motion);
 initMagnetic(motion);
 

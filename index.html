@@ -255,10 +255,48 @@
       </div>
     </section>
 
-    <!-- ================= HOW WE WORK (commit 4) ================= -->
-    <section id="process" class="section section--white">
+    <!-- ================= HOW WE WORK ================= -->
+    <!-- Default markup = finished state (all steps active, line drawn).
+         process.js pins it on desktop and draws the line as you scroll. -->
+    <section id="process" class="section section--white process-section" aria-labelledby="process-title">
       <div class="container">
-        <div class="scaffold-stub" data-reveal><strong>How we work</strong><span>Pinned 4-step timeline</span></div>
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>How we work</p>
+          <h2 id="process-title" data-reveal="mask">A clear process, from first review to every filing.</h2>
+        </div>
+        <div class="process">
+          <div class="process-track" aria-hidden="true"><span class="process-line"></span></div>
+          <ol class="process-steps">
+            <li class="process-step">
+              <span class="process-num" aria-hidden="true">01</span>
+              <div class="process-body">
+                <h3>Diagnose</h3>
+                <p>We review your books, registrations and filing history, and give you a written status of what&rsquo;s done, what&rsquo;s due and what&rsquo;s at risk.</p>
+              </div>
+            </li>
+            <li class="process-step">
+              <span class="process-num" aria-hidden="true">02</span>
+              <div class="process-body">
+                <h3>Set up</h3>
+                <p>We reconcile and clean up the ledger, align your chart of accounts, and complete any outstanding FTA registrations.</p>
+              </div>
+            </li>
+            <li class="process-step">
+              <span class="process-num" aria-hidden="true">03</span>
+              <div class="process-body">
+                <h3>Automate</h3>
+                <p>We connect document intake, bank feeds and approvals, so routine entries arrive pre-coded for review.</p>
+              </div>
+            </li>
+            <li class="process-step">
+              <span class="process-num" aria-hidden="true">04</span>
+              <div class="process-body">
+                <h3>Report &amp; file</h3>
+                <p>Each month you get a closed ledger and an MIS pack. VAT and Corporate Tax returns are prepared and filed on schedule.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
       </div>
     </section>
 

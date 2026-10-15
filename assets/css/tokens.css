@@ -1,0 +1,101 @@
+/* =========================================================
+   AccuMinds — design tokens (single source of truth)
+   Brand: Deep Navy #1A2E4A · Gold #C9972B · Teal #0D8A7F · Off-white #F7F5F1
+   Font:  Plus Jakarta Sans 400 / 600 / 800
+   Contrast notes (WCAG AA):
+     - Gold #C9972B fails as text on light backgrounds (2.4–2.6:1).
+       Use --gold-text on light, --gold / --gold-300 on navy.
+     - Gold buttons carry NAVY text (5.2:1), never white.
+     - Teal #0D8A7F is for large text / decoration on light; use --teal-text for body copy.
+   ========================================================= */
+:root {
+  /* ---- Brand ---- */
+  --navy: #1A2E4A;
+  --gold: #C9972B;
+  --teal: #0D8A7F;
+  --off-white: #F7F5F1;
+
+  /* ---- Navy scale ---- */
+  --navy-950: #0B182B;
+  --navy-900: #111F38;
+  --navy-700: var(--navy);
+  --navy-600: #2B416A;
+  --navy-300: #B8C2D4;   /* muted text on navy (9.9:1 on 950) */
+  --navy-200: #D1D8E4;
+  --navy-100: #E6EAF1;
+  --navy-050: #F1F3F8;
+
+  /* ---- Gold scale ---- */
+  --gold-400: #D9AC47;   /* button hover */
+  --gold-300: #E2C66C;   /* gold text on navy (8.2:1) */
+  --gold-100: #F3E6C2;
+  --gold-text: #8A6518;  /* gold text on light (5.3:1 on white) */
+
+  /* ---- Teal scale ---- */
+  --teal-300: #2DB3A6;   /* teal text on navy (6.9:1 on 950) */
+  --teal-100: #D3EEEB;
+  --teal-text: #0A7067;  /* teal text on light (6.0:1 on white) */
+
+  /* ---- Ink ---- */
+  --ink-900: #0A1628;
+  --ink-700: #2C3A54;
+  --ink-600: #4A5670;
+  --ink-300: #C5CCDB;
+  --ink-200: #E1E5EE;
+
+  /* ---- Surfaces ---- */
+  --bg: var(--off-white);
+  --surface: #FFFFFF;
+  --surface-dark: var(--navy-950);
+  --error: #B42318;
+  --success: var(--teal);
+
+  /* ---- Type ---- */
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fw-regular: 400;
+  --fw-semibold: 600;
+  --fw-extrabold: 800;
+  --fs-hero: clamp(2.25rem, 1.4rem + 4.2vw, 4rem);   /* 36 → 64 */
+  --fs-h2:   clamp(1.875rem, 1.4rem + 2vw, 2.625rem);/* 30 → 42 */
+  --fs-h3:   1.1875rem;                               /* 19 */
+  --fs-lead: clamp(1.0625rem, 1rem + 0.4vw, 1.1875rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-eyebrow: 0.75rem;
+
+  /* ---- Space & shape ---- */
+  --container: 1180px;
+  --gutter: 24px;
+  --section-y: clamp(72px, 6vw + 40px, 112px);
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --header-h: 76px;
+
+  /* ---- Elevation ---- */
+  --shadow-xs: 0 1px 2px rgba(10, 22, 40, 0.05);
+  --shadow-sm: 0 2px 6px rgba(10, 22, 40, 0.06), 0 1px 2px rgba(10, 22, 40, 0.04);
+  --shadow-md: 0 6px 20px rgba(10, 22, 40, 0.08), 0 2px 6px rgba(10, 22, 40, 0.05);
+  --shadow-lg: 0 18px 40px rgba(10, 22, 40, 0.10), 0 6px 14px rgba(10, 22, 40, 0.06);
+  --shadow-gold: 0 12px 28px rgba(201, 151, 43, 0.30);
+  --ring: 0 0 0 3px rgba(201, 151, 43, 0.55);
+
+  /* ---- Motion (calm: ease-out only, 0.6–1.2s for reveals) ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);   /* ≈ power3.out */
+  --dur-ui: 200ms;      /* hovers, focus */
+  --dur-1: 0.6s;
+  --dur-2: 0.9s;
+  --dur-3: 1.2s;
+
+  --z-header: 50;
+  --z-menu: 60;
+  --z-float: 40;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --gutter: 16px;
+    --header-h: 64px;
+  }
+}

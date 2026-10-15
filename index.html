@@ -128,14 +128,130 @@
       </button>
     </section>
 
-    <!-- ================= SERVICES (commit 3) ================= -->
-    <section id="services" class="section">
+    <!-- ================= SERVICES ================= -->
+    <!-- Icons: each SVG's default state is the finished frame (no-JS / reduced motion);
+         icons.js animates them in a loop while the card is on screen. -->
+    <section id="services" class="section" aria-labelledby="services-title">
       <div class="container">
         <div class="section-head">
           <p class="eyebrow" data-reveal>Our services</p>
-          <h2 data-reveal="mask">Five disciplines. One accountable firm.</h2>
+          <h2 id="services-title" data-reveal="mask">Five disciplines. One accountable firm.</h2>
         </div>
-        <div class="scaffold-stub" data-reveal><strong>Services</strong><span>5 pillar cards with looping icons</span></div>
+        <div class="svc-grid" data-reveal-stagger>
+          <article class="svc-card">
+            <div class="svc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" data-icon="ledger">
+                <rect x="4.5" y="3" width="15" height="18" rx="2" />
+                <path class="draw row" pathLength="1" d="M8 7.5h8" />
+                <path class="draw row" pathLength="1" d="M8 11h5.5" />
+                <path class="draw row" pathLength="1" d="M8 14.5h8" />
+                <path class="draw total accent" pathLength="1" d="M11.5 17.2h4.5" />
+                <path class="draw total accent" pathLength="1" d="M11.5 19.3h4.5" />
+              </svg>
+            </div>
+            <h3>Core Accounting</h3>
+            <p>Bookkeeping, reconciliations and month-end close, with management accounts you can act on.</p>
+            <ul class="svc-points">
+              <li>Bookkeeping &amp; bank reconciliations</li>
+              <li>Monthly close &amp; financial statements</li>
+              <li>MIS reporting</li>
+            </ul>
+            <a class="svc-cta u-link" href="#contact" data-service="Core Accounting">Discuss this<span class="sr-only">: Core Accounting</span> <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="svc-card">
+            <div class="svc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" data-icon="vat">
+                <circle class="draw ring" pathLength="1" cx="10.5" cy="10.5" r="7.5" />
+                <text class="vat-num" x="10.5" y="13.1" text-anchor="middle">5%</text>
+                <g class="stamp">
+                  <circle class="draw accent stamp-ring" pathLength="1" cx="18" cy="18" r="3.8" />
+                  <path class="draw accent" pathLength="1" d="M16.2 18.1l1.3 1.3 2.4-2.6" />
+                </g>
+              </svg>
+            </div>
+            <h3>FTA Compliance</h3>
+            <p>VAT, Corporate Tax and e-invoicing readiness, handled against Federal Tax Authority requirements and deadlines.</p>
+            <ul class="svc-points">
+              <li>VAT registration, returns &amp; refunds</li>
+              <li>Corporate Tax registration &amp; annual returns</li>
+              <li>E-invoicing readiness &amp; accredited service provider onboarding</li>
+            </ul>
+            <a class="svc-cta u-link" href="#contact" data-service="FTA Compliance">Discuss this<span class="sr-only">: FTA Compliance</span> <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="svc-card svc-card--gold">
+            <div class="svc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" data-icon="growth">
+                <path d="M3.5 20.5h17" />
+                <rect class="bar" x="5.5" y="14" width="3" height="6.5" rx="0.6" />
+                <rect class="bar" x="10.5" y="11" width="3" height="9.5" rx="0.6" />
+                <rect class="bar" x="15.5" y="8" width="3" height="12.5" rx="0.6" />
+                <path class="draw trend accent" pathLength="1" d="M4 11.5l4.5-4 3.5 2 6.5-5.5" />
+                <path class="draw trend accent" pathLength="1" d="M15.5 4h3.5v3.5" />
+              </svg>
+            </div>
+            <h3>CFO Advisory</h3>
+            <p>Part-time CFO support (forecasting, cash-flow planning and board-ready reporting) without a full-time hire.</p>
+            <ul class="svc-points">
+              <li>Budgets &amp; rolling forecasts</li>
+              <li>Cash-flow &amp; working capital</li>
+              <li>Structuring &amp; board / investor packs</li>
+            </ul>
+            <a class="svc-cta u-link" href="#contact" data-service="CFO Advisory">Discuss this<span class="sr-only">: CFO Advisory</span> <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="svc-card svc-card--teal">
+            <div class="svc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" data-icon="scan">
+                <path d="M6 3h8l4 4v14H6z" />
+                <path d="M14 3v4h4" />
+                <path class="field" d="M8.5 11h7" />
+                <path class="field" d="M8.5 14h7" />
+                <path class="field" d="M8.5 17h4" />
+                <path class="beam accent" d="M4 6h16" />
+                <path class="spark accent-fill" d="M20 1.5l.6 1.5 1.5.6-1.5.6-.6 1.5-.6-1.5-1.5-.6 1.5-.6z" />
+              </svg>
+            </div>
+            <h3>AI Automation</h3>
+            <p>AI-assisted intake and workflow automation that turns invoices and receipts into ledger entries ready for review.</p>
+            <ul class="svc-points">
+              <li>Invoice &amp; receipt capture (multi-language)</li>
+              <li>Approval &amp; reconciliation workflows</li>
+              <li>Dashboards fed from your ledger</li>
+            </ul>
+            <a class="svc-cta u-link" href="#contact" data-service="AI Automation">Discuss this<span class="sr-only">: AI Automation</span> <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="svc-card">
+            <div class="svc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" data-icon="calendar">
+                <defs><clipPath id="cal-body"><rect x="4" y="10" width="16" height="10.5" /></clipPath></defs>
+                <rect x="3.5" y="5" width="17" height="16" rx="2" />
+                <path d="M3.5 9.5h17M8.5 3v4M15.5 3v4" />
+                <g clip-path="url(#cal-body)">
+                  <g class="cal-page">
+                    <circle class="dot" cx="8" cy="13.2" r="0.9" />
+                    <circle class="dot" cx="12" cy="13.2" r="0.9" />
+                    <circle class="dot" cx="16" cy="13.2" r="0.9" />
+                    <circle class="dot" cx="8" cy="17.3" r="0.9" />
+                    <circle class="dot" cx="12" cy="17.3" r="0.9" />
+                    <circle class="dot accent-fill" cx="16" cy="17.3" r="0.9" />
+                    <circle class="draw pay accent" pathLength="1" cx="16" cy="17.3" r="2.2" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <h3>Payroll &amp; WPS</h3>
+            <p>Monthly payroll processed and documented, with WPS salary files and end-of-service calculations prepared for you.</p>
+            <ul class="svc-points">
+              <li>Payroll runs &amp; payslips</li>
+              <li>WPS SIF file preparation</li>
+              <li>Gratuity, leave &amp; final settlements</li>
+            </ul>
+            <a class="svc-cta u-link" href="#contact" data-service="Payroll &amp; WPS">Discuss this<span class="sr-only">: Payroll &amp; WPS</span> <span aria-hidden="true">→</span></a>
+          </article>
+        </div>
       </div>
     </section>
 

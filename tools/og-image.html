@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+  Source for assets/img/og-image.jpg (1200×630 social preview).
+  To regenerate after editing, from the repo root:
+    1. npm run serve
+    2. "C:/Program Files/Google/Chrome/Application/chrome.exe" --headless=new --hide-scrollbars
+         --window-size=1200,630 --virtual-time-budget=4000
+         --screenshot=og.png http://localhost:4173/tools/og-image.html
+    3. python -c "from PIL import Image; Image.open('og.png').convert('RGB').save('assets/img/og-image.jpg', quality=86, optimize=True, progressive=True)"
+  Not linked from the site; /tools/ is disallowed in robots.txt.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex" />
+  <title>OG image source</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;800&display=swap" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <style>
+    html, body { margin: 0; }
+    body {
+      width: 1200px; height: 630px; overflow: hidden; position: relative;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: var(--font); color: #fff;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-900) 60%, var(--navy-950) 100%);
+    }
+    body::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 75% 30%, rgba(201, 151, 43, 0.18), transparent 55%);
+    }
+    body::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 8px; background: var(--gold); }
+    .mark { position: relative; width: 760px; filter: drop-shadow(0 22px 32px rgba(0, 0, 0, 0.4)); }
+    .word { position: relative; margin-top: 18px; font-size: 64px; font-weight: 800; letter-spacing: 0.06em; line-height: 1; }
+    .sub { position: relative; margin-top: 12px; font-size: 22px; font-weight: 800; letter-spacing: 0.22em; color: var(--gold-300); }
+    .tag { position: relative; margin-top: 26px; font-size: 21px; font-weight: 600; color: var(--navy-300); }
+  </style>
+</head>
+<body>
+  <img class="mark" src="../assets/img/hero-mark-1380.webp" alt="" />
+  <div class="word">ACCUMINDS</div>
+  <div class="sub">CONSULTING · FZCO</div>
+  <div class="tag">Accounting · FTA Compliance · CFO Advisory · AI Automation · Payroll &amp; WPS · Dubai</div>
+</body>
+</html>

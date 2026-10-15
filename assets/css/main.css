@@ -217,15 +217,6 @@ html:not(.show-todo) [data-todo-slot] { display: none !important; }
   background: #D93025; color: #fff; font: 600 12px/1.2 var(--font);
 }
 
-/* ---------- Scaffold stubs (removed as each section is built) ---------- */
-.scaffold-stub {
-  display: grid; place-items: center; gap: 6px; min-height: 260px;
-  border: 1px dashed var(--ink-300); border-radius: var(--radius-lg);
-  color: var(--ink-600); text-align: center;
-}
-.section--dark .scaffold-stub, .hero .scaffold-stub { border-color: rgba(255, 255, 255, 0.25); color: var(--navy-300); }
-.scaffold-stub strong { font-size: 1.25rem; color: inherit; }
-
 /* =========================================================
    HERO: v3 layout (mark above centred copy), navy palette
    ========================================================= */

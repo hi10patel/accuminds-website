@@ -8,6 +8,7 @@ import { initShowcase } from './motion/showcase.js';
 import { initStats } from './motion/stats.js';
 import { initNav } from './ui/nav.js';
 import { initMagnetic } from './ui/magnetic.js';
+import { initContact } from './ui/contact.js';
 
 const motion = createMotion();
 initHero(motion);
@@ -17,6 +18,7 @@ initShowcase(motion);
 initStats(motion);
 initNav(motion);
 initMagnetic(motion);
+initContact(motion);
 
 document.querySelectorAll('[data-year]').forEach((el) => {
   el.textContent = String(new Date().getFullYear());

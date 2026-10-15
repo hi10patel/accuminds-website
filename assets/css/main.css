@@ -591,6 +591,79 @@ html:not(.js) .motion-toggle { display: none; }
   .trust-logos li { flex: 1 1 calc(50% - 6px); min-width: 0; }
 }
 
+/* =========================================================
+   CONTACT: WhatsApp + email CTAs, contact list, form
+   ========================================================= */
+.contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.contact-copy h2 { margin-bottom: 20px; font-size: var(--fs-h2); }
+.p-light { font-size: 1.0625rem; line-height: 1.6; color: rgba(255, 255, 255, 0.85); }
+.contact-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+/* Teal for WhatsApp: on-brand, and white text passes AA (6:1) */
+.btn-whatsapp { background: var(--teal-text); color: #fff; }
+.btn-whatsapp:hover { background: var(--teal); box-shadow: 0 12px 28px rgba(13, 138, 127, 0.3); }
+.contact-list { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; list-style: none; font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+.contact-list li { display: flex; align-items: center; gap: 12px; }
+.contact-list .icon { width: 20px; height: 20px; color: var(--gold-300); }
+.contact-list a { color: inherit; }
+
+.contact-form {
+  display: flex; flex-direction: column;
+  padding: 32px; border-radius: var(--radius-xl);
+  background: var(--surface); color: var(--ink-900); box-shadow: var(--shadow-lg);
+}
+.form-body { display: flex; flex-direction: column; gap: 16px; }
+.contact-form label { display: flex; flex-direction: column; gap: 6px; font-size: 0.8125rem; font-weight: var(--fw-semibold); color: var(--ink-900); }
+.contact-form input, .contact-form select, .contact-form textarea {
+  width: 100%; min-height: 44px; padding: 10px 12px;
+  font: inherit; font-size: 0.9375rem; font-weight: var(--fw-regular); color: var(--ink-900);
+  background: var(--surface); border: 1px solid var(--ink-300); border-radius: var(--radius-sm);
+  transition: border-color var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out);
+}
+.contact-form ::placeholder { color: var(--ink-600); opacity: 0.75; }
+.contact-form input:focus-visible, .contact-form select:focus-visible, .contact-form textarea:focus-visible {
+  outline: none; border-color: var(--navy); box-shadow: var(--ring);
+}
+.contact-form textarea { min-height: 88px; resize: vertical; }
+.contact-form .hp { display: none; }
+.form-submit { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-top: 4px; }
+.contact-form [aria-busy="true"] .btn-label { opacity: 0.7; }
+.form-error { font-size: var(--fs-small); color: var(--error); }
+.form-error a { color: inherit; }
+
+.sent { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 36px 12px; text-align: center; }
+.sent[hidden] { display: none; }
+.sent-icon { width: 56px; height: 56px; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.sent-ring { stroke: var(--teal-100); stroke-width: 3; }
+.sent-tick { stroke: var(--teal); stroke-width: 3.5; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.sent-title { font-size: 1.25rem; color: var(--ink-900); }
+.sent-title:focus { outline: none; }
+.sent-text { max-width: 36ch; color: var(--ink-600); }
+.sent-text a { color: var(--navy); }
+.sent-again { margin-top: 6px; padding: 0; background: none; border: 0; font-size: var(--fs-small); font-weight: var(--fw-semibold); color: var(--navy); cursor: pointer; }
+
+/* Floating WhatsApp shortcut (small screens; contact.js toggles .is-visible) */
+.wa-float {
+  position: fixed; right: 16px; bottom: 16px; z-index: var(--z-float);
+  display: none; place-items: center; width: 52px; height: 52px; border-radius: 50%;
+  background: var(--teal-text); color: #fff; box-shadow: var(--shadow-lg);
+  opacity: 0; translate: 0 12px; pointer-events: none;
+  transition: opacity var(--dur-1) var(--ease-out), translate var(--dur-1) var(--ease-out);
+}
+.wa-float .icon { width: 26px; height: 26px; }
+.wa-float.is-visible { opacity: 1; translate: 0 0; pointer-events: auto; }
+@media (max-width: 767px) { .wa-float { display: grid; } }
+html:not(.js) .wa-float { display: none; }
+
+@media (max-width: 900px) {
+  .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 600px) {
+  .contact-form { padding: 24px 20px; }
+  .contact-actions .btn { flex: 1 1 100%; }
+  .form-submit .btn { width: 100%; }
+  .contact-list li { align-items: flex-start; }
+}
+
 /* ---------- Reduced motion: no transitions, no smooth scroll ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

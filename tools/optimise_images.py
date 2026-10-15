@@ -1,7 +1,7 @@
 """Build web-ready images from the design originals in /design.
 
 Run once after changing a source image:  python tools/optimise_images.py
-Requires Pillow >= 11.3 (built-in AVIF support). Outputs are committed, so
+Requires Pillow >= 11 with WebP support. Outputs are committed, so
 nothing here runs at deploy time.
 """
 from pathlib import Path
@@ -25,17 +25,16 @@ def tint(img, rgb):
     return solid
 
 
-def save_modern(img, stem, avif_q=55, webp_q=80):
-    img.save(OUT / f"{stem}.avif", quality=avif_q, speed=4)
-    img.save(OUT / f"{stem}.webp", quality=webp_q, method=6)
-
-
 def hero_mark():
     # Framing is kept untouched: the hero reveal's clip geometry is based on it.
+    # WebP only: lossy AVIF adds faint alpha noise across the transparent area,
+    # which shows as a dark box on the navy hero. WebP keeps it clean.
     src = Image.open(SRC / "logo-mark-3d-transparent.png").convert("RGBA")
     for w in (640, 960, 1380):
         h = round(src.height * w / src.width)
-        save_modern(src.resize((w, h), Image.LANCZOS), f"hero-mark-{w}")
+        img = src.resize((w, h), Image.LANCZOS)
+        img.putalpha(img.getchannel("A").point(lambda v: 0 if v < 16 else v))
+        img.save(OUT / f"hero-mark-{w}.webp", quality=80, method=6, alpha_quality=100)
 
 
 def flat_marks():

@@ -1,10 +1,12 @@
 // Entry point. GSAP, ScrollTrigger and Lenis are loaded as deferred classic
 // scripts before this module (see index.html), so they are on `window` here.
 import { createMotion } from './motion/core.js';
+import { initHero } from './motion/hero.js';
 import { initNav } from './ui/nav.js';
 import { initMagnetic } from './ui/magnetic.js';
 
 const motion = createMotion();
+initHero(motion);
 initNav(motion);
 initMagnetic(motion);
 

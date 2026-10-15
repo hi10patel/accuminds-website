@@ -30,6 +30,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" />
 
+  <link rel="preload" as="image" fetchpriority="high"
+        imagesrcset="assets/img/hero-mark-640.webp 640w, assets/img/hero-mark-960.webp 960w, assets/img/hero-mark-1380.webp 1380w"
+        imagesizes="(max-width: 868px) calc(100vw - 32px), 820px" />
+
   <link rel="stylesheet" href="assets/css/tokens.css" />
   <link rel="stylesheet" href="assets/css/main.css" />
 
@@ -40,6 +44,23 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Icon sprite: 24×24, stroke = currentColor -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3l7 3v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6l7-3z" /><path d="M8.8 12.2l2.2 2.2 4.2-4.4" />
+      </symbol>
+      <symbol id="i-landmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9.5L12 4l9 5.5" /><path d="M5 10v8M9.7 10v8M14.3 10v8M19 10v8" /><path d="M3 20.5h18" />
+      </symbol>
+      <symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1L5 10.5l5.1-1.9L12 3.5z" /><path d="M18.5 16v4M16.5 18h4" />
+      </symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="6" width="3.2" height="12" rx="1" /><rect x="13.8" y="6" width="3.2" height="12" rx="1" /></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 6.2v11.6a.8.8 0 0 0 1.2.7l9.2-5.8a.8.8 0 0 0 0-1.4L9.2 5.5A.8.8 0 0 0 8 6.2z" /></symbol>
+    </defs>
+  </svg>
 
   <!-- ================= HEADER ================= -->
   <header class="site-header" id="site-header">
@@ -66,11 +87,45 @@
   </header>
 
   <main id="main">
-    <!-- ================= HERO (commit 2) ================= -->
-    <section id="top" class="hero on-dark">
-      <div class="container">
-        <div class="scaffold-stub" data-reveal><strong>Hero</strong><span>3D logo reveal, headline and line network: next commit</span></div>
+    <!-- ================= HERO ================= -->
+    <section id="top" class="hero on-dark" aria-labelledby="hero-title">
+      <canvas class="hero-network" aria-hidden="true"></canvas>
+      <div class="container hero-inner">
+        <div class="hero-mark">
+          <picture class="hero-mark__clip">
+            <img src="assets/img/hero-mark-960.webp" width="1380" height="560" fetchpriority="high"
+                 srcset="assets/img/hero-mark-640.webp 640w, assets/img/hero-mark-960.webp 960w, assets/img/hero-mark-1380.webp 1380w"
+                 sizes="(max-width: 868px) calc(100vw - 32px), 820px"
+                 alt="AccuMinds mark: a tangled wire ball unravelling into a clean gold spiral" />
+          </picture>
+        </div>
+        <div class="hero-copy">
+          <p class="eyebrow" data-hero-fade>Accounting · Tax · AI automation</p>
+          <h1 class="hero-title" id="hero-title">
+            <span class="line">Accurate books.</span>
+            <span class="line">Automated workflows.</span>
+            <span class="line accent">Always compliant.</span>
+          </h1>
+          <p class="lead" data-hero-fade>
+            Bookkeeping, VAT and Corporate Tax handled end-to-end for UAE SMEs and
+            free zone entities, with AI-assisted document intake.
+          </p>
+          <div class="hero-ctas">
+            <a class="btn btn-gold" href="#contact" data-hero-fade data-magnetic>Book a consultation</a>
+            <a class="btn btn-ghost-light" href="#services" data-hero-fade data-magnetic>View services <span aria-hidden="true">→</span></a>
+          </div>
+          <ul class="hero-trust">
+            <li data-hero-fade><svg class="icon" aria-hidden="true"><use href="#i-shield" /></svg> FTA-aligned filings</li>
+            <li data-hero-fade><svg class="icon" aria-hidden="true"><use href="#i-landmark" /></svg> Free zone &amp; mainland</li>
+            <li data-hero-fade><svg class="icon" aria-hidden="true"><use href="#i-sparkle" /></svg> AI document intake</li>
+          </ul>
+        </div>
       </div>
+      <button class="motion-toggle" type="button">
+        <svg class="icon icon--pause" aria-hidden="true"><use href="#i-pause" /></svg>
+        <svg class="icon icon--play" aria-hidden="true"><use href="#i-play" /></svg>
+        <span class="motion-toggle__label">Pause motion</span>
+      </button>
     </section>
 
     <!-- ================= SERVICES (commit 3) ================= -->

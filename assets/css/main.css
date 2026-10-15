@@ -436,6 +436,98 @@ html:not(.js) .motion-toggle { display: none; }
   .process-body h3 { font-size: 1.125rem; }
 }
 
+/* =========================================================
+   AUTOMATION SHOWCASE: workbook → dashboard
+   Static (default): before + after side by side, each captioned.
+   Animated (.is-animated, set by showcase.js): panels stacked in one stage.
+   ========================================================= */
+.showcase { max-width: 1040px; margin-inline: auto; }
+.showcase-stage { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.showcase-panel { margin: 0; }
+.showcase-label { margin-bottom: 10px; font-size: var(--fs-small); font-weight: var(--fw-semibold); color: var(--ink-700); }
+.showcase-bar { display: none; }
+.showcase-note { margin-top: 16px; text-align: center; font-size: 0.8125rem; color: var(--ink-600); }
+
+.showcase.is-animated { max-width: 880px; }
+.showcase.is-animated .showcase-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px;
+}
+.showcase.is-animated .showcase-stage { grid-template-columns: 1fr; }
+.showcase.is-animated .showcase-panel { grid-area: 1 / 1; }
+.showcase.is-animated .showcase-label {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+.showcase-tabs { display: flex; flex-wrap: wrap; gap: 6px 22px; }
+.showcase-tab {
+  position: relative; padding-bottom: 6px;
+  font-size: var(--fs-small); font-weight: var(--fw-semibold); color: var(--ink-600);
+  transition: color var(--dur-1) var(--ease-out);
+}
+.showcase-tab::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 2px;
+  background: var(--gold); transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform var(--dur-1) var(--ease-out);
+}
+.showcase-tab.is-active { color: var(--navy); }
+.showcase-tab.is-active::after { transform: none; }
+.showcase-replay {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 6px 14px 6px 10px;
+  background: var(--surface); border: 1px solid var(--ink-200); border-radius: 999px;
+  font-size: 0.8125rem; font-weight: var(--fw-semibold); color: var(--navy); cursor: pointer;
+  transition: border-color var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out);
+}
+.showcase-replay:hover { border-color: var(--gold); box-shadow: var(--shadow-sm); }
+.showcase-replay .icon { width: 15px; height: 15px; }
+
+/* ---- Scene (shared SVG styles) ---- */
+.scene { width: 100%; height: auto; border-radius: 14px; box-shadow: var(--shadow-lg); font-family: var(--font); }
+.scene text { font-family: var(--font); font-variant-numeric: tabular-nums; }
+.scene .frame { fill: var(--surface); stroke: var(--ink-200); }
+.scene .chrome { fill: var(--navy-050); }
+.scene .dot-r { fill: #E8A49C; } .scene .dot-y { fill: #EBCB8B; } .scene .dot-g { fill: #A8CFA0; }
+.scene .chrome-title { font-size: 12px; font-weight: var(--fw-semibold); fill: var(--ink-600); }
+
+.scene .headcell { fill: var(--navy-050); stroke: var(--ink-200); }
+.scene .head { font-size: 12px; font-weight: var(--fw-extrabold); fill: var(--ink-700); }
+.scene .gridcell { fill: none; stroke: var(--ink-200); }
+.scene .cell { font-size: 13px; fill: var(--ink-900); }
+.scene .cell.clean { opacity: 0; }
+.scene .is-error { fill: #B42318; font-weight: var(--fw-semibold); }
+.scene .is-formula { fill: var(--ink-600); font-size: 11.5px; }
+.scene .is-bold { font-weight: var(--fw-extrabold); }
+.scene .is-highlight { fill: var(--ink-900); paint-order: stroke; stroke: #FFF2A8; stroke-width: 7px; stroke-linejoin: round; }
+.scene .problem-fill { fill: rgba(180, 35, 24, 0.07); }
+.scene .dup-fill { fill: rgba(201, 151, 43, 0.12); }
+.scene .flag { fill: #D93025; }
+.scene .flag--dup { fill: var(--gold); }
+.scene .tick { fill: none; stroke: var(--teal); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: 0; }
+.scene .tabbar { fill: var(--navy-050); }
+.scene .tabtext { font-size: 11.5px; fill: var(--ink-600); }
+.scene .tabtext.is-active { font-weight: var(--fw-extrabold); fill: var(--ink-900); }
+
+.scene .chip rect { fill: var(--teal-100); }
+.scene .chip path { fill: none; stroke: var(--teal-text); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.scene .chip text { font-size: 11px; font-weight: var(--fw-extrabold); fill: var(--teal-text); }
+.scene .panel { fill: var(--surface); stroke: var(--ink-200); }
+.scene .kpi-label, .scene .panel-title { font-size: 12px; font-weight: var(--fw-semibold); fill: var(--ink-600); }
+.scene .kpi-value { font-size: 22px; font-weight: var(--fw-extrabold); fill: var(--navy); letter-spacing: -0.01em; }
+.scene .axis { stroke: var(--ink-200); stroke-width: 1.5; }
+.scene .axis-label { font-size: 11px; fill: var(--ink-600); }
+.scene .m-bar { fill: var(--navy-200); }
+.scene .m-bar.is-current { fill: var(--gold); }
+.scene .sup-label { font-size: 12px; fill: var(--ink-900); }
+.scene .sup-value { font-size: 12px; font-weight: var(--fw-semibold); fill: var(--ink-700); }
+.scene .s-track { fill: var(--navy-050); }
+.scene .s-bar { fill: var(--teal); }
+
+@media (max-width: 860px) {
+  .showcase-stage { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 600px) {
+  .tab-detail { display: none; }
+  .scene { border-radius: 10px; }
+}
+
 /* ---------- Reduced motion: no transitions, no smooth scroll ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

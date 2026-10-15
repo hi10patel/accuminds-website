@@ -57,6 +57,9 @@
       <symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1L5 10.5l5.1-1.9L12 3.5z" /><path d="M18.5 16v4M16.5 18h4" />
       </symbol>
+      <symbol id="i-replay" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 12a8 8 0 1 0 2.4-5.7" /><path d="M4 4v4.5h4.5" />
+      </symbol>
       <symbol id="i-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="6" width="3.2" height="12" rx="1" /><rect x="13.8" y="6" width="3.2" height="12" rx="1" /></symbol>
       <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 6.2v11.6a.8.8 0 0 0 1.2.7l9.2-5.8a.8.8 0 0 0 0-1.4L9.2 5.5A.8.8 0 0 0 8 6.2z" /></symbol>
     </defs>
@@ -300,10 +303,244 @@
       </div>
     </section>
 
-    <!-- ================= AUTOMATION SHOWCASE (commit 5) ================= -->
-    <section id="automation" class="section">
+    <!-- ================= AUTOMATION SHOWCASE ================= -->
+    <!-- Illustrative scene only (no client data). Default/no-JS/reduced motion:
+         before and after shown side by side. showcase.js stacks them and plays
+         the clean-up once when scrolled into view; Replay restarts it.
+         Scene markup comes from tools/gen_showcase.py: numbers in the "after" dashboard reconcile
+         to the "before" workbook rows. -->
+    <section id="automation" class="section" aria-labelledby="automation-title">
       <div class="container">
-        <div class="scaffold-stub" data-reveal><strong>Automation showcase</strong><span>Spreadsheet to dashboard scene</span></div>
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Automation in practice</p>
+          <h2 id="automation-title" data-reveal="mask">From scattered spreadsheets to a live dashboard.</h2>
+          <p class="lead" data-reveal>Invoices, receipts and bank lines arrive in every format. We standardise, reconcile and code them, so your numbers are ready when you need them.</p>
+        </div>
+        <div class="showcase" data-reveal>
+          <div class="showcase-bar">
+            <p class="showcase-tabs" aria-hidden="true">
+              <span class="showcase-tab" data-tab="before">Before<span class="tab-detail">: manual workbook</span></span>
+              <span class="showcase-tab" data-tab="after">After<span class="tab-detail">: reconciled dashboard</span></span>
+            </p>
+            <button class="showcase-replay" type="button">
+              <svg class="icon" aria-hidden="true"><use href="#i-replay" /></svg>
+              Replay<span class="sr-only"> the before and after animation</span>
+            </button>
+          </div>
+          <div class="showcase-stage">
+            <figure class="showcase-panel showcase-panel--before">
+              <figcaption class="showcase-label">Before: manual workbook</figcaption>
+              <svg class="scene scene--before" viewBox="0 0 640 400" role="img" aria-labelledby="sc-before-t sc-before-d">
+              <title id="sc-before-t">Before: a manual invoice workbook</title>
+              <desc id="sc-before-d">A spreadsheet of April supplier invoices with mixed date and number formats, inconsistent supplier names, a duplicated invoice, missing tax registration numbers and a broken total.</desc>
+              <rect class="frame" x="0.5" y="0.5" width="639" height="399" rx="14" />
+              <path class="chrome" d="M0.5 14.5a14 14 0 0 1 14-14h611a14 14 0 0 1 14 14v17h-639z" />
+              <circle class="dot-r" cx="20" cy="16" r="4" /><circle class="dot-y" cx="34" cy="16" r="4" /><circle class="dot-g" cx="48" cy="16" r="4" />
+              <text class="chrome-title" x="320" y="20" text-anchor="middle">Q2_invoices_FINAL_v3 (2).xlsx</text>
+              <g class="sheet-head">
+              <rect class="headcell" x="16" y="44" width="104" height="32" />
+              <text class="head" x="26" y="64" text-anchor="start">Date</text>
+              <rect class="headcell" x="120" y="44" width="170" height="32" />
+              <text class="head" x="130" y="64" text-anchor="start">Supplier</text>
+              <rect class="headcell" x="290" y="44" width="118" height="32" />
+              <text class="head" x="300" y="64" text-anchor="start">TRN</text>
+              <rect class="headcell" x="408" y="44" width="96" height="32" />
+              <text class="head" x="494" y="64" text-anchor="end">Amount</text>
+              <rect class="headcell" x="504" y="44" width="80" height="32" />
+              <text class="head" x="574" y="64" text-anchor="end">VAT</text>
+              <rect class="headcell" x="584" y="44" width="40" height="32" />
+              </g>
+              <g class="row">
+              <rect class="gridcell" x="16" y="76" width="104" height="36" />
+              <rect class="gridcell" x="120" y="76" width="170" height="36" />
+              <rect class="gridcell" x="290" y="76" width="118" height="36" />
+              <rect class="gridcell" x="408" y="76" width="96" height="36" />
+              <rect class="gridcell" x="504" y="76" width="80" height="36" />
+              <rect class="gridcell" x="584" y="76" width="40" height="36" />
+              <text class="cell messy" x="26" y="98.5" text-anchor="start" data-dx="0">03/04/26</text>
+              <text class="cell clean" x="26" y="98.5" text-anchor="start">03 Apr 2026</text>
+              <text class="cell" x="130" y="98.5" text-anchor="start">Northwind Trading</text>
+              <text class="cell" x="300" y="98.5" text-anchor="start">100•••••0003</text>
+              <text class="cell" x="494" y="98.5" text-anchor="end">1,250.00</text>
+              <rect class="problem-fill" x="504" y="76" width="80" height="36" />
+              <path class="flag" d="M575 77h8v8z" />
+              <text class="cell messy" x="560" y="98.5" text-anchor="end" data-dx="14">62.5</text>
+              <text class="cell clean" x="574" y="98.5" text-anchor="end">62.50</text>
+              <path class="tick" d="M598 94l4 4 8-9" />
+              </g>
+              <g class="row">
+              <rect class="gridcell" x="16" y="112" width="104" height="36" />
+              <rect class="gridcell" x="120" y="112" width="170" height="36" />
+              <rect class="gridcell" x="290" y="112" width="118" height="36" />
+              <rect class="gridcell" x="408" y="112" width="96" height="36" />
+              <rect class="gridcell" x="504" y="112" width="80" height="36" />
+              <rect class="gridcell" x="584" y="112" width="40" height="36" />
+              <text class="cell messy" x="110" y="134.5" text-anchor="end" data-dx="-84">2026-04-05</text>
+              <text class="cell clean" x="26" y="134.5" text-anchor="start">05 Apr 2026</text>
+              <text class="cell messy" x="142" y="134.5" text-anchor="start" data-dx="-12">northwind trdg</text>
+              <text class="cell clean" x="130" y="134.5" text-anchor="start">Northwind Trading</text>
+              <rect class="problem-fill" x="290" y="112" width="118" height="36" />
+              <path class="flag" d="M399 113h8v8z" />
+              <text class="cell messy is-error" x="300" y="134.5" text-anchor="start" data-dx="0">#N/A</text>
+              <text class="cell clean" x="300" y="134.5" text-anchor="start">100•••••0003</text>
+              <text class="cell messy" x="418" y="134.5" text-anchor="start" data-dx="76">AED 980</text>
+              <text class="cell clean" x="494" y="134.5" text-anchor="end">980.00</text>
+              <text class="cell messy" x="544" y="134.5" text-anchor="middle" data-dx="30">49</text>
+              <text class="cell clean" x="574" y="134.5" text-anchor="end">49.00</text>
+              <path class="tick" d="M598 130l4 4 8-9" />
+              </g>
+              <g class="row">
+              <rect class="dup-fill" x="16" y="148" width="568" height="36" />
+              <path class="flag flag--dup" d="M575 149h8v8z" />
+              <rect class="gridcell" x="16" y="148" width="104" height="36" />
+              <rect class="gridcell" x="120" y="148" width="170" height="36" />
+              <rect class="gridcell" x="290" y="148" width="118" height="36" />
+              <rect class="gridcell" x="408" y="148" width="96" height="36" />
+              <rect class="gridcell" x="504" y="148" width="80" height="36" />
+              <rect class="gridcell" x="584" y="148" width="40" height="36" />
+              <text class="cell messy" x="26" y="170.5" text-anchor="start" data-dx="0">5 Apr</text>
+              <text class="cell clean" x="26" y="170.5" text-anchor="start">05 Apr 2026</text>
+              <text class="cell" x="130" y="170.5" text-anchor="start">Dune Office Supplies</text>
+              <text class="cell" x="300" y="170.5" text-anchor="start">100•••••0071</text>
+              <rect class="problem-fill" x="408" y="148" width="96" height="36" />
+              <path class="flag" d="M495 149h8v8z" />
+              <text class="cell messy" x="494" y="170.5" text-anchor="end" data-dx="0">1.430,50</text>
+              <text class="cell clean" x="494" y="170.5" text-anchor="end">1,430.50</text>
+              <text class="cell" x="574" y="170.5" text-anchor="end">71.53</text>
+              <path class="tick" d="M598 166l4 4 8-9" />
+              </g>
+              <g class="row dup-row">
+              <rect class="dup-fill" x="16" y="184" width="568" height="36" />
+              <path class="flag flag--dup" d="M575 185h8v8z" />
+              <rect class="gridcell" x="16" y="184" width="104" height="36" />
+              <rect class="gridcell" x="120" y="184" width="170" height="36" />
+              <rect class="gridcell" x="290" y="184" width="118" height="36" />
+              <rect class="gridcell" x="408" y="184" width="96" height="36" />
+              <rect class="gridcell" x="504" y="184" width="80" height="36" />
+              <rect class="gridcell" x="584" y="184" width="40" height="36" />
+              <text class="cell" x="26" y="206.5" text-anchor="start">05/04/2026</text>
+              <text class="cell" x="130" y="206.5" text-anchor="start">Dune Office Supplies</text>
+              <text class="cell" x="300" y="206.5" text-anchor="start">100•••••0071</text>
+              <text class="cell" x="494" y="206.5" text-anchor="end">1.430,50</text>
+              <text class="cell" x="574" y="206.5" text-anchor="end">71.53</text>
+              </g>
+              <g class="row row-below">
+              <rect class="gridcell" x="16" y="220" width="104" height="36" />
+              <rect class="gridcell" x="120" y="220" width="170" height="36" />
+              <rect class="gridcell" x="290" y="220" width="118" height="36" />
+              <rect class="gridcell" x="408" y="220" width="96" height="36" />
+              <rect class="gridcell" x="504" y="220" width="80" height="36" />
+              <rect class="gridcell" x="584" y="220" width="40" height="36" />
+              <text class="cell messy" x="44" y="242.5" text-anchor="start" data-dx="-18">Apr-7</text>
+              <text class="cell clean" x="26" y="242.5" text-anchor="start">07 Apr 2026</text>
+              <text class="cell messy" x="130" y="242.5" text-anchor="start" data-dx="0">FALCON LOGISTICS</text>
+              <text class="cell clean" x="130" y="242.5" text-anchor="start">Falcon Logistics</text>
+              <rect class="problem-fill" x="290" y="220" width="118" height="36" />
+              <path class="flag" d="M399 221h8v8z" />
+              <text class="cell clean" x="300" y="242.5" text-anchor="start">100•••••0145</text>
+              <text class="cell messy" x="424" y="242.5" text-anchor="start" data-dx="70">2100</text>
+              <text class="cell clean" x="494" y="242.5" text-anchor="end">2,100.00</text>
+              <rect class="problem-fill" x="504" y="220" width="80" height="36" />
+              <path class="flag" d="M575 221h8v8z" />
+              <text class="cell clean" x="574" y="242.5" text-anchor="end">105.00</text>
+              <path class="tick" d="M598 238l4 4 8-9" />
+              </g>
+              <g class="row row-below">
+              <rect class="gridcell" x="16" y="256" width="104" height="36" />
+              <rect class="gridcell" x="120" y="256" width="170" height="36" />
+              <rect class="gridcell" x="290" y="256" width="118" height="36" />
+              <rect class="gridcell" x="408" y="256" width="96" height="36" />
+              <rect class="gridcell" x="504" y="256" width="80" height="36" />
+              <rect class="gridcell" x="584" y="256" width="40" height="36" />
+              <text class="cell messy" x="26" y="278.5" text-anchor="start" data-dx="0">08.04.26</text>
+              <text class="cell clean" x="26" y="278.5" text-anchor="start">08 Apr 2026</text>
+              <text class="cell is-highlight" x="130" y="278.5" text-anchor="start">Palm Media FZ</text>
+              <text class="cell" x="300" y="278.5" text-anchor="start">100•••••0256</text>
+              <text class="cell" x="494" y="278.5" text-anchor="end">760.00</text>
+              <text class="cell messy" x="574" y="278.5" text-anchor="end" data-dx="0">38</text>
+              <text class="cell clean" x="574" y="278.5" text-anchor="end">38.00</text>
+              <path class="tick" d="M598 274l4 4 8-9" />
+              </g>
+              <g class="row row-below row-total">
+              <rect class="gridcell" x="16" y="292" width="104" height="36" />
+              <rect class="gridcell" x="120" y="292" width="170" height="36" />
+              <rect class="gridcell" x="290" y="292" width="118" height="36" />
+              <rect class="gridcell" x="408" y="292" width="96" height="36" />
+              <rect class="gridcell" x="504" y="292" width="80" height="36" />
+              <rect class="gridcell" x="584" y="292" width="40" height="36" />
+              <text class="cell is-bold" x="26" y="314.5" text-anchor="start">Total</text>
+              <rect class="problem-fill" x="408" y="292" width="96" height="36" />
+              <path class="flag" d="M495 293h8v8z" />
+              <text class="cell messy is-error" x="494" y="314.5" text-anchor="end" data-dx="0">#VALUE!</text>
+              <text class="cell clean" x="494" y="314.5" text-anchor="end">6,520.50</text>
+              <rect class="problem-fill" x="504" y="292" width="80" height="36" />
+              <path class="flag" d="M575 293h8v8z" />
+              <text class="cell messy is-formula" x="574" y="314.5" text-anchor="end" data-dx="0">=SUM(E2:E7)</text>
+              <text class="cell clean" x="574" y="314.5" text-anchor="end">326.03</text>
+              <path class="tick" d="M598 310l4 4 8-9" />
+              </g>
+              <g class="sheet-tabs"><rect class="tabbar" x="0.5" y="360" width="639" height="39.5" />
+              <text class="tabtext is-active" x="24" y="385">Sheet1</text>
+              <text class="tabtext" x="88" y="385">Sheet1 (2)</text>
+              <text class="tabtext" x="176" y="385">Copy of Sheet1</text>
+              <text class="tabtext" x="300" y="385">OLD - do not use</text></g>
+              </svg>
+            </figure>
+            <figure class="showcase-panel showcase-panel--after">
+              <figcaption class="showcase-label">After: reconciled dashboard</figcaption>
+              <svg class="scene scene--after" viewBox="0 0 640 400" role="img" aria-labelledby="sc-after-t sc-after-d">
+              <title id="sc-after-t">After: a reconciled dashboard</title>
+              <desc id="sc-after-d">The same April invoices, cleaned and reconciled: expenses AED 6,520.50, input VAT AED 326.03, 5 of 5 documents reconciled, a monthly expenses chart and expenses by supplier.</desc>
+              <rect class="frame" x="0.5" y="0.5" width="639" height="399" rx="14" />
+              <path class="chrome" d="M0.5 14.5a14 14 0 0 1 14-14h611a14 14 0 0 1 14 14v17h-639z" />
+              <circle class="dot-r" cx="20" cy="16" r="4" /><circle class="dot-y" cx="34" cy="16" r="4" /><circle class="dot-g" cx="48" cy="16" r="4" />
+              <text class="chrome-title" x="320" y="20" text-anchor="middle">April close · Dashboard</text>
+              <g class="chip"><rect x="532" y="7" width="92" height="20" rx="10" /><path d="M545 17l3 3 6-6.5" /><text x="560" y="21">Reconciled</text></g>
+              <g class="tile"><rect class="panel" x="16" y="48" width="198" height="84" rx="10" />
+              <text class="kpi-label" x="32" y="76">Expenses (Apr)</text>
+              <text class="kpi-value" x="32" y="112" data-value="6520.5" data-format="aed">AED 6,520.50</text></g>
+              <g class="tile"><rect class="panel" x="226" y="48" width="198" height="84" rx="10" />
+              <text class="kpi-label" x="242" y="76">Input VAT (Apr)</text>
+              <text class="kpi-value" x="242" y="112" data-value="326.03" data-format="aed">AED 326.03</text></g>
+              <g class="tile"><rect class="panel" x="436" y="48" width="198" height="84" rx="10" />
+              <text class="kpi-label" x="452" y="76">Documents reconciled</text>
+              <text class="kpi-value" x="452" y="112" data-value="5" data-format="of5">5 of 5</text></g>
+              <g class="chart"><rect class="panel" x="16" y="146" width="290" height="238" rx="10" />
+              <text class="panel-title" x="32" y="174">Monthly expenses</text>
+              <path class="axis" d="M32 352h258" />
+              <rect class="m-bar" x="50" y="256" width="34" height="96" rx="4" />
+              <text class="axis-label" x="67" y="371" text-anchor="middle">Jan</text>
+              <rect class="m-bar" x="112" y="234" width="34" height="118" rx="4" />
+              <text class="axis-label" x="129" y="371" text-anchor="middle">Feb</text>
+              <rect class="m-bar" x="174" y="248" width="34" height="104" rx="4" />
+              <text class="axis-label" x="191" y="371" text-anchor="middle">Mar</text>
+              <rect class="m-bar is-current" x="236" y="202" width="34" height="150" rx="4" />
+              <text class="axis-label" x="253" y="371" text-anchor="middle">Apr</text>
+              </g>
+              <g class="suppliers"><rect class="panel" x="320" y="146" width="304" height="238" rx="10" />
+              <text class="panel-title" x="336" y="174">By supplier (Apr)</text>
+              <text class="sup-label" x="336" y="206">Northwind Trading</text>
+              <text class="sup-value" x="608" y="206" text-anchor="end">2,230.00</text>
+              <rect class="s-track" x="336" y="214" width="272" height="8" rx="4" />
+              <rect class="s-bar" x="336" y="214" width="272.0" height="8" rx="4" />
+              <text class="sup-label" x="336" y="250">Falcon Logistics</text>
+              <text class="sup-value" x="608" y="250" text-anchor="end">2,100.00</text>
+              <rect class="s-track" x="336" y="258" width="272" height="8" rx="4" />
+              <rect class="s-bar" x="336" y="258" width="256.1" height="8" rx="4" />
+              <text class="sup-label" x="336" y="294">Dune Office Supplies</text>
+              <text class="sup-value" x="608" y="294" text-anchor="end">1,430.50</text>
+              <rect class="s-track" x="336" y="302" width="272" height="8" rx="4" />
+              <rect class="s-bar" x="336" y="302" width="174.5" height="8" rx="4" />
+              <text class="sup-label" x="336" y="338">Palm Media FZ</text>
+              <text class="sup-value" x="608" y="338" text-anchor="end">760.00</text>
+              <rect class="s-track" x="336" y="346" width="272" height="8" rx="4" />
+              <rect class="s-bar" x="336" y="346" width="92.7" height="8" rx="4" />
+              </g>
+              </svg>
+            </figure>
+          </div>
+          <p class="showcase-note">Illustrative example. Not client data.</p>
+        </div>
       </div>
     </section>
 

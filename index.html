@@ -544,10 +544,37 @@
       </div>
     </section>
 
-    <!-- ================= NUMBERS (commit 6) ================= -->
-    <section id="numbers" class="section section--dark on-dark">
+    <!-- ================= NUMBERS ================= -->
+    <!-- TODO before launch: this whole section is hidden on the live site
+         (data-todo-slot) until real figures are in. To publish it:
+           1. replace each data-count="TODO" with a plain number, e.g. data-count="240"
+           2. remove data-todo from those spans and data-todo-slot from <section>
+         Preview: /?todo shows the placeholders; /?todo&demo counts up to the
+         dummy data-demo values (never shown in production). -->
+    <section id="numbers" class="section section--dark on-dark" aria-labelledby="numbers-title" data-todo-slot>
       <div class="container">
-        <div class="scaffold-stub" data-reveal><strong>Numbers</strong><span>Count-up stats (TODO values)</span></div>
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>By the numbers</p>
+          <h2 id="numbers-title" data-reveal="mask">Numbers we&rsquo;re accountable for.</h2>
+        </div>
+        <ul class="stats" data-reveal-stagger>
+          <li class="stat">
+            <p class="stat-figure"><span class="stat-num" data-count="TODO" data-demo="240" data-todo>TODO</span><span class="stat-suffix">+</span></p>
+            <p class="stat-label">VAT &amp; Corporate Tax returns filed</p>
+          </li>
+          <li class="stat">
+            <p class="stat-figure"><span class="stat-num" data-count="TODO" data-demo="40" data-todo>TODO</span><span class="stat-suffix">+</span></p>
+            <p class="stat-label">Active SME clients</p>
+          </li>
+          <li class="stat">
+            <p class="stat-figure"><span class="stat-num" data-count="TODO" data-demo="10" data-todo>TODO</span><span class="stat-suffix">+</span></p>
+            <p class="stat-label">Years of UAE finance experience</p>
+          </li>
+          <li class="stat">
+            <p class="stat-figure"><span class="stat-num" data-count="TODO" data-demo="12000" data-todo>TODO</span><span class="stat-suffix">+</span></p>
+            <p class="stat-label">Documents processed through AI intake</p>
+          </li>
+        </ul>
       </div>
     </section>
 

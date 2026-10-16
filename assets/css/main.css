@@ -690,6 +690,146 @@ html:not(.js) .wa-float { display: none; }
   .contact-list li { align-items: flex-start; }
 }
 
+/* =========================================================
+   V2 DARK EDITORIAL THEME
+   One layer over everything above: remaps the colour tokens for a dark page
+   and restyles components to match the 3D hero. Two places stay light on
+   purpose and restore the original tokens: the contact form card (inputs read
+   best dark-on-white) and the showcase "app screens" (.scene).
+   Contrast (AA) on #070F1C / #0C1829: heading 17:1, body 12:1, muted 8:1,
+   gold-300 11:1, teal-300 7:1.
+   ========================================================= */
+:root {
+  --bg: #070F1C;
+  --surface: #0C1829;
+  --card: rgba(255, 255, 255, 0.035);
+  --line: rgba(255, 255, 255, 0.09);
+  --heading: #F2F4F7;
+  --ink-900: #F2F4F7;
+  --ink-700: #C9D2E0;
+  --ink-600: #9AA8BF;
+  --ink-300: rgba(255, 255, 255, 0.24);
+  --ink-200: rgba(255, 255, 255, 0.1);
+  --gold-text: var(--gold-300);
+  --teal-text: var(--teal-300);
+  --surface-dark: #0A1424;
+}
+.contact-form, .scene {
+  --surface: #FFFFFF;
+  --ink-900: #0A1628;
+  --ink-700: #2C3A54;
+  --ink-600: #4A5670;
+  --ink-300: #C5CCDB;
+  --ink-200: #E1E5EE;
+  --gold-text: #8A6518;
+  --teal-text: #0A7067;
+}
+
+body { background: var(--bg); color: var(--ink-700); }
+h1, h2, h3, h4 { color: var(--heading); }
+::selection { background: rgba(201, 151, 43, 0.35); color: #fff; }
+.eyebrow { color: var(--gold-300); }
+.lead { color: var(--ink-700); }
+
+/* ---- Sections: alternating depth, hairline seams ---- */
+.section { background: var(--bg); }
+.section--white { background: var(--surface); }
+.section--dark { background: var(--surface-dark); }
+.section + .section { border-top: 1px solid var(--line); }
+
+/* ---- Editorial section heads: numbered, left-aligned, oversized ---- */
+main { counter-reset: chapter; }
+.section-head {
+  counter-increment: chapter;
+  max-width: none; margin: 0 0 clamp(48px, 6vw, 80px); text-align: left;
+  display: grid; grid-template-columns: minmax(160px, 0.28fr) 1fr; column-gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+}
+.section-head .eyebrow {
+  grid-column: 1; grid-row: 1 / span 2;
+  display: flex; flex-direction: column; gap: 10px; margin: 6px 0 0;
+  padding-top: 14px; border-top: 1px solid rgba(201, 151, 43, 0.6);
+}
+.section-head .eyebrow::before {
+  content: counter(chapter, decimal-leading-zero);
+  font-size: 0.875rem; letter-spacing: 0.08em; color: var(--ink-600);
+}
+.section-head h2 {
+  grid-column: 2;
+  max-width: 17ch;
+  font-size: clamp(2.25rem, 1.2rem + 4vw, 4.75rem); line-height: 1.02; letter-spacing: -0.035em;
+}
+.section-head .lead { grid-column: 2; max-width: 54ch; margin-top: 22px; }
+@media (max-width: 760px) {
+  .section-head { grid-template-columns: 1fr; }
+  .section-head .eyebrow, .section-head h2, .section-head .lead { grid-column: 1; grid-row: auto; }
+  .section-head .eyebrow { flex-direction: row; align-items: baseline; gap: 12px; margin-bottom: 18px; }
+}
+
+/* ---- Services: dark glass cards, numbered ---- */
+.svc-grid { counter-reset: pillar; }
+.svc-card {
+  counter-increment: pillar; position: relative;
+  --icon-bg: rgba(255, 255, 255, 0.06); --icon-fg: #E6EAF1; --icon-accent: var(--gold);
+  --cta: #FFFFFF; --hover-border: rgba(201, 151, 43, 0.55);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  border-color: var(--line); box-shadow: none;
+}
+.svc-card::after {
+  content: counter(pillar, decimal-leading-zero);
+  position: absolute; top: 26px; right: 28px;
+  font-size: 0.8125rem; font-weight: var(--fw-semibold); letter-spacing: 0.08em; color: var(--ink-600);
+}
+.svc-card:hover { box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(201, 151, 43, 0.25); }
+.svc-card--gold { --icon-bg: rgba(201, 151, 43, 0.14); --icon-fg: var(--gold-300); --icon-accent: #F2F4F7; --cta: var(--gold-300); }
+.svc-card--teal { --icon-bg: rgba(45, 179, 166, 0.14); --icon-fg: var(--teal-300); --icon-accent: var(--gold-300); --cta: var(--teal-300); }
+.svc-icon .bar { fill-opacity: 0.22; }
+
+/* ---- How we work ---- */
+.process-num { box-shadow: 0 0 0 8px var(--surface); }
+.process-section.is-pinned { background: var(--surface); }
+.process-track { background: rgba(255, 255, 255, 0.12); }
+
+/* ---- Automation showcase: light app screens floating on dark ---- */
+.showcase-tab { color: var(--ink-600); }
+.showcase-tab.is-active { color: #fff; }
+.showcase-label { color: var(--ink-700); }
+.showcase-replay { background: rgba(255, 255, 255, 0.06); border-color: var(--line); color: #fff; }
+.showcase-replay:hover { border-color: var(--gold); }
+.scene { box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06); }
+.showcase-note { color: var(--ink-600); }
+
+/* About and Contact continue the chapter numbering and the editorial scale */
+.about-copy > .eyebrow, .contact-copy > .eyebrow {
+  counter-increment: chapter;
+  display: flex; align-items: baseline; gap: 12px;
+  width: min(100%, 220px); padding-top: 14px; border-top: 1px solid rgba(201, 151, 43, 0.6);
+}
+.about-copy > .eyebrow::before, .contact-copy > .eyebrow::before {
+  content: counter(chapter, decimal-leading-zero);
+  font-size: 0.875rem; letter-spacing: 0.08em; color: var(--ink-600);
+}
+.about-copy h2, .contact-copy h2 {
+  max-width: 15ch; font-size: clamp(2.1rem, 1.1rem + 3vw, 3.6rem); line-height: 1.04; letter-spacing: -0.03em;
+}
+
+/* ---- About ---- */
+.about-text .lead { color: var(--heading); }
+.fact { background: var(--card); border-color: var(--line); }
+.fact:hover { box-shadow: none; }
+.fact-n { color: var(--gold-300); }
+.trust { border-top-color: var(--line); }
+.trust-logos li { border-color: var(--ink-300); }
+
+/* ---- Contact (form card stays white) ---- */
+.btn-whatsapp { background: #0A7067; color: #fff; }        /* white on #0A7067 = 6:1 */
+.btn-whatsapp:hover { background: var(--teal); }
+.wa-float { background: #0A7067; }
+.contact-form { box-shadow: 0 40px 80px rgba(0, 0, 0, 0.45); }
+
+/* ---- Footer ---- */
+.site-footer { background: #050B15; }
+
 /* ---------- Reduced motion: no transitions, no smooth scroll ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

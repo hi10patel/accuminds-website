@@ -91,6 +91,7 @@ All visible text is in **`index.html`**. Each section starts with a comment bann
 | Phone, email, address, WhatsApp | the old value, e.g. `509867247` | Each appears in the contact section, the footer **and** the JSON-LD in `<head>`; update all of them |
 | Page title, description, social preview text | `<title>`, `og:`, `twitter:` | |
 | Colours, fonts, spacing | `assets/css/tokens.css` | Change a token once and it applies everywhere |
+| Dark page colours (backgrounds, text, lines) | `V2 DARK EDITORIAL THEME` in `assets/css/main.css` | The dark theme remaps the tokens there. The contact form card and the showcase screens keep light colours on purpose |
 
 Rules of thumb:
 - Write `&amp;` for **&** inside HTML text.
@@ -200,12 +201,12 @@ python tools/optimise_images.py
 
 Targets: Performance ≥ 90, Accessibility ≥ 95, SEO ≥ 95. All met.
 
-With the 3D hero (branch `redesign-v2`, same set-up):
+With the 3D hero and the dark editorial restyle (branch `redesign-v2`, same set-up):
 
 | Run | Performance | Accessibility | Best Practices | SEO | FCP | LCP | TBT | CLS |
 |---|---|---|---|---|---|---|---|---|
-| Mobile | **96** | **100** | 100 | **100** | 1.1 s | 2.3 s | 150 ms | 0.004 |
-| Desktop | **100** | **100** | 100 | **100** | 0.3 s | 0.6 s | 0 ms | 0.003 |
+| Mobile | **95** | **100** | 100 | **100** | 1.2 s | 2.3 s | 220 ms | 0.004 |
+| Desktop | **100** | **100** | 100 | **100** | 0.3 s | 0.6 s | 0 ms | 0.007 |
 
 Lighthouse doesn't interact with the page, so these runs measure the poster first paint; three.js loads on a visitor's first mouse move, scroll or touch.
 

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /design/
+Disallow: /tools/
+
+Sitemap: https://www.accumindsconsulting.ae/sitemap.xml

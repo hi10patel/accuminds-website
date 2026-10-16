@@ -1,0 +1,10 @@
+{
+  "name": "accuminds-website",
+  "private": true,
+  "description": "AccuMinds Consulting FZCO website. Static: no build step, no runtime dependencies.",
+  "scripts": {
+    "serve": "node tools/serve.mjs 4173",
+    "check:todo": "node tools/check-todo.mjs",
+    "images": "python tools/optimise_images.py"
+  }
+}

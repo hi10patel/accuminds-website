@@ -2,512 +2,855 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Accuminds Consulting — FZCO | Accounting, Tax & AI automation in Dubai</title>
-  <meta name="description" content="Accuminds Consulting - FZCO: bookkeeping, VAT, corporate tax, and AI-powered document processing for UAE SMEs and free zone entities. Based in Dubai Silicon Oasis." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AccuMinds Consulting FZCO | Accounting, FTA Compliance &amp; AI Automation in Dubai</title>
+  <meta name="description" content="AccuMinds Consulting FZCO: accounting, VAT, Corporate Tax, CFO advisory, AI automation and payroll for UAE SMEs and free zone entities. Based in Dubai Silicon Oasis." />
   <meta name="theme-color" content="#1A2E4A" />
-  <link rel="icon" type="image/png" href="assets/logo-square-blue.png" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://www.accumindsconsulting.ae/" />
 
-  <!-- OpenGraph -->
-  <meta property="og:title" content="Accuminds Consulting — FZCO" />
-  <meta property="og:description" content="Accurate books. Automated workflows. Always compliant." />
+  <!-- Open Graph / social previews (absolute URLs so every platform can fetch them) -->
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="AccuMinds Consulting FZCO" />
   <meta property="og:url" content="https://www.accumindsconsulting.ae/" />
-  <meta property="og:image" content="assets/logo-square-blue.png" />
+  <meta property="og:title" content="AccuMinds Consulting FZCO | Accounting, FTA Compliance &amp; AI Automation in Dubai" />
+  <meta property="og:description" content="Accurate books. Automated workflows. Always compliant. Accounting, VAT, Corporate Tax, CFO advisory, AI automation and payroll for UAE SMEs." />
+  <meta property="og:image" content="https://www.accumindsconsulting.ae/assets/img/og-image.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="AccuMinds Consulting FZCO: a tangled wire ball unravelling into a gold spiral" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AccuMinds Consulting FZCO" />
+  <meta name="twitter:description" content="Accounting, FTA compliance, CFO advisory, AI automation and payroll for UAE SMEs. Dubai Silicon Oasis." />
+  <meta name="twitter:image" content="https://www.accumindsconsulting.ae/assets/img/og-image.jpg" />
+  <meta name="twitter:image:alt" content="AccuMinds Consulting FZCO: a tangled wire ball unravelling into a gold spiral" />
 
-  <template id="__bundler_thumbnail">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
-      <rect width="400" height="400" fill="#1A2E4A"/>
-      <g transform="translate(140 140) scale(0.9)" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M10 110 Q 40 40, 80 80 T 140 100 Q 165 110, 165 80 T 115 65 Q 80 70, 100 100 T 130 130"/>
-      </g>
-      <text x="200" y="330" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="-1">Accuminds</text>
-    </svg>
-  </template>
+  <!-- Structured data. TODO: add once confirmed (none are invented here):
+       "geo" (lat/long of the office), "openingHoursSpecification",
+       "sameAs" (LinkedIn / Google Business Profile URLs) and "taxID" (TRN). -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://www.accumindsconsulting.ae/#website",
+        "url": "https://www.accumindsconsulting.ae/",
+        "name": "AccuMinds Consulting FZCO",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.accumindsconsulting.ae/#organization" }
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://www.accumindsconsulting.ae/#organization",
+        "name": "AccuMinds Consulting FZCO",
+        "alternateName": "Accuminds Consulting - FZCO",
+        "url": "https://www.accumindsconsulting.ae/",
+        "logo": "https://www.accumindsconsulting.ae/assets/img/icon-512.png",
+        "image": "https://www.accumindsconsulting.ae/assets/img/og-image.jpg",
+        "description": "UAE finance, compliance and automation consultancy for SMEs and free zone entities: accounting, FTA compliance (VAT, Corporate Tax, e-invoicing), CFO advisory, AI automation, and payroll & WPS.",
+        "email": "info@accumindsconsulting.ae",
+        "telephone": "+971509867247",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "DSO - IFZA, IFZA Properties, Dubai Silicon Oasis",
+          "addressLocality": "Dubai",
+          "addressRegion": "Dubai",
+          "addressCountry": "AE"
+        },
+        "areaServed": { "@type": "Country", "name": "United Arab Emirates" },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "telephone": "+971509867247",
+          "email": "info@accumindsconsulting.ae",
+          "areaServed": "AE",
+          "availableLanguage": "English"
+        },
+        "knowsAbout": ["Bookkeeping", "VAT", "UAE Corporate Tax", "E-invoicing", "Payroll", "Wage Protection System", "Financial planning", "Accounting automation"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Services",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Core Accounting", "description": "Bookkeeping, reconciliations and month-end close, with management accounts you can act on." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "FTA Compliance", "description": "VAT, Corporate Tax and e-invoicing readiness, handled against Federal Tax Authority requirements and deadlines." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "CFO Advisory", "description": "Part-time CFO support: forecasting, cash-flow planning and board-ready reporting." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Automation", "description": "AI-assisted intake and workflow automation that turns invoices and receipts into ledger entries ready for review." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Payroll & WPS", "description": "Monthly payroll with WPS salary files and end-of-service calculations." } }
+          ]
+        }
+      }
+    ]
+  }
+  </script>
 
-  <!-- Google Fonts -->
+  <link rel="icon" href="favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" href="assets/img/favicon-32.png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+
+  <!-- Before first paint: enable JS-only states; ?todo shows placeholder slots -->
+  <script>
+    (function (h) {
+      h.classList.add('js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        h.classList.add('js-motion');
+        // Safety net: if the motion scripts never start, show the content anyway.
+        setTimeout(function () { if (!window.__amMotion) h.classList.remove('js-motion'); }, 3000);
+      }
+      if (/[?&]todo(=|&|$)/.test(location.search)) h.classList.add('show-todo');
+    })(document.documentElement);
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Fonts load without blocking first paint; system fallback shows meanwhile -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" /></noscript>
 
-  <!-- Lucide icons (tiny, CDN) -->
-  <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="preload" as="image" fetchpriority="high"
+        imagesrcset="assets/img/hero-mark-640.webp 640w, assets/img/hero-mark-720.webp 720w, assets/img/hero-mark-960.webp 960w, assets/img/hero-mark-1380.webp 1380w"
+        imagesizes="(max-width: 868px) calc(100vw - 32px), 820px" />
 
-  <style>
-    /* =========================================================
-       Accuminds Consulting — production stylesheet (inlined)
-       Palette: Navy #1A2E4A primary · Gold #C9972B · Teal #0D8A7F
-       Mark blue #004AAD reserved for logo.
-       Font: Plus Jakarta Sans (display) + Inter (body).
-       ========================================================= */
-    :root {
-      --navy-900: #0B182B;
-      --navy-800: #111F38;
-      --navy-700: #1A2E4A;
-      --navy-600: #2B416A;
-      --navy-500: #415A87;
-      --navy-400: #7286A9;
-      --navy-300: #A9B5CC;
-      --navy-200: #D1D8E4;
-      --navy-100: #E6EAF1;
-      --navy-050: #F1F3F8;
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/main.css" />
 
-      --mark-blue: #004AAD;
-
-      --gold:    #C9972B;
-      --gold-soft: #F3E6C2;
-      --teal:    #0D8A7F;
-      --teal-soft: #D3EEEB;
-
-      --ink-900: #0A1628;
-      --ink-800: #17243A;
-      --ink-700: #2C3A54;
-      --ink-600: #4A5670;
-      --ink-500: #6B7691;
-      --ink-400: #9AA3BA;
-      --ink-300: #C5CCDB;
-      --ink-200: #E1E5EE;
-      --ink-100: #F0F2F7;
-
-      --bg-page: #F7F5F1;
-
-      --success-600: #0E8A5F;
-
-      --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      --font-body:    'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-
-      --shadow-xs: 0 1px 2px rgba(10,22,40,0.05);
-      --shadow-sm: 0 2px 6px rgba(10,22,40,0.06), 0 1px 2px rgba(10,22,40,0.04);
-      --shadow-md: 0 6px 20px rgba(10,22,40,0.08), 0 2px 6px rgba(10,22,40,0.05);
-      --shadow-lg: 0 18px 40px rgba(10,22,40,0.10), 0 6px 14px rgba(10,22,40,0.06);
-      --shadow-brand: 0 12px 28px rgba(26,46,74,0.22);
-      --ring-focus: 0 0 0 3px rgba(26,46,74,0.25);
-
-      --ease: cubic-bezier(0.2, 0.0, 0, 1);
-      --dur-fast: 120ms;
-      --dur-med:  220ms;
-    }
-
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; scroll-behavior: smooth; }
-    html { font-size: 16px; }
-    body {
-      font-family: var(--font-body);
-      font-size: 16px;
-      line-height: 1.5;
-      color: var(--ink-900);
-      background: var(--bg-page);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    img { max-width: 100%; display: block; }
-    a { color: var(--navy-700); text-decoration: underline; text-underline-offset: 2px; transition: color var(--dur-fast) var(--ease); }
-    a:hover { color: var(--navy-800); }
-    ::selection { background: var(--navy-200); color: var(--navy-900); }
-
-    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-
-    .eyebrow {
-      font-family: var(--font-body); font-weight: 600; font-size: 13px;
-      text-transform: uppercase; letter-spacing: 0.08em;
-      color: var(--navy-600); margin: 0 0 14px;
-    }
-    .eyebrow-light { color: #A9B5CC !important; }
-    .eyebrow-gold  { color: var(--gold) !important; }
-    .eyebrow-teal  { color: var(--teal) !important; }
-
-    h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; color: var(--navy-900); margin: 0; text-wrap: balance; }
-    p { text-wrap: pretty; }
-
-    /* ================ Header ================ */
-    .site-header {
-      position: sticky; top: 0; z-index: 50;
-      background: rgba(247,245,241,0.9);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid transparent;
-      transition: box-shadow var(--dur-med) var(--ease), border-color var(--dur-med), background var(--dur-med);
-    }
-    .site-header.is-scrolled {
-      background: rgba(255,255,255,0.92);
-      box-shadow: var(--shadow-sm);
-      border-bottom-color: var(--ink-200);
-    }
-    .header-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 24px; }
-    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
-    .brand img { height: 28px; width: auto; }
-    .wordmark { font-family: var(--font-display); font-weight: 700; font-size: 20px; color: var(--navy-700); letter-spacing: -0.01em; }
-    .nav { display: flex; gap: 28px; }
-    .nav a { color: var(--ink-700); font-weight: 500; font-size: 15px; text-decoration: none; }
-    .nav a:hover { color: var(--navy-700); }
-
-    /* ================ Buttons ================ */
-    .btn {
-      font-family: var(--font-body); font-weight: 600; font-size: 15px;
-      border: 1px solid transparent; border-radius: 10px; padding: 11px 20px;
-      cursor: pointer; transition: all var(--dur-fast) var(--ease);
-      display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
-      line-height: 1;
-    }
-    .btn-sm { padding: 9px 14px; font-size: 14px; border-radius: 8px; }
-    .btn-primary { background: var(--navy-700); color: white; }
-    .btn-primary:hover { background: var(--navy-800); box-shadow: var(--shadow-brand); transform: translateY(-1px); }
-    .btn-primary:active { background: var(--navy-900); transform: translateY(0); }
-    .btn-ghost-light { background: transparent; color: white; border-color: rgba(255,255,255,0.28); }
-    .btn-ghost-light:hover { background: rgba(255,255,255,0.08); color: white; }
-
-    /* ================ Hero ================ */
-    .hero {
-      background: linear-gradient(135deg, #1A2E4A 0%, #0B182B 100%);
-      color: white; position: relative; overflow: hidden;
-      padding: 96px 0 112px;
-    }
-    .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 85% 60%, rgba(143,180,234,0.18), transparent 50%);
-      pointer-events: none;
-    }
-    .hero-inner { display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: center; gap: 48px; position: relative; z-index: 1; }
-    .hero-copy .eyebrow { color: #A9B5CC; }
-    .hero h1 {
-      font-weight: 700;
-      font-size: clamp(40px, 5.2vw, 64px);
-      line-height: 1.05;
-      color: white; margin: 0 0 20px;
-    }
-    .hero h1 .accent { color: #E2C66C; /* gold-tinted highlight on dark */ }
-    .hero .lead { color: rgba(255,255,255,0.82); font-size: 19px; line-height: 1.5; max-width: 520px; margin: 0 0 30px; }
-    .hero-ctas { display: flex; gap: 12px; margin-bottom: 42px; flex-wrap: wrap; }
-    .hero-trust { list-style: none; padding: 0; margin: 0; display: flex; gap: 28px; flex-wrap: wrap; color: rgba(255,255,255,0.72); font-size: 14px; }
-    .hero-trust li { display: inline-flex; align-items: center; gap: 8px; }
-    .hero-trust svg { color: #A9B5CC; width: 18px; height: 18px; }
-    .hero-art { position: relative; display: flex; justify-content: flex-end; }
-    .hero-art img { width: 100%; max-width: 420px; height: auto; }
-
-    /* ================ Sections ================ */
-    .section { padding: 96px 0; }
-    .section-alt { background: #F1EEE7; }
-    .section-dark { background: var(--navy-900); color: white; padding: 96px 0; }
-    .section-head { max-width: 720px; margin: 0 auto 56px; text-align: center; }
-    .section h2 {
-      font-weight: 700;
-      font-size: clamp(32px, 4vw, 44px);
-      line-height: 1.12;
-      color: var(--navy-900);
-    }
-    .section-dark h2 { color: white; }
-
-    /* ================ Services ================ */
-    .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .svc-card {
-      background: white;
-      border: 1px solid var(--ink-200);
-      border-radius: 16px;
-      padding: 28px;
-      display: flex; flex-direction: column; gap: 12px;
-      box-shadow: var(--shadow-xs);
-      transition: all var(--dur-med) var(--ease);
-      text-decoration: none; color: inherit;
-    }
-    .svc-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: var(--navy-200); }
-    .svc-card .icon-wrap {
-      width: 44px; height: 44px; border-radius: 12px;
-      background: var(--navy-050); color: var(--navy-700);
-      display: grid; place-items: center;
-    }
-    .svc-card.ai .icon-wrap { background: var(--teal-soft); color: var(--teal); }
-    .svc-card.advisory .icon-wrap { background: var(--gold-soft); color: var(--gold); }
-    .svc-card .icon-wrap svg { width: 22px; height: 22px; }
-    .svc-card h4 { font-weight: 600; font-size: 19px; color: var(--ink-900); letter-spacing: -0.01em; }
-    .svc-card p { color: var(--ink-700); font-size: 15px; line-height: 1.5; margin: 0; }
-    .svc-card .cta { color: var(--navy-700); font-weight: 600; font-size: 14px; text-decoration: none; margin-top: auto; }
-    .svc-card .cta:hover { color: var(--navy-800); }
-
-    /* ================ About ================ */
-    .about-inner { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: start; }
-    .about-copy .eyebrow { color: var(--navy-600); }
-    .about-copy h2 { margin-bottom: 24px; }
-    .about-copy p { color: var(--ink-700); font-size: 16px; line-height: 1.65; margin: 0 0 16px; max-width: 56ch; }
-    .about-copy .lead { font-size: 20px; color: var(--ink-900); margin-bottom: 20px; line-height: 1.5; }
-    .about-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .fact { background: white; border: 1px solid var(--ink-200); border-radius: 14px; padding: 22px; transition: border-color var(--dur-fast); }
-    .fact:hover { border-color: var(--navy-200); }
-    .fact-n { font-family: var(--font-display); font-weight: 700; font-size: 26px; color: var(--navy-700); letter-spacing: -0.01em; margin-bottom: 6px; }
-    .fact-l { color: var(--ink-700); font-size: 14px; line-height: 1.4; }
-
-    /* ================ Contact ================ */
-    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-    .contact-inner h2 { color: white; margin-bottom: 20px; }
-    .p-light { color: rgba(255,255,255,0.82); font-size: 17px; line-height: 1.6; }
-    .contact-list { list-style: none; padding: 0; margin: 28px 0 0; display: flex; flex-direction: column; gap: 14px; color: rgba(255,255,255,0.88); font-size: 16px; }
-    .contact-list li { display: flex; align-items: center; gap: 12px; }
-    .contact-list a { color: inherit; text-decoration: none; }
-    .contact-list a:hover { color: white; text-decoration: underline; }
-    .contact-list svg { color: #A9B5CC; width: 20px; height: 20px; flex-shrink: 0; }
-    .contact-form {
-      background: white; border-radius: 20px; padding: 32px;
-      color: var(--ink-900); display: flex; flex-direction: column; gap: 14px;
-      box-shadow: var(--shadow-lg);
-    }
-    .contact-form label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 500; color: var(--ink-900); }
-    .contact-form input, .contact-form select, .contact-form textarea {
-      font-family: inherit; font-size: 15px; color: var(--ink-900);
-      background: white; border: 1px solid var(--ink-300); border-radius: 8px;
-      padding: 10px 12px; outline: none; transition: all var(--dur-fast) var(--ease);
-    }
-    .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus {
-      border-color: var(--navy-700); box-shadow: var(--ring-focus);
-    }
-    .contact-form textarea { resize: vertical; min-height: 70px; }
-    .contact-form .btn { margin-top: 6px; align-self: flex-start; }
-    .sent { text-align: center; padding: 40px 20px; display: none; flex-direction: column; align-items: center; gap: 8px; }
-    .sent svg { width: 40px; height: 40px; color: var(--success-600); }
-    .sent h4 { font-weight: 600; font-size: 20px; margin: 4px 0 0; color: var(--ink-900); }
-    .sent p { color: var(--ink-500); margin: 0; }
-    .contact-form.is-sent .form-body { display: none; }
-    .contact-form.is-sent .sent { display: flex; }
-
-    /* ================ Footer ================ */
-    .site-footer { background: var(--navy-900); color: rgba(255,255,255,0.72); padding: 48px 0; border-top: 1px solid rgba(255,255,255,0.06); }
-    .footer-inner { display: flex; flex-direction: column; gap: 14px; align-items: center; text-align: center; }
-    .footer-brand { display: flex; align-items: center; gap: 10px; }
-    .footer-brand img { height: 22px; }
-    .wordmark-light { font-family: var(--font-display); font-weight: 700; color: white; font-size: 16px; letter-spacing: -0.01em; }
-    .footer-meta { font-size: 13px; max-width: 720px; line-height: 1.7; }
-    .footer-meta a { color: #A9B5CC; text-decoration: none; }
-    .footer-meta a:hover { color: white; }
-    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 6px; }
-
-    /* ================ Responsive ================ */
-    @media (max-width: 900px) {
-      .hero-inner, .about-inner, .contact-inner { grid-template-columns: 1fr; }
-      .hero-art { display: none; }
-      .svc-grid { grid-template-columns: 1fr 1fr; }
-      .about-facts { grid-template-columns: 1fr 1fr; }
-      .section { padding: 72px 0; }
-    }
-    @media (max-width: 600px) {
-      .svc-grid, .about-facts { grid-template-columns: 1fr; }
-      .nav { display: none; }
-      .hero { padding: 64px 0 80px; }
-      .section-head { text-align: left; margin-bottom: 40px; }
-    }
-  </style>
+  <script defer src="assets/vendor/gsap-3.15.0.min.js"></script>
+  <script defer src="assets/vendor/ScrollTrigger-3.15.0.min.js"></script>
+  <script defer src="assets/vendor/lenis-1.3.27.min.js"></script>
+  <script type="module" src="assets/js/main.js"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Icon sprite: 24×24, stroke = currentColor -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3l7 3v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6l7-3z" /><path d="M8.8 12.2l2.2 2.2 4.2-4.4" />
+      </symbol>
+      <symbol id="i-landmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9.5L12 4l9 5.5" /><path d="M5 10v8M9.7 10v8M14.3 10v8M19 10v8" /><path d="M3 20.5h18" />
+      </symbol>
+      <symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1L5 10.5l5.1-1.9L12 3.5z" /><path d="M18.5 16v4M16.5 18h4" />
+      </symbol>
+      <symbol id="i-replay" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 12a8 8 0 1 0 2.4-5.7" /><path d="M4 4v4.5h4.5" />
+      </symbol>
+      <symbol id="i-whatsapp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.8L3.5 20.5l4.3-1.1A8.5 8.5 0 1 0 12 3.5z" />
+        <path d="M9.3 8.4c.4-.5 1-.4 1.2.1l.6 1.4c.1.3 0 .6-.2.8l-.5.5a6 6 0 0 0 2.6 2.6l.5-.5c.2-.2.5-.3.8-.2l1.4.6c.5.2.6.8.1 1.2-.8.6-1.8.8-2.8.3a8.3 8.3 0 0 1-3.9-3.9c-.5-1-.3-2.1.2-2.9z" fill="currentColor" stroke="none" />
+      </symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3.5" y="5.5" width="17" height="13" rx="2" /><path d="M4 7l8 6 8-6" />
+      </symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6.6 3.8h2.6l1.4 4.1-2 1.3a10.5 10.5 0 0 0 6.2 6.2l1.3-2 4.1 1.4v2.6a2 2 0 0 1-2.2 2A16 16 0 0 1 4.6 6a2 2 0 0 1 2-2.2z" />
+      </symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" /><circle cx="12" cy="10" r="2.4" />
+      </symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="6" width="3.2" height="12" rx="1" /><rect x="13.8" y="6" width="3.2" height="12" rx="1" /></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 6.2v11.6a.8.8 0 0 0 1.2.7l9.2-5.8a.8.8 0 0 0 0-1.4L9.2 5.5A.8.8 0 0 0 8 6.2z" /></symbol>
+    </defs>
+  </svg>
+
   <!-- ================= HEADER ================= -->
   <header class="site-header" id="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#top">
-        <img src="assets/logo-mark-blue-transparent.png" alt="Accuminds logo" />
-        <span class="wordmark">Accuminds</span>
+      <a class="brand" href="#top" aria-label="AccuMinds Consulting, back to top">
+        <img src="assets/img/mark-navy.webp" width="94" height="32" alt="" />
+        <span class="wordmark">AccuMinds</span>
       </a>
-      <nav class="nav">
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#contact">Contact</a>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul>
+          <li><a class="u-link" href="#services">Services</a></li>
+          <li><a class="u-link" href="#process">How we work</a></li>
+          <li><a class="u-link" href="#about">About</a></li>
+          <li><a class="u-link" href="#contact">Contact</a></li>
+        </ul>
+        <a class="btn btn-gold nav-cta" href="#contact">Book a consultation</a>
       </nav>
-      <a href="#contact" class="btn btn-primary btn-sm">Book a consultation</a>
+      <a class="btn btn-gold btn-sm header-cta" href="#contact" data-magnetic>Book a consultation</a>
+      <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">
+        <span class="sr-only">Open menu</span>
+        <span class="nav-toggle__bars" aria-hidden="true"></span>
+      </button>
     </div>
   </header>
 
-  <main>
+  <main id="main">
     <!-- ================= HERO ================= -->
-    <section id="top" class="hero">
+    <section id="top" class="hero on-dark" aria-labelledby="hero-title">
+      <canvas class="hero-network" aria-hidden="true"></canvas>
       <div class="container hero-inner">
+        <div class="hero-mark">
+          <span class="hero-mark__shadow" aria-hidden="true"></span>
+          <picture class="hero-mark__clip">
+            <img src="assets/img/hero-mark-960.webp" width="1380" height="560" fetchpriority="high"
+                 srcset="assets/img/hero-mark-640.webp 640w, assets/img/hero-mark-720.webp 720w, assets/img/hero-mark-960.webp 960w, assets/img/hero-mark-1380.webp 1380w"
+                 sizes="(max-width: 868px) calc(100vw - 32px), 820px"
+                 alt="AccuMinds mark: a tangled wire ball unravelling into a clean gold spiral" />
+          </picture>
+        </div>
         <div class="hero-copy">
-          <div class="eyebrow">Accounting · Tax · AI automation</div>
-          <h1>Accurate books.<br/>Automated workflows.<br/>Always compliant.</h1>
-          <p class="lead">
-            Bookkeeping, VAT, and corporate tax — handled end-to-end for UAE SMEs and
-            free zone entities, with AI that reads every invoice.
+          <p class="eyebrow" data-hero-fade>Accounting · Tax · AI automation</p>
+          <h1 class="hero-title" id="hero-title">
+            <span class="line">Accurate books.</span>
+            <span class="line">Automated workflows.</span>
+            <span class="line accent">Always compliant.</span>
+          </h1>
+          <p class="lead" data-hero-fade>
+            Bookkeeping, VAT and Corporate Tax handled end-to-end for UAE SMEs and
+            free zone entities, with AI-assisted document intake.
           </p>
           <div class="hero-ctas">
-            <a href="#contact" class="btn btn-primary">Book a consultation</a>
-            <a href="#services" class="btn btn-ghost-light">View services →</a>
+            <a class="btn btn-gold" href="#contact" data-hero-fade data-magnetic>Book a consultation</a>
+            <a class="btn btn-ghost-light" href="#services" data-hero-fade data-magnetic>View services <span aria-hidden="true">→</span></a>
           </div>
           <ul class="hero-trust">
-            <li><i data-lucide="shield-check"></i> FTA-aligned filings</li>
-            <li><i data-lucide="landmark"></i> Free zone &amp; mainland</li>
-            <li><i data-lucide="sparkles"></i> AI document intake</li>
+            <li data-hero-fade><svg class="icon" aria-hidden="true"><use href="#i-shield" /></svg> FTA-aligned filings</li>
+            <li data-hero-fade><svg class="icon" aria-hidden="true"><use href="#i-landmark" /></svg> Free zone &amp; mainland</li>
+            <li data-hero-fade><svg class="icon" aria-hidden="true"><use href="#i-sparkle" /></svg> AI document intake</li>
           </ul>
         </div>
-        <div class="hero-art" aria-hidden="true">
-          <img src="assets/logo-mark-white.png" alt="" />
+      </div>
+      <button class="motion-toggle" type="button">
+        <svg class="icon icon--pause" aria-hidden="true"><use href="#i-pause" /></svg>
+        <svg class="icon icon--play" aria-hidden="true"><use href="#i-play" /></svg>
+        <span class="motion-toggle__label">Pause motion</span>
+      </button>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <!-- Icons: each SVG's default state is the finished frame (no-JS / reduced motion);
+         icons.js animates them in a loop while the card is on screen. -->
+    <section id="services" class="section" aria-labelledby="services-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Our services</p>
+          <h2 id="services-title" data-reveal="mask">Five disciplines. One accountable firm.</h2>
+        </div>
+        <div class="svc-grid" data-reveal-stagger>
+          <article class="svc-card">
+            <div class="svc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" data-icon="ledger">
+                <rect x="4.5" y="3" width="15" height="18" rx="2" />
+                <path class="draw row" pathLength="1" d="M8 7.5h8" />
+                <path class="draw row" pathLength="1" d="M8 11h5.5" />
+                <path class="draw row" pathLength="1" d="M8 14.5h8" />
+                <path class="draw total accent" pathLength="1" d="M11.5 17.2h4.5" />
+                <path class="draw total accent" pathLength="1" d="M11.5 19.3h4.5" />
+              </svg>
+            </div>
+            <h3>Core Accounting</h3>
+            <p>Bookkeeping, reconciliations and month-end close, with management accounts you can act on.</p>
+            <ul class="svc-points">
+              <li>Bookkeeping &amp; bank reconciliations</li>
+              <li>Monthly close &amp; financial statements</li>
+              <li>MIS reporting</li>
+            </ul>
+            <a class="svc-cta u-link" href="#contact" data-service="Core Accounting">Discuss this<span class="sr-only">: Core Accounting</span> <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="svc-card">
+            <div class="svc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" data-icon="vat">
+                <circle class="draw ring" pathLength="1" cx="10.5" cy="10.5" r="7.5" />
+                <text class="vat-num" x="10.5" y="13.1" text-anchor="middle">5%</text>
+                <g class="stamp">
+                  <circle class="draw accent stamp-ring" pathLength="1" cx="18" cy="18" r="3.8" />
+                  <path class="draw accent" pathLength="1" d="M16.2 18.1l1.3 1.3 2.4-2.6" />
+                </g>
+              </svg>
+            </div>
+            <h3>FTA Compliance</h3>
+            <p>VAT, Corporate Tax and e-invoicing readiness, handled against Federal Tax Authority requirements and deadlines.</p>
+            <ul class="svc-points">
+              <li>VAT registration, returns &amp; refunds</li>
+              <li>Corporate Tax registration &amp; annual returns</li>
+              <li>E-invoicing readiness &amp; accredited service provider onboarding</li>
+            </ul>
+            <a class="svc-cta u-link" href="#contact" data-service="FTA Compliance">Discuss this<span class="sr-only">: FTA Compliance</span> <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="svc-card svc-card--gold">
+            <div class="svc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" data-icon="growth">
+                <path d="M3.5 20.5h17" />
+                <rect class="bar" x="5.5" y="14" width="3" height="6.5" rx="0.6" />
+                <rect class="bar" x="10.5" y="11" width="3" height="9.5" rx="0.6" />
+                <rect class="bar" x="15.5" y="8" width="3" height="12.5" rx="0.6" />
+                <path class="draw trend accent" pathLength="1" d="M4 11.5l4.5-4 3.5 2 6.5-5.5" />
+                <path class="draw trend accent" pathLength="1" d="M15.5 4h3.5v3.5" />
+              </svg>
+            </div>
+            <h3>CFO Advisory</h3>
+            <p>Part-time CFO support (forecasting, cash-flow planning and board-ready reporting) without a full-time hire.</p>
+            <ul class="svc-points">
+              <li>Budgets &amp; rolling forecasts</li>
+              <li>Cash-flow &amp; working capital</li>
+              <li>Structuring &amp; board / investor packs</li>
+            </ul>
+            <a class="svc-cta u-link" href="#contact" data-service="CFO Advisory">Discuss this<span class="sr-only">: CFO Advisory</span> <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="svc-card svc-card--teal">
+            <div class="svc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" data-icon="scan">
+                <path d="M6 3h8l4 4v14H6z" />
+                <path d="M14 3v4h4" />
+                <path class="field" d="M8.5 11h7" />
+                <path class="field" d="M8.5 14h7" />
+                <path class="field" d="M8.5 17h4" />
+                <path class="beam accent" d="M4 6h16" />
+                <path class="spark accent-fill" d="M20 1.5l.6 1.5 1.5.6-1.5.6-.6 1.5-.6-1.5-1.5-.6 1.5-.6z" />
+              </svg>
+            </div>
+            <h3>AI Automation</h3>
+            <p>AI-assisted intake and workflow automation that turns invoices and receipts into ledger entries ready for review.</p>
+            <ul class="svc-points">
+              <li>Invoice &amp; receipt capture (multi-language)</li>
+              <li>Approval &amp; reconciliation workflows</li>
+              <li>Dashboards fed from your ledger</li>
+            </ul>
+            <a class="svc-cta u-link" href="#contact" data-service="AI Automation">Discuss this<span class="sr-only">: AI Automation</span> <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="svc-card">
+            <div class="svc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" data-icon="calendar">
+                <defs><clipPath id="cal-body"><rect x="4" y="10" width="16" height="10.5" /></clipPath></defs>
+                <rect x="3.5" y="5" width="17" height="16" rx="2" />
+                <path d="M3.5 9.5h17M8.5 3v4M15.5 3v4" />
+                <g clip-path="url(#cal-body)">
+                  <g class="cal-page">
+                    <circle class="dot" cx="8" cy="13.2" r="0.9" />
+                    <circle class="dot" cx="12" cy="13.2" r="0.9" />
+                    <circle class="dot" cx="16" cy="13.2" r="0.9" />
+                    <circle class="dot" cx="8" cy="17.3" r="0.9" />
+                    <circle class="dot" cx="12" cy="17.3" r="0.9" />
+                    <circle class="dot accent-fill" cx="16" cy="17.3" r="0.9" />
+                    <circle class="draw pay accent" pathLength="1" cx="16" cy="17.3" r="2.2" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <h3>Payroll &amp; WPS</h3>
+            <p>Monthly payroll processed and documented, with WPS salary files and end-of-service calculations prepared for you.</p>
+            <ul class="svc-points">
+              <li>Payroll runs &amp; payslips</li>
+              <li>WPS SIF file preparation</li>
+              <li>Gratuity, leave &amp; final settlements</li>
+            </ul>
+            <a class="svc-cta u-link" href="#contact" data-service="Payroll &amp; WPS">Discuss this<span class="sr-only">: Payroll &amp; WPS</span> <span aria-hidden="true">→</span></a>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- ================= SERVICES ================= -->
-    <section id="services" class="section">
+    <!-- ================= HOW WE WORK ================= -->
+    <!-- Default markup = finished state (all steps active, line drawn).
+         process.js pins it on desktop and draws the line as you scroll. -->
+    <section id="process" class="section section--white process-section" aria-labelledby="process-title">
       <div class="container">
         <div class="section-head">
-          <div class="eyebrow">Our services</div>
-          <h2>Everything your books need — in one firm.</h2>
+          <p class="eyebrow" data-reveal>How we work</p>
+          <h2 id="process-title" data-reveal="mask">A clear process, from first review to every filing.</h2>
         </div>
-        <div class="svc-grid">
-          <article class="svc-card">
-            <div class="icon-wrap"><i data-lucide="receipt"></i></div>
-            <h4>Bookkeeping &amp; Accounting</h4>
-            <p>Comprehensive bookkeeping services, financial statements, and accounts management.</p>
-            <a class="cta" href="#contact">Discuss this →</a>
-          </article>
-          <article class="svc-card">
-            <div class="icon-wrap"><i data-lucide="calculator"></i></div>
-            <h4>VAT Services</h4>
-            <p>VAT registration, compliance, filing, and strategic planning.</p>
-            <a class="cta" href="#contact">Discuss this →</a>
-          </article>
-          <article class="svc-card">
-            <div class="icon-wrap"><i data-lucide="scale"></i></div>
-            <h4>Corporate Taxation</h4>
-            <p>Tax planning, corporate tax returns, audits, and strategy implementation.</p>
-            <a class="cta" href="#contact">Discuss this →</a>
-          </article>
-          <article class="svc-card">
-            <div class="icon-wrap"><i data-lucide="pie-chart"></i></div>
-            <h4>Management Information Systems</h4>
-            <p>Custom MIS solutions, reporting, and analytics to enhance decision-making.</p>
-            <a class="cta" href="#contact">Discuss this →</a>
-          </article>
-          <article class="svc-card ai">
-            <div class="icon-wrap"><i data-lucide="sparkles"></i></div>
-            <h4>AI Document Processing</h4>
-            <p>Intelligent ingest for invoices and receipts in any language — audit-ready output.</p>
-            <a class="cta" href="#contact">Discuss this →</a>
-          </article>
-          <article class="svc-card advisory">
-            <div class="icon-wrap"><i data-lucide="briefcase"></i></div>
-            <h4>Financial Advisory</h4>
-            <p>Structuring, forecasting, and board-ready reporting for SMEs and free zone entities.</p>
-            <a class="cta" href="#contact">Discuss this →</a>
-          </article>
+        <div class="process">
+          <div class="process-track" aria-hidden="true"><span class="process-line"></span></div>
+          <ol class="process-steps">
+            <li class="process-step">
+              <span class="process-num" aria-hidden="true">01</span>
+              <div class="process-body">
+                <h3>Diagnose</h3>
+                <p>We review your books, registrations and filing history, and give you a written status of what&rsquo;s done, what&rsquo;s due and what&rsquo;s at risk.</p>
+              </div>
+            </li>
+            <li class="process-step">
+              <span class="process-num" aria-hidden="true">02</span>
+              <div class="process-body">
+                <h3>Set up</h3>
+                <p>We reconcile and clean up the ledger, align your chart of accounts, and complete any outstanding FTA registrations.</p>
+              </div>
+            </li>
+            <li class="process-step">
+              <span class="process-num" aria-hidden="true">03</span>
+              <div class="process-body">
+                <h3>Automate</h3>
+                <p>We connect document intake, bank feeds and approvals, so routine entries arrive pre-coded for review.</p>
+              </div>
+            </li>
+            <li class="process-step">
+              <span class="process-num" aria-hidden="true">04</span>
+              <div class="process-body">
+                <h3>Report &amp; file</h3>
+                <p>Each month you get a closed ledger and an MIS pack. VAT and Corporate Tax returns are prepared and filed on schedule.</p>
+              </div>
+            </li>
+          </ol>
         </div>
+      </div>
+    </section>
+
+    <!-- ================= AUTOMATION SHOWCASE ================= -->
+    <!-- Illustrative scene only (no client data). Default/no-JS/reduced motion:
+         before and after shown side by side. showcase.js stacks them and plays
+         the clean-up once when scrolled into view; Replay restarts it.
+         Scene markup comes from tools/gen_showcase.py: numbers in the "after" dashboard reconcile
+         to the "before" workbook rows. -->
+    <section id="automation" class="section" aria-labelledby="automation-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Automation in practice</p>
+          <h2 id="automation-title" data-reveal="mask">From scattered spreadsheets to a live dashboard.</h2>
+          <p class="lead" data-reveal>Invoices, receipts and bank lines arrive in every format. We standardise, reconcile and code them, so your numbers are ready when you need them.</p>
+        </div>
+        <div class="showcase" data-reveal>
+          <div class="showcase-bar">
+            <p class="showcase-tabs" aria-hidden="true">
+              <span class="showcase-tab" data-tab="before">Before<span class="tab-detail">: manual workbook</span></span>
+              <span class="showcase-tab" data-tab="after">After<span class="tab-detail">: reconciled dashboard</span></span>
+            </p>
+            <button class="showcase-replay" type="button">
+              <svg class="icon" aria-hidden="true"><use href="#i-replay" /></svg>
+              Replay<span class="sr-only"> the before and after animation</span>
+            </button>
+          </div>
+          <div class="showcase-stage">
+            <figure class="showcase-panel showcase-panel--before">
+              <figcaption class="showcase-label">Before: manual workbook</figcaption>
+              <svg class="scene scene--before" viewBox="0 0 640 400" role="img" aria-labelledby="sc-before-t sc-before-d">
+              <title id="sc-before-t">Before: a manual invoice workbook</title>
+              <desc id="sc-before-d">A spreadsheet of April supplier invoices with mixed date and number formats, inconsistent supplier names, a duplicated invoice, missing tax registration numbers and a broken total.</desc>
+              <rect class="frame" x="0.5" y="0.5" width="639" height="399" rx="14" />
+              <path class="chrome" d="M0.5 14.5a14 14 0 0 1 14-14h611a14 14 0 0 1 14 14v17h-639z" />
+              <circle class="dot-r" cx="20" cy="16" r="4" /><circle class="dot-y" cx="34" cy="16" r="4" /><circle class="dot-g" cx="48" cy="16" r="4" />
+              <text class="chrome-title" x="320" y="20" text-anchor="middle">Q2_invoices_FINAL_v3 (2).xlsx</text>
+              <g class="sheet-head">
+              <rect class="headcell" x="16" y="44" width="104" height="32" />
+              <text class="head" x="26" y="64" text-anchor="start">Date</text>
+              <rect class="headcell" x="120" y="44" width="170" height="32" />
+              <text class="head" x="130" y="64" text-anchor="start">Supplier</text>
+              <rect class="headcell" x="290" y="44" width="118" height="32" />
+              <text class="head" x="300" y="64" text-anchor="start">TRN</text>
+              <rect class="headcell" x="408" y="44" width="96" height="32" />
+              <text class="head" x="494" y="64" text-anchor="end">Amount</text>
+              <rect class="headcell" x="504" y="44" width="80" height="32" />
+              <text class="head" x="574" y="64" text-anchor="end">VAT</text>
+              <rect class="headcell" x="584" y="44" width="40" height="32" />
+              </g>
+              <g class="row">
+              <rect class="gridcell" x="16" y="76" width="104" height="36" />
+              <rect class="gridcell" x="120" y="76" width="170" height="36" />
+              <rect class="gridcell" x="290" y="76" width="118" height="36" />
+              <rect class="gridcell" x="408" y="76" width="96" height="36" />
+              <rect class="gridcell" x="504" y="76" width="80" height="36" />
+              <rect class="gridcell" x="584" y="76" width="40" height="36" />
+              <text class="cell messy" x="26" y="98.5" text-anchor="start" data-dx="0">03/04/26</text>
+              <text class="cell clean" x="26" y="98.5" text-anchor="start">03 Apr 2026</text>
+              <text class="cell" x="130" y="98.5" text-anchor="start">Northwind Trading</text>
+              <text class="cell" x="300" y="98.5" text-anchor="start">100•••••0003</text>
+              <text class="cell" x="494" y="98.5" text-anchor="end">1,250.00</text>
+              <rect class="problem-fill" x="504" y="76" width="80" height="36" />
+              <path class="flag" d="M575 77h8v8z" />
+              <text class="cell messy" x="560" y="98.5" text-anchor="end" data-dx="14">62.5</text>
+              <text class="cell clean" x="574" y="98.5" text-anchor="end">62.50</text>
+              <path class="tick" d="M598 94l4 4 8-9" />
+              </g>
+              <g class="row">
+              <rect class="gridcell" x="16" y="112" width="104" height="36" />
+              <rect class="gridcell" x="120" y="112" width="170" height="36" />
+              <rect class="gridcell" x="290" y="112" width="118" height="36" />
+              <rect class="gridcell" x="408" y="112" width="96" height="36" />
+              <rect class="gridcell" x="504" y="112" width="80" height="36" />
+              <rect class="gridcell" x="584" y="112" width="40" height="36" />
+              <text class="cell messy" x="110" y="134.5" text-anchor="end" data-dx="-84">2026-04-05</text>
+              <text class="cell clean" x="26" y="134.5" text-anchor="start">05 Apr 2026</text>
+              <text class="cell messy" x="142" y="134.5" text-anchor="start" data-dx="-12">northwind trdg</text>
+              <text class="cell clean" x="130" y="134.5" text-anchor="start">Northwind Trading</text>
+              <rect class="problem-fill" x="290" y="112" width="118" height="36" />
+              <path class="flag" d="M399 113h8v8z" />
+              <text class="cell messy is-error" x="300" y="134.5" text-anchor="start" data-dx="0">#N/A</text>
+              <text class="cell clean" x="300" y="134.5" text-anchor="start">100•••••0003</text>
+              <text class="cell messy" x="418" y="134.5" text-anchor="start" data-dx="76">AED 980</text>
+              <text class="cell clean" x="494" y="134.5" text-anchor="end">980.00</text>
+              <text class="cell messy" x="544" y="134.5" text-anchor="middle" data-dx="30">49</text>
+              <text class="cell clean" x="574" y="134.5" text-anchor="end">49.00</text>
+              <path class="tick" d="M598 130l4 4 8-9" />
+              </g>
+              <g class="row">
+              <rect class="dup-fill" x="16" y="148" width="568" height="36" />
+              <path class="flag flag--dup" d="M575 149h8v8z" />
+              <rect class="gridcell" x="16" y="148" width="104" height="36" />
+              <rect class="gridcell" x="120" y="148" width="170" height="36" />
+              <rect class="gridcell" x="290" y="148" width="118" height="36" />
+              <rect class="gridcell" x="408" y="148" width="96" height="36" />
+              <rect class="gridcell" x="504" y="148" width="80" height="36" />
+              <rect class="gridcell" x="584" y="148" width="40" height="36" />
+              <text class="cell messy" x="26" y="170.5" text-anchor="start" data-dx="0">5 Apr</text>
+              <text class="cell clean" x="26" y="170.5" text-anchor="start">05 Apr 2026</text>
+              <text class="cell" x="130" y="170.5" text-anchor="start">Dune Office Supplies</text>
+              <text class="cell" x="300" y="170.5" text-anchor="start">100•••••0071</text>
+              <rect class="problem-fill" x="408" y="148" width="96" height="36" />
+              <path class="flag" d="M495 149h8v8z" />
+              <text class="cell messy" x="494" y="170.5" text-anchor="end" data-dx="0">1.430,50</text>
+              <text class="cell clean" x="494" y="170.5" text-anchor="end">1,430.50</text>
+              <text class="cell" x="574" y="170.5" text-anchor="end">71.53</text>
+              <path class="tick" d="M598 166l4 4 8-9" />
+              </g>
+              <g class="row dup-row">
+              <rect class="dup-fill" x="16" y="184" width="568" height="36" />
+              <path class="flag flag--dup" d="M575 185h8v8z" />
+              <rect class="gridcell" x="16" y="184" width="104" height="36" />
+              <rect class="gridcell" x="120" y="184" width="170" height="36" />
+              <rect class="gridcell" x="290" y="184" width="118" height="36" />
+              <rect class="gridcell" x="408" y="184" width="96" height="36" />
+              <rect class="gridcell" x="504" y="184" width="80" height="36" />
+              <rect class="gridcell" x="584" y="184" width="40" height="36" />
+              <text class="cell" x="26" y="206.5" text-anchor="start">05/04/2026</text>
+              <text class="cell" x="130" y="206.5" text-anchor="start">Dune Office Supplies</text>
+              <text class="cell" x="300" y="206.5" text-anchor="start">100•••••0071</text>
+              <text class="cell" x="494" y="206.5" text-anchor="end">1.430,50</text>
+              <text class="cell" x="574" y="206.5" text-anchor="end">71.53</text>
+              </g>
+              <g class="row row-below">
+              <rect class="gridcell" x="16" y="220" width="104" height="36" />
+              <rect class="gridcell" x="120" y="220" width="170" height="36" />
+              <rect class="gridcell" x="290" y="220" width="118" height="36" />
+              <rect class="gridcell" x="408" y="220" width="96" height="36" />
+              <rect class="gridcell" x="504" y="220" width="80" height="36" />
+              <rect class="gridcell" x="584" y="220" width="40" height="36" />
+              <text class="cell messy" x="44" y="242.5" text-anchor="start" data-dx="-18">Apr-7</text>
+              <text class="cell clean" x="26" y="242.5" text-anchor="start">07 Apr 2026</text>
+              <text class="cell messy" x="130" y="242.5" text-anchor="start" data-dx="0">FALCON LOGISTICS</text>
+              <text class="cell clean" x="130" y="242.5" text-anchor="start">Falcon Logistics</text>
+              <rect class="problem-fill" x="290" y="220" width="118" height="36" />
+              <path class="flag" d="M399 221h8v8z" />
+              <text class="cell clean" x="300" y="242.5" text-anchor="start">100•••••0145</text>
+              <text class="cell messy" x="424" y="242.5" text-anchor="start" data-dx="70">2100</text>
+              <text class="cell clean" x="494" y="242.5" text-anchor="end">2,100.00</text>
+              <rect class="problem-fill" x="504" y="220" width="80" height="36" />
+              <path class="flag" d="M575 221h8v8z" />
+              <text class="cell clean" x="574" y="242.5" text-anchor="end">105.00</text>
+              <path class="tick" d="M598 238l4 4 8-9" />
+              </g>
+              <g class="row row-below">
+              <rect class="gridcell" x="16" y="256" width="104" height="36" />
+              <rect class="gridcell" x="120" y="256" width="170" height="36" />
+              <rect class="gridcell" x="290" y="256" width="118" height="36" />
+              <rect class="gridcell" x="408" y="256" width="96" height="36" />
+              <rect class="gridcell" x="504" y="256" width="80" height="36" />
+              <rect class="gridcell" x="584" y="256" width="40" height="36" />
+              <text class="cell messy" x="26" y="278.5" text-anchor="start" data-dx="0">08.04.26</text>
+              <text class="cell clean" x="26" y="278.5" text-anchor="start">08 Apr 2026</text>
+              <text class="cell is-highlight" x="130" y="278.5" text-anchor="start">Palm Media FZ</text>
+              <text class="cell" x="300" y="278.5" text-anchor="start">100•••••0256</text>
+              <text class="cell" x="494" y="278.5" text-anchor="end">760.00</text>
+              <text class="cell messy" x="574" y="278.5" text-anchor="end" data-dx="0">38</text>
+              <text class="cell clean" x="574" y="278.5" text-anchor="end">38.00</text>
+              <path class="tick" d="M598 274l4 4 8-9" />
+              </g>
+              <g class="row row-below row-total">
+              <rect class="gridcell" x="16" y="292" width="104" height="36" />
+              <rect class="gridcell" x="120" y="292" width="170" height="36" />
+              <rect class="gridcell" x="290" y="292" width="118" height="36" />
+              <rect class="gridcell" x="408" y="292" width="96" height="36" />
+              <rect class="gridcell" x="504" y="292" width="80" height="36" />
+              <rect class="gridcell" x="584" y="292" width="40" height="36" />
+              <text class="cell is-bold" x="26" y="314.5" text-anchor="start">Total</text>
+              <rect class="problem-fill" x="408" y="292" width="96" height="36" />
+              <path class="flag" d="M495 293h8v8z" />
+              <text class="cell messy is-error" x="494" y="314.5" text-anchor="end" data-dx="0">#VALUE!</text>
+              <text class="cell clean" x="494" y="314.5" text-anchor="end">6,520.50</text>
+              <rect class="problem-fill" x="504" y="292" width="80" height="36" />
+              <path class="flag" d="M575 293h8v8z" />
+              <text class="cell messy is-formula" x="574" y="314.5" text-anchor="end" data-dx="0">=SUM(E2:E7)</text>
+              <text class="cell clean" x="574" y="314.5" text-anchor="end">326.03</text>
+              <path class="tick" d="M598 310l4 4 8-9" />
+              </g>
+              <g class="sheet-tabs"><rect class="tabbar" x="0.5" y="360" width="639" height="39.5" />
+              <text class="tabtext is-active" x="24" y="385">Sheet1</text>
+              <text class="tabtext" x="88" y="385">Sheet1 (2)</text>
+              <text class="tabtext" x="176" y="385">Copy of Sheet1</text>
+              <text class="tabtext" x="300" y="385">OLD - do not use</text></g>
+              </svg>
+            </figure>
+            <figure class="showcase-panel showcase-panel--after">
+              <figcaption class="showcase-label">After: reconciled dashboard</figcaption>
+              <svg class="scene scene--after" viewBox="0 0 640 400" role="img" aria-labelledby="sc-after-t sc-after-d">
+              <title id="sc-after-t">After: a reconciled dashboard</title>
+              <desc id="sc-after-d">The same April invoices, cleaned and reconciled: expenses AED 6,520.50, input VAT AED 326.03, 5 of 5 documents reconciled, a monthly expenses chart and expenses by supplier.</desc>
+              <rect class="frame" x="0.5" y="0.5" width="639" height="399" rx="14" />
+              <path class="chrome" d="M0.5 14.5a14 14 0 0 1 14-14h611a14 14 0 0 1 14 14v17h-639z" />
+              <circle class="dot-r" cx="20" cy="16" r="4" /><circle class="dot-y" cx="34" cy="16" r="4" /><circle class="dot-g" cx="48" cy="16" r="4" />
+              <text class="chrome-title" x="320" y="20" text-anchor="middle">April close · Dashboard</text>
+              <g class="chip"><rect x="532" y="7" width="92" height="20" rx="10" /><path d="M545 17l3 3 6-6.5" /><text x="560" y="21">Reconciled</text></g>
+              <g class="tile"><rect class="panel" x="16" y="48" width="198" height="84" rx="10" />
+              <text class="kpi-label" x="32" y="76">Expenses (Apr)</text>
+              <text class="kpi-value" x="32" y="112" data-value="6520.5" data-format="aed">AED 6,520.50</text></g>
+              <g class="tile"><rect class="panel" x="226" y="48" width="198" height="84" rx="10" />
+              <text class="kpi-label" x="242" y="76">Input VAT (Apr)</text>
+              <text class="kpi-value" x="242" y="112" data-value="326.03" data-format="aed">AED 326.03</text></g>
+              <g class="tile"><rect class="panel" x="436" y="48" width="198" height="84" rx="10" />
+              <text class="kpi-label" x="452" y="76">Documents reconciled</text>
+              <text class="kpi-value" x="452" y="112" data-value="5" data-format="of5">5 of 5</text></g>
+              <g class="chart"><rect class="panel" x="16" y="146" width="290" height="238" rx="10" />
+              <text class="panel-title" x="32" y="174">Monthly expenses</text>
+              <path class="axis" d="M32 352h258" />
+              <rect class="m-bar" x="50" y="256" width="34" height="96" rx="4" />
+              <text class="axis-label" x="67" y="371" text-anchor="middle">Jan</text>
+              <rect class="m-bar" x="112" y="234" width="34" height="118" rx="4" />
+              <text class="axis-label" x="129" y="371" text-anchor="middle">Feb</text>
+              <rect class="m-bar" x="174" y="248" width="34" height="104" rx="4" />
+              <text class="axis-label" x="191" y="371" text-anchor="middle">Mar</text>
+              <rect class="m-bar is-current" x="236" y="202" width="34" height="150" rx="4" />
+              <text class="axis-label" x="253" y="371" text-anchor="middle">Apr</text>
+              </g>
+              <g class="suppliers"><rect class="panel" x="320" y="146" width="304" height="238" rx="10" />
+              <text class="panel-title" x="336" y="174">By supplier (Apr)</text>
+              <text class="sup-label" x="336" y="206">Northwind Trading</text>
+              <text class="sup-value" x="608" y="206" text-anchor="end">2,230.00</text>
+              <rect class="s-track" x="336" y="214" width="272" height="8" rx="4" />
+              <rect class="s-bar" x="336" y="214" width="272.0" height="8" rx="4" />
+              <text class="sup-label" x="336" y="250">Falcon Logistics</text>
+              <text class="sup-value" x="608" y="250" text-anchor="end">2,100.00</text>
+              <rect class="s-track" x="336" y="258" width="272" height="8" rx="4" />
+              <rect class="s-bar" x="336" y="258" width="256.1" height="8" rx="4" />
+              <text class="sup-label" x="336" y="294">Dune Office Supplies</text>
+              <text class="sup-value" x="608" y="294" text-anchor="end">1,430.50</text>
+              <rect class="s-track" x="336" y="302" width="272" height="8" rx="4" />
+              <rect class="s-bar" x="336" y="302" width="174.5" height="8" rx="4" />
+              <text class="sup-label" x="336" y="338">Palm Media FZ</text>
+              <text class="sup-value" x="608" y="338" text-anchor="end">760.00</text>
+              <rect class="s-track" x="336" y="346" width="272" height="8" rx="4" />
+              <rect class="s-bar" x="336" y="346" width="92.7" height="8" rx="4" />
+              </g>
+              </svg>
+            </figure>
+          </div>
+          <p class="showcase-note">Illustrative example. Not client data.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NUMBERS ================= -->
+    <!-- TODO before launch: this whole section is hidden on the live site
+         (data-todo-slot) until real figures are in. To publish it:
+           1. replace each data-count="TODO" with a plain number, e.g. data-count="240"
+           2. remove data-todo from those spans and data-todo-slot from <section>
+         Preview: /?todo shows the placeholders; /?todo&demo counts up to the
+         dummy data-demo values (never shown in production). -->
+    <section id="numbers" class="section section--dark on-dark" aria-labelledby="numbers-title" data-todo-slot>
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>By the numbers</p>
+          <h2 id="numbers-title" data-reveal="mask">Numbers we&rsquo;re accountable for.</h2>
+        </div>
+        <ul class="stats" data-reveal-stagger>
+          <li class="stat">
+            <p class="stat-figure"><span class="stat-num" data-count="TODO" data-demo="240" data-todo>TODO</span><span class="stat-suffix">+</span></p>
+            <p class="stat-label">VAT &amp; Corporate Tax returns filed</p>
+          </li>
+          <li class="stat">
+            <p class="stat-figure"><span class="stat-num" data-count="TODO" data-demo="40" data-todo>TODO</span><span class="stat-suffix">+</span></p>
+            <p class="stat-label">Active SME clients</p>
+          </li>
+          <li class="stat">
+            <p class="stat-figure"><span class="stat-num" data-count="TODO" data-demo="10" data-todo>TODO</span><span class="stat-suffix">+</span></p>
+            <p class="stat-label">Years of UAE finance experience</p>
+          </li>
+          <li class="stat">
+            <p class="stat-figure"><span class="stat-num" data-count="TODO" data-demo="12000" data-todo>TODO</span><span class="stat-suffix">+</span></p>
+            <p class="stat-label">Documents processed through AI intake</p>
+          </li>
+        </ul>
       </div>
     </section>
 
     <!-- ================= ABOUT ================= -->
-    <section id="about" class="section section-alt">
-      <div class="container about-inner">
-        <div class="about-copy">
-          <div class="eyebrow">About us</div>
-          <h2>A Dubai-based firm that takes the mess out of your books.</h2>
-          <p class="lead">
-            At Accuminds Consulting - FZCO, we specialize in providing tailored financial
-            and business solutions to help organizations achieve their goals with confidence
-            and precision.
-          </p>
-          <p>
-            Based in Dubai, UAE, we cater to businesses of all sizes and industries —
-            delivering services that streamline operations, enhance decision-making, and
-            ensure compliance with local and international regulations.
-          </p>
-          <p>
-            Our mission is to empower businesses through professional expertise, innovative
-            solutions, and a dedication to integrity and quality.
-          </p>
+    <!-- Copy and fact tiles as in the v3 design. -->
+    <section id="about" class="section section--white" aria-labelledby="about-title">
+      <div class="container">
+        <div class="about-inner">
+          <div class="about-copy">
+            <p class="eyebrow" data-reveal>About us</p>
+            <h2 id="about-title" data-reveal="mask">A Dubai-based firm that takes the mess out of your books.</h2>
+            <div class="about-text" data-reveal-stagger>
+              <p class="lead">
+                At AccuMinds Consulting FZCO, we specialize in providing tailored financial and
+                business solutions to help organizations achieve their goals with confidence and precision.
+              </p>
+              <p>
+                Based in Dubai, UAE, we cater to businesses of all sizes and industries, delivering
+                services that streamline operations, enhance decision-making, and ensure compliance
+                with local and international regulations.
+              </p>
+              <p>
+                Our mission is to empower businesses through professional expertise, innovative
+                solutions, and a dedication to integrity and quality.
+              </p>
+            </div>
+          </div>
+          <ul class="about-facts" data-reveal-stagger>
+            <li class="fact"><span class="fact-n">UAE</span><span class="fact-l">VAT &amp; Corporate Tax focus</span></li>
+            <li class="fact"><span class="fact-n">DSO</span><span class="fact-l">IFZA-registered FZCO</span></li>
+            <li class="fact"><span class="fact-n">AI</span><span class="fact-l">Document processing built in</span></li>
+            <li class="fact"><span class="fact-n">SME</span><span class="fact-l">Free zone &amp; mainland clients</span></li>
+          </ul>
         </div>
-        <aside class="about-facts">
-          <div class="fact"><div class="fact-n">UAE</div><div class="fact-l">VAT &amp; Corporate Tax focus</div></div>
-          <div class="fact"><div class="fact-n">DSO</div><div class="fact-l">IFZA-registered FZCO</div></div>
-          <div class="fact"><div class="fact-n">AI</div><div class="fact-l">Document processing built in</div></div>
-          <div class="fact"><div class="fact-n">SME</div><div class="fact-l">Free zone &amp; mainland clients</div></div>
-        </aside>
+
+        <!-- TODO before launch: trust placeholders. Hidden on the live site (data-todo-slot);
+             visible with /?todo. Add only real certifications, client logos used with
+             permission, and testimonials with written consent, then remove data-todo-slot
+             from the blocks you fill. Delete any block you don't need. -->
+        <div class="trust" data-todo-slot>
+          <div class="trust-block">
+            <p class="trust-title">Certifications &amp; memberships</p>
+            <ul class="trust-logos">
+              <li data-todo>TODO: certification</li>
+              <li data-todo>TODO: certification</li>
+              <li data-todo>TODO: membership</li>
+            </ul>
+          </div>
+          <div class="trust-block">
+            <p class="trust-title">Selected clients</p>
+            <ul class="trust-logos">
+              <li data-todo>TODO: client logo</li>
+              <li data-todo>TODO: client logo</li>
+              <li data-todo>TODO: client logo</li>
+              <li data-todo>TODO: client logo</li>
+            </ul>
+          </div>
+          <figure class="testimonial">
+            <blockquote data-todo>TODO: client testimonial, used with written permission.</blockquote>
+            <figcaption data-todo>TODO: name, role, company</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
     <!-- ================= CONTACT ================= -->
-    <section id="contact" class="section section-dark">
+    <!-- WhatsApp: +971 50 98 67247 (confirmed). The number lives in data-whatsapp + href
+         on each [data-whatsapp] link (here and the floating button); change both together.
+         Form: see the comment on #contact-form for Formspree set-up. -->
+    <section id="contact" class="section section--dark on-dark" aria-labelledby="contact-title">
       <div class="container contact-inner">
-        <div>
-          <div class="eyebrow eyebrow-light">Contact us</div>
-          <h2>Let&rsquo;s get your books in order.</h2>
-          <p class="p-light">
-            For inquiries, reach out directly or send us a note — we usually reply the same business day.
+        <div class="contact-copy">
+          <p class="eyebrow" data-reveal>Contact us</p>
+          <h2 id="contact-title" data-reveal="mask">Let&rsquo;s get your books in order.</h2>
+          <p class="p-light" data-reveal>
+            For inquiries, reach out directly or send us a note.
+            We reply within two business days.
           </p>
-          <ul class="contact-list">
-            <li><i data-lucide="phone"></i> <a href="tel:+971509867247">+971 50 98 67247</a></li>
-            <li><i data-lucide="mail"></i> <a href="mailto:info@accumindsconsulting.ae">info@accumindsconsulting.ae</a></li>
-            <li><i data-lucide="map-pin"></i> DSO – IFZA, IFZA Properties, Dubai Silicon Oasis, UAE</li>
+          <div class="contact-actions" data-reveal-stagger>
+            <a class="btn btn-whatsapp" data-magnetic data-whatsapp="971509867247"
+               href="https://wa.me/971509867247?text=Hello%20AccuMinds%2C%20I%27d%20like%20to%20discuss%20my%20accounting%20and%20compliance%20needs."
+               target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#i-whatsapp" /></svg>
+              Chat on WhatsApp<span class="sr-only"> (opens WhatsApp)</span>
+            </a>
+            <a class="btn btn-ghost-light" data-magnetic href="mailto:info@accumindsconsulting.ae?subject=Inquiry%20from%20accumindsconsulting.ae">
+              <svg class="icon" aria-hidden="true"><use href="#i-mail" /></svg>
+              Email us
+            </a>
+          </div>
+          <ul class="contact-list" data-reveal-stagger>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-phone" /></svg><a class="u-link" href="tel:+971509867247">+971 50 98 67247</a></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-mail" /></svg><a class="u-link" href="mailto:info@accumindsconsulting.ae">info@accumindsconsulting.ae</a></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-pin" /></svg><span>DSO – IFZA, IFZA Properties, Dubai Silicon Oasis, Dubai, UAE</span></li>
           </ul>
         </div>
-        <form class="contact-form" id="contact-form" action="mailto:info@accumindsconsulting.ae" method="post" enctype="text/plain">
-          <div class="form-body">
-            <label>Your name<input name="name" placeholder="Layla Al-Marzooqi" required /></label>
-            <label>Work email<input type="email" name="email" placeholder="you@company.ae" required /></label>
+
+        <!-- Form delivery: Formspree form "Website contact" (formspree.io dashboard),
+             sending to info@accumindsconsulting.ae.
+             - To change form, put the new ID in BOTH data-formspree and action.
+             - With JavaScript the form posts in the background and shows an inline
+               thank-you; without it, the browser posts to Formspree's own thank-you page.
+             - Setting data-formspree="TODO" and action="mailto:info@accumindsconsulting.ae"
+               switches back to the email-app fallback.
+             - On Netlify instead: add name="contact" data-netlify="true", set action="/",
+               and set data-formspree="TODO". -->
+        <form class="contact-form" id="contact-form" data-reveal data-formspree="xkjokqyk"
+              action="https://formspree.io/f/xkjokqyk" method="post">
+          <div class="form-body" data-reveal-stagger>
+            <label>Your name<input name="name" autocomplete="name" placeholder="Layla Al-Marzooqi" required /></label>
+            <label>Work email<input type="email" name="email" autocomplete="email" placeholder="you@company.ae" required /></label>
             <label>What do you need?
               <select name="service" required>
                 <option value="" disabled selected>Select a service</option>
-                <option>Bookkeeping &amp; Accounting</option>
-                <option>VAT Services</option>
-                <option>Corporate Taxation</option>
-                <option>MIS / Reporting</option>
-                <option>AI Document Processing</option>
-                <option>Financial Advisory</option>
+                <option>Core Accounting</option>
+                <option>FTA Compliance</option>
+                <option>CFO Advisory</option>
+                <option>AI Automation</option>
+                <option>Payroll &amp; WPS</option>
+                <option>Something else</option>
               </select>
             </label>
             <label>A short note (optional)<textarea name="note" rows="3" placeholder="Anything useful we should know"></textarea></label>
-            <button type="submit" class="btn btn-primary">Send inquiry</button>
+            <input type="hidden" name="_subject" value="New inquiry from accumindsconsulting.ae" />
+            <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <div class="form-submit">
+              <button type="submit" class="btn btn-gold" data-magnetic>
+                <span class="btn-label">Send inquiry</span>
+              </button>
+              <p class="form-error" role="alert" hidden>
+                Sorry, your message didn&rsquo;t send. Please try again, or email
+                <a href="mailto:info@accumindsconsulting.ae">info@accumindsconsulting.ae</a>.
+              </p>
+            </div>
           </div>
-          <div class="sent" role="status" aria-live="polite">
-            <i data-lucide="check-circle-2"></i>
-            <h4>Thanks — we&rsquo;ll be in touch.</h4>
-            <p>We reply within one business day, usually much sooner.</p>
+          <div class="sent" role="status" aria-live="polite" hidden>
+            <svg class="sent-icon" viewBox="0 0 48 48" aria-hidden="true">
+              <circle class="sent-ring" cx="24" cy="24" r="21" pathLength="1" />
+              <path class="sent-tick" d="M15 24.5l6 6 12-13" pathLength="1" />
+            </svg>
+            <h3 class="sent-title" tabindex="-1">Thanks, we&rsquo;ll be in touch.</h3>
+            <p class="sent-text">We&rsquo;ve received your message.</p>
+            <button type="button" class="sent-again u-link">Send another message</button>
           </div>
         </form>
       </div>
     </section>
   </main>
 
+  <!-- Floating WhatsApp shortcut: small screens only, after the hero, hidden over #contact -->
+  <a class="wa-float" data-whatsapp="971509867247"
+     href="https://wa.me/971509867247?text=Hello%20AccuMinds%2C%20I%27d%20like%20to%20discuss%20my%20accounting%20and%20compliance%20needs."
+     target="_blank" rel="noopener" aria-label="Chat with AccuMinds on WhatsApp (opens WhatsApp)">
+    <svg class="icon" aria-hidden="true"><use href="#i-whatsapp" /></svg>
+  </a>
+
   <!-- ================= FOOTER ================= -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div class="footer-brand">
-        <img src="assets/logo-mark-white.png" alt="" />
-        <span class="wordmark-light">Accuminds Consulting - FZCO</span>
-      </div>
-      <div class="footer-meta">
-        DSO – IFZA, IFZA Properties, Dubai Silicon Oasis, UAE ·
-        <a href="mailto:info@accumindsconsulting.ae">info@accumindsconsulting.ae</a> ·
-        <a href="tel:+971509867247">+971 50 98 67247</a> ·
-        <a href="https://www.accumindsconsulting.ae">www.accumindsconsulting.ae</a>
-      </div>
-      <div class="footer-copy">© <span id="yr"></span> Accuminds Consulting - FZCO. All rights reserved.</div>
+      <a class="footer-brand" href="#top">
+        <img src="assets/img/mark-white.webp" width="82" height="28" alt="" loading="lazy" decoding="async" />
+        <span class="wordmark-light">AccuMinds Consulting · FZCO</span>
+      </a>
+      <nav aria-label="Footer">
+        <ul class="footer-nav">
+          <li><a class="u-link" href="#services">Services</a></li>
+          <li><a class="u-link" href="#process">How we work</a></li>
+          <li><a class="u-link" href="#about">About</a></li>
+          <li><a class="u-link" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <address class="footer-meta">
+        DSO – IFZA, IFZA Properties, Dubai Silicon Oasis, Dubai, UAE ·
+        <a class="u-link" href="mailto:info@accumindsconsulting.ae">info@accumindsconsulting.ae</a> ·
+        <a class="u-link" href="tel:+971509867247">+971 50 98 67247</a>
+      </address>
+      <!-- TODO: add trade licence number and TRN, then remove data-todo-slot / data-todo -->
+      <p class="footer-legal" data-todo-slot>
+        IFZA trade licence no. <span data-todo>TODO</span> · TRN <span data-todo>TODO</span>
+      </p>
+      <p class="footer-copy">© <span data-year>2026</span> AccuMinds Consulting FZCO. All rights reserved.</p>
     </div>
   </footer>
-
-  <script>
-    // Sticky header shadow on scroll
-    (function () {
-      var h = document.getElementById('site-header');
-      function onScroll() {
-        if (window.scrollY > 40) h.classList.add('is-scrolled');
-        else h.classList.remove('is-scrolled');
-      }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    })();
-
-    // Footer year
-    document.getElementById('yr').textContent = new Date().getFullYear();
-
-    // Contact form — shows thank-you state inline. (Keeps mailto fallback for real email delivery.)
-    (function () {
-      var form = document.getElementById('contact-form');
-      if (!form) return;
-      form.addEventListener('submit', function (e) {
-        // Let the mailto: open in the user's email client, then show the thank-you state.
-        setTimeout(function () {
-          form.classList.add('is-sent');
-          if (window.lucide) window.lucide.createIcons();
-        }, 400);
-      });
-    })();
-
-    // Render Lucide icons once loaded
-    window.addEventListener('load', function () {
-      if (window.lucide) window.lucide.createIcons();
-    });
-  </script>
 </body>
 </html>

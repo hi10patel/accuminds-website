@@ -100,6 +100,32 @@ Rules of thumb:
 
 ---
 
+## 4b. Service pages (SEO)
+
+Each service has its own page, so it can rank for its own searches. There are seven, plus a hub at `/services/`:
+
+| Page | URL |
+|---|---|
+| Bookkeeping & Accounting | `/services/bookkeeping-accounting-dubai/` |
+| VAT | `/services/vat-services-uae/` |
+| Corporate Tax | `/services/corporate-tax-uae/` |
+| E-invoicing | `/services/e-invoicing-uae/` |
+| CFO Advisory | `/services/cfo-advisory-dubai/` |
+| MIS & Reporting | `/services/mis-reporting-dubai/` |
+| AI Automation | `/services/ai-accounting-automation-uae/` |
+
+**Don't edit the generated HTML.** All page copy lives in `tools/pages_content.py`: titles, descriptions, what's included, who it's for, key facts, FAQs and related services. After editing it, run:
+
+```bash
+python tools/build_pages.py
+```
+
+That rebuilds every service page, `sitemap.xml`, `llms.txt` and the service links in the home footer.
+
+- **Key facts must have an official source** (FTA or Ministry of Finance) and carry the review date in `REVIEWED`. UAE rules change often, so re-check them, update `REVIEWED`, and rebuild.
+- **Each page includes structured data** for search engines: Service, BreadcrumbList and FAQPage, plus a reference to the firm. FAQs are written as direct answers so AI assistants can quote them.
+- **To add a service,** add an entry to `SERVICES` in `tools/pages_content.py`, rebuild, and add a "Learn more" link to the matching card on the home page.
+
 ## 5. Images and generated assets
 
 | Asset | Source | Regenerate with |

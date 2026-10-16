@@ -126,6 +126,23 @@ That rebuilds every service page, `sitemap.xml`, `llms.txt` and the service link
 - **Each page includes structured data** for search engines: Service, BreadcrumbList and FAQPage, plus a reference to the firm. FAQs are written as direct answers so AI assistants can quote them.
 - **To add a service,** add an entry to `SERVICES` in `tools/pages_content.py`, rebuild, and add a "Learn more" link to the matching card on the home page.
 
+### Telling search engines about changes
+
+- **Google:** Search Console is verified by the `google-site-verification` meta tag in `index.html`. **Don't remove it.** The sitemap is submitted there.
+- **Bing and other IndexNow engines:** the key file `0fb1f254e2294a41940ad768991c5054.txt` at the site root proves the site is ours. It's public by design, so keep it in place.
+
+After a change is live, notify the IndexNow engines. To send every page in the sitemap:
+
+```bash
+npm run indexnow
+```
+
+To send only the pages you changed:
+
+```bash
+npm run indexnow -- https://www.accumindsconsulting.ae/services/vat-services-uae/
+```
+
 ## 5. Images and generated assets
 
 | Asset | Source | Regenerate with |

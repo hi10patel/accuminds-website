@@ -28,11 +28,13 @@ const norm = (v) => { const l = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] 
 const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
 const nextTask = () => new Promise((r) => setTimeout(r, 0));
 
-// The clarity path: Bézier lead-in ending tangent to an inward spiral, arc-length sampled.
+// The clarity path, drawn the way the AccuMinds logo reads: the strand starts
+// low on the left, rises through an S-curve, enters the spiral at its top
+// heading right, then coils clockwise inwards. Arc-length sampled.
 function logoPath(samples, { center = [0.95, 0.15], rOut = 1.25, rIn = 0.14, turns = 3.1 } = {}) {
-  const a0 = -Math.PI / 2;
+  const a0 = Math.PI / 2; // top of the spiral; clockwise from here heads right
   const start = [center[0] + rOut * Math.cos(a0), center[1] + rOut * Math.sin(a0)];
-  const bez = [[-2.75, 0.35], [-1.55, 1.05], [-0.55, start[1]], start];
+  const bez = [[-2.75, -0.7], [-1.35, -1.3], [-0.7, start[1]], start]; // dips, then climbs; ends tangent to the spiral
   const lead = 0.3;
   const raw = (s) => {
     if (s < lead) {
@@ -40,7 +42,7 @@ function logoPath(samples, { center = [0.95, 0.15], rOut = 1.25, rIn = 0.14, tur
       return [0, 1].map((k) => v * v * v * bez[0][k] + 3 * v * v * u * bez[1][k] + 3 * v * u * u * bez[2][k] + u * u * u * bez[3][k]).concat(0);
     }
     const v = (s - lead) / (1 - lead);
-    const a = a0 + TAU * turns * v, r = rOut - (rOut - rIn) * Math.pow(v, 0.9);
+    const a = a0 - TAU * turns * v, r = rOut - (rOut - rIn) * Math.pow(v, 0.9);
     return [center[0] + r * Math.cos(a), center[1] + r * Math.sin(a), 0];
   };
   const dense = 3000, pts = [], len = [0];

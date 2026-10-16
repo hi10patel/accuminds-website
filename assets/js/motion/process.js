@@ -41,7 +41,8 @@ export function initProcess(motion) {
     // Step 1 is lit from the start; the rest wait for the line.
     gsap.set(line, { [axis]: 0 });
     gsap.set(nums.slice(1), IDLE);
-    gsap.set(bodies.slice(1), { opacity: 0.25, y: 12 });
+    // Upcoming steps start hidden rather than dimmed: faint text would fail contrast.
+    gsap.set(bodies.slice(1), { opacity: 0, y: 12 });
 
     const tl = gsap.timeline({
       defaults: { ease: 'power2.out' },

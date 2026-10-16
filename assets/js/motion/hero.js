@@ -3,7 +3,7 @@
 //   Desktop: ball grows in through a circular clip, then a sweep unrolls the
 //            strand and spiral (geometry from design/logo-animation; the
 //            prototype's shake phase is intentionally dropped).
-//   Mobile:  simple left-to-right wipe.
+//   Mobile:  mark visible from the first paint (it is the LCP element), settles in.
 //   Reduced motion: everything visible, copy fades in briefly.
 import { MQ } from './core.js';
 import { initNetwork } from './network.js';
@@ -40,16 +40,14 @@ export function initHero(motion) {
   if (matchMedia('(min-width: 768px)').matches) {
     tl.add(markReveal(clip, gsap), 0);
   } else {
-    tl.fromTo(clip,
-      { clipPath: 'inset(0% 100% 0% 0%)' },
-      {
-        clipPath: 'inset(0% 0% 0% 0%)', duration: 1.1, ease: 'power2.out',
-        // Explicit 'none' (not clearProps), or the CSS start state would hide it again.
-        onComplete: () => { clip.style.clipPath = 'none'; },
-      }, 0);
+    // Small screens: the mark is the largest thing on screen (the LCP element),
+    // so it stays painted from the first frame and only settles into place
+    // (transform only, no clipping or fading).
+    tl.fromTo(clip, { scale: 0.96, y: 10 }, { scale: 1, y: 0, duration: 1.1, ease: 'power2.out' }, 0);
   }
 
-  tl.fromTo(eyebrow, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6 }, 0.25)
+  tl.fromTo(hero.querySelector('.hero-mark__shadow'), { opacity: 0 }, { opacity: 1, duration: 1.2, ease: 'power1.out' }, 0.3)
+    .fromTo(eyebrow, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6 }, 0.25)
     .to(words, { yPercent: 0, duration: 0.9, stagger: 0.06 }, 0.35)
     .fromTo(lead, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8 }, 0.9)
     .fromTo(rest, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 }, 1.05);

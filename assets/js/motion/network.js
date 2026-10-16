@@ -3,6 +3,10 @@
 //   Mobile / coarse pointer: 16 nodes, 30 fps cap, no parallax.
 //   Reduced motion or "Pause motion": a single static frame.
 //   Off screen or tab hidden: no frames are drawn at all.
+//   The drift starts after page load (the first frame is drawn immediately), so
+//   it doesn't compete with the hero intro and page start-up for the main thread.
+//   Lines fade towards the headline area (drawn here rather than with a CSS mask,
+//   which would be recomposited on every frame).
 
 const COLORS = {
   gold: '201, 151, 43',   // --gold
@@ -44,6 +48,14 @@ export function initNetwork(canvas, motion) {
     }));
   }
 
+  // 0.25 inside an ellipse centred behind the headline, rising to 1 at the edges.
+  function quiet(x, y) {
+    const dx = (x - w * 0.5) / (w * 0.55);
+    const dy = (y - h * 0.66) / (h * 0.45);
+    const t = Math.min(1, Math.sqrt(dx * dx + dy * dy) / 1.6);
+    return 0.25 + 0.75 * t * t * (3 - 2 * t);
+  }
+
   function draw(dt) {
     const maxD = small.matches ? 120 : 170;
     const margin = 20;
@@ -70,7 +82,8 @@ export function initNetwork(canvas, motion) {
         const dy = pts[i].y - pts[j].y;
         const d2 = dx * dx + dy * dy;
         if (d2 > maxD * maxD) continue;
-        const a = (1 - Math.sqrt(d2) / maxD) * 0.3 * Math.min(pts[i].n.z, pts[j].n.z);
+        const a = (1 - Math.sqrt(d2) / maxD) * 0.3 * Math.min(pts[i].n.z, pts[j].n.z)
+          * quiet((pts[i].x + pts[j].x) / 2, (pts[i].y + pts[j].y) / 2);
         ctx.strokeStyle = `rgba(${pts[i].n.c}, ${a.toFixed(3)})`;
         ctx.beginPath();
         ctx.moveTo(pts[i].x, pts[i].y);
@@ -79,7 +92,7 @@ export function initNetwork(canvas, motion) {
       }
     }
     for (const p of pts) {
-      ctx.fillStyle = `rgba(${p.n.c}, ${(0.35 + 0.35 * p.n.z).toFixed(3)})`;
+      ctx.fillStyle = `rgba(${p.n.c}, ${((0.35 + 0.35 * p.n.z) * quiet(p.x, p.y)).toFixed(3)})`;
       ctx.beginPath();
       ctx.arc(p.x, p.y, 1 + 1.2 * p.n.z, 0, Math.PI * 2);
       ctx.fill();
@@ -104,14 +117,18 @@ export function initNetwork(canvas, motion) {
     running = false;
     cancelAnimationFrame(raf);
   }
+  let loaded = document.readyState === 'complete';
   function sync() {
-    if (reduce.matches || motion.paused || !inView) stop();
+    if (reduce.matches || motion.paused || !inView || !loaded) stop();
     else start();
   }
 
   build();
   draw(0);
   canvas.classList.add('is-ready');
+  if (!loaded) {
+    window.addEventListener('load', () => setTimeout(() => { loaded = true; sync(); }, 600), { once: true });
+  }
   sync();
 
   let resizeQueued = false;

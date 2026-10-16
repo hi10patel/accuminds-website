@@ -1,9 +1,11 @@
 // Zero-dependency static server for local preview.
 //   node tools/serve.mjs [port]      (default 4173)
-// Serves the repo root the same way GitHub Pages does, with caching off.
+// Serves the repo root the way GitHub Pages does: gzip for text files and
+// revalidate-every-time caching, so local Lighthouse runs reflect production.
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize, resolve, sep } from 'node:path';
+import { gzipSync } from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
@@ -45,11 +47,14 @@ createServer(async (req, res) => {
   const status = file ? 200 : 404;
   const path = file ?? join(ROOT, '404.html');
   try {
-    const body = await readFile(path);
-    res.writeHead(status, {
-      'Content-Type': TYPES[extname(path).toLowerCase()] ?? 'application/octet-stream',
-      'Cache-Control': 'no-store',
-    });
+    let body = await readFile(path);
+    const type = TYPES[extname(path).toLowerCase()] ?? 'application/octet-stream';
+    const headers = { 'Content-Type': type, 'Cache-Control': 'no-cache', Vary: 'Accept-Encoding' };
+    if (/^(text\/|application\/(json|xml|manifest)|image\/svg)/.test(type) && /gzip/.test(req.headers['accept-encoding'] ?? '')) {
+      body = gzipSync(body);
+      headers['Content-Encoding'] = 'gzip';
+    }
+    res.writeHead(status, headers);
     res.end(body);
   } catch {
     res.writeHead(404, { 'Content-Type': 'text/plain' });

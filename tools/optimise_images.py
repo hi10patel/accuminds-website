@@ -30,7 +30,7 @@ def hero_mark():
     # WebP only: lossy AVIF adds faint alpha noise across the transparent area,
     # which shows as a dark box on the navy hero. WebP keeps it clean.
     src = Image.open(SRC / "logo-mark-3d-transparent.png").convert("RGBA")
-    for w in (640, 960, 1380):
+    for w in (640, 720, 960, 1380):
         h = round(src.height * w / src.width)
         img = src.resize((w, h), Image.LANCZOS)
         img.putalpha(img.getchannel("A").point(lambda v: 0 if v < 16 else v))
@@ -39,7 +39,7 @@ def hero_mark():
 
 def flat_marks():
     src = Image.open(SRC / "logo-mark-blue-transparent.png").convert("RGBA")
-    h = 96  # 2x for a 48px-tall header mark
+    h = 64  # 2x for the 32px-tall header mark (footer uses 28px)
     w = round(src.width * h / src.height)
     for name, rgb in (("mark-navy", NAVY), ("mark-white", WHITE)):
         tint(src, rgb).resize((w, h), Image.LANCZOS).save(OUT / f"{name}.webp", lossless=True, method=6)

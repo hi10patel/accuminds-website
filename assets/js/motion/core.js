@@ -67,6 +67,9 @@ export function createMotion() {
   }
 
   gsap.registerPlugin(ScrollTrigger);
+  // No automatic refresh on DOMContentLoaded/load: runWhenIdle() refreshes once
+  // after setup and again when web fonts are ready, outside the busy load window.
+  ScrollTrigger.config({ autoRefreshEvents: 'visibilitychange,resize' });
   gsap.defaults({ ease: 'power3.out', duration: 0.9 });
   motion.mm = gsap.matchMedia();
 
@@ -87,9 +90,29 @@ export function createMotion() {
     });
   }
 
-  initReveals(motion);
   window.__amMotion = true;
   return motion;
+}
+
+// Runs each task in its own idle slot (keeps load-time long tasks short), then
+// refreshes ScrollTrigger once so every trigger accounts for pins created later.
+export function runWhenIdle(tasks, motion) {
+  const idle = window.requestIdleCallback
+    ? (fn) => requestIdleCallback(fn, { timeout: 1200 })
+    : (fn) => setTimeout(fn, 1);
+  const next = () => {
+    const task = tasks.shift();
+    if (task) {
+      task();
+      idle(next);
+    } else if (motion.enabled) {
+      window.ScrollTrigger.sort();
+      window.ScrollTrigger.refresh();
+      // Font swap changes text heights, so re-measure once fonts have loaded.
+      document.fonts?.ready.then(() => idle(() => window.ScrollTrigger.refresh()));
+    }
+  };
+  idle(next);
 }
 
 function initAnchors(motion) {
@@ -109,7 +132,8 @@ function initAnchors(motion) {
 // [data-reveal]          fade + rise when scrolled into view
 // [data-reveal="mask"]   heading rises through a clipping mask
 // [data-reveal-stagger]  children reveal one after another
-function initReveals(motion) {
+export function initReveals(motion) {
+  if (!motion.enabled) return;
   const { gsap } = motion;
 
   // Wrap mask headings once, outside matchMedia, so reverts don't re-wrap.

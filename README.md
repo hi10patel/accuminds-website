@@ -36,8 +36,6 @@ npm run check:todo
 
 | Placeholder | Where (search `index.html` for…) | Shown on the live site until done? | What to do |
 |---|---|---|---|
-| WhatsApp number | `data-whatsapp="971509867247"` (2 links) | **Yes** | Confirm the number, or change it in both places (and their `href`). Remove `data-todo` from both links |
-| Reply-time promise | `We usually reply the same business day` | **Yes** | Confirm it, or delete that `<span>` |
 | Numbers (4 stats) | `data-count="TODO"` | No, section hidden | Replace `TODO` with plain numbers (e.g. `data-count="240"`), remove `data-todo` from those spans and `data-todo-slot` from `<section id="numbers">` |
 | Certifications, client logos, testimonial | `class="trust"` | No, hidden | Real items only (logos with permission, testimonials with written consent). Remove `data-todo-slot` when filled; delete what you don't need |
 | Trade licence no. and TRN | `footer-legal` | No, hidden | Fill both, remove `data-todo` and `data-todo-slot` |
@@ -89,7 +87,7 @@ All visible text is in **`index.html`**. Each section starts with a comment bann
 | Automation showcase text | `automation-title` | The workbook and dashboard figures come from `tools/gen_showcase.py` (see section 5) |
 | Numbers | `class="stat"` | See section 2 |
 | About text and fact tiles | `about-text`, `class="fact"` | |
-| Phone, email, address | the old value, e.g. `509867247` | Each appears in the contact section, the footer **and** the JSON-LD in `<head>`; update all of them |
+| Phone, email, address, WhatsApp | the old value, e.g. `509867247` | Each appears in the contact section, the footer **and** the JSON-LD in `<head>`; update all of them |
 | Page title, description, social preview text | `<title>`, `og:`, `twitter:` | |
 | Colours, fonts, spacing | `assets/css/tokens.css` | Change a token once and it applies everywhere |
 

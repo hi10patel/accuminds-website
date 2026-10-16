@@ -160,6 +160,18 @@ tools/                preview server, TODO checker, image/scene generators
 
 ---
 
+## 7b. 3D hero prototype (branch `redesign-v2`)
+
+`prototype/hero-3d.html`: a "chaos to clarity" scroll story. A real-time 3D wire ball, generated in code with three.js 0.186.1 (no model files), unravels into the gold spiral as you scroll, weaving through giant TANGLED → CLARITY type.
+
+- Preview: `npm run serve`, then open http://localhost:4173/prototype/hero-3d.html
+- Source: `prototype/src/` (`wires.js` = the procedural geometry, `hero-3d.js` = scene + scroll). After editing, rebuild the bundle (needs `npm install` once):
+  ```bash
+  npm run build:3d
+  ```
+- Reduced motion or no WebGL 2: static logo image and headline instead
+- Not linked from the live page; it's marked `noindex`
+
 ## 8. QA results (16 Oct 2026, branch `redesign-motion`)
 
 ### Lighthouse 12.8.2 (local server with gzip, as GitHub Pages serves it)

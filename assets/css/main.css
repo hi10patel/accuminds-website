@@ -360,10 +360,10 @@ html:not(.js) .motion-toggle { display: none; }
   fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
 }
 .svc-icon .accent { stroke: var(--icon-accent); }
+.svc-icon .slice { stroke-width: 2.6; stroke-linecap: butt; }
 .svc-icon .total { stroke-width: 1.2; }
 .svc-icon .accent-fill { fill: var(--icon-accent); stroke: none; }
 .svc-icon .draw { stroke-dasharray: 1; stroke-dashoffset: 0; }
-.svc-icon .dot { fill: currentColor; stroke: none; }
 .svc-icon .bar { fill: currentColor; fill-opacity: 0.16; }
 .svc-icon .vat-num { fill: currentColor; stroke: none; font: var(--fw-extrabold) 6.6px/1 var(--font); letter-spacing: -0.02em; }
 .svc-icon .beam { opacity: 0; stroke-width: 1.2; }

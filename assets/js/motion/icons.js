@@ -69,16 +69,16 @@ const BUILDERS = {
       .to([...fields, spark], { opacity: 0.3, duration: 0.5, ease: 'power1.inOut' }, `+=${HOLD}`);
   },
 
-  // Payroll & WPS: calendar page slides up to the next month, payday is ringed.
-  calendar(svg, tl) {
-    const page = svg.querySelector('.cal-page');
-    const pay = svg.querySelector('.pay');
-    tl.to(pay, { opacity: 0, duration: 0.3, ease: 'power1.inOut' })
-      .to(page, { y: -6, opacity: 0, duration: 0.45, ease: 'power1.in' })
-      .fromTo(page, { y: 6, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: EASE })
-      .fromTo(pay, DRAW_FROM, { ...DRAW_TO, duration: 0.6 }, '-=0.05')
+  // MIS & Reporting: a report builds: donut ring, highlighted segment, KPI lines.
+  report(svg, tl) {
+    const donut = svg.querySelector('.donut');
+    const slice = svg.querySelector('.slice');
+    const kpis = svg.querySelectorAll('.kpi');
+    tl.fromTo(donut, DRAW_FROM, { ...DRAW_TO, duration: 0.7 })
+      .fromTo(slice, DRAW_FROM, { ...DRAW_TO, duration: 0.45 }, '-=0.15')
+      .fromTo(kpis, DRAW_FROM, { ...DRAW_TO, duration: 0.4, stagger: 0.15 }, '-=0.25')
       .addLabel('rest')
-      .to({}, { duration: HOLD });
+      .to([donut, slice, ...kpis], { opacity: 0, duration: 0.5, ease: 'power1.inOut' }, `+=${HOLD}`);
   },
 };
 

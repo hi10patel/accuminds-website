@@ -37,12 +37,18 @@ def hero_mark():
         img.save(OUT / f"hero-mark-{w}.webp", quality=80, method=6, alpha_quality=100)
 
 
-def flat_marks():
-    src = Image.open(SRC / "logo-mark-blue-transparent.png").convert("RGBA")
-    h = 64  # 2x for the 32px-tall header mark (footer uses 28px)
+def small_3d_mark():
+    # Header/footer logo (replaces the earlier flat line-drawing marks): the metal 3D mark, cropped to the wires (no empty
+    # margin) and sized 2x for a 32px-tall display. Lossy WebP with clean alpha,
+    # as for the hero.
+    src = Image.open(SRC / "logo-mark-3d-transparent.png").convert("RGBA")
+    src = src.crop(src.getchannel("A").getbbox())
+    h = 64
     w = round(src.width * h / src.height)
-    for name, rgb in (("mark-navy", NAVY), ("mark-white", WHITE)):
-        tint(src, rgb).resize((w, h), Image.LANCZOS).save(OUT / f"{name}.webp", lossless=True, method=6)
+    img = src.resize((w, h), Image.LANCZOS)
+    img.putalpha(img.getchannel("A").point(lambda v: 0 if v < 16 else v))
+    img.save(OUT / "mark-3d.webp", quality=88, method=6, alpha_quality=100)
+    print(f"mark-3d.webp is {w}x{h} (display at {w // 2}x{h // 2})")
 
 
 def icons():
@@ -76,7 +82,7 @@ def icons():
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     hero_mark()
-    flat_marks()
+    small_3d_mark()
     icons()
     for p in sorted(OUT.iterdir()):
         print(f"{p.stat().st_size / 1024:7.1f} KB  {p.name}")

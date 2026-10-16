@@ -767,16 +767,17 @@
           </ul>
         </div>
 
-        <!-- Form delivery:
-             - Formspree (recommended): create a form at formspree.io, then put its ID in
-               BOTH data-formspree="xxxxxxxx" and action="https://formspree.io/f/xxxxxxxx".
-             - Until then (data-formspree="TODO") submitting opens the visitor's email app
-               with the message filled in (mailto fallback), with or without JavaScript.
+        <!-- Form delivery: Formspree form "Website contact" (formspree.io dashboard),
+             sending to info@accumindsconsulting.ae.
+             - To change form, put the new ID in BOTH data-formspree and action.
+             - With JavaScript the form posts in the background and shows an inline
+               thank-you; without it, the browser posts to Formspree's own thank-you page.
+             - Setting data-formspree="TODO" and action="mailto:info@accumindsconsulting.ae"
+               switches back to the email-app fallback.
              - On Netlify instead: add name="contact" data-netlify="true", set action="/",
-               and leave data-formspree="TODO". -->
-        <form class="contact-form" id="contact-form" data-reveal data-formspree="TODO"
-              action="mailto:info@accumindsconsulting.ae?subject=Inquiry%20from%20accumindsconsulting.ae"
-              method="post" enctype="text/plain">
+               and set data-formspree="TODO". -->
+        <form class="contact-form" id="contact-form" data-reveal data-formspree="xkjokqyk"
+              action="https://formspree.io/f/xkjokqyk" method="post">
           <div class="form-body" data-reveal-stagger>
             <label>Your name<input name="name" autocomplete="name" placeholder="Layla Al-Marzooqi" required /></label>
             <label>Work email<input type="email" name="email" autocomplete="email" placeholder="you@company.ae" required /></label>

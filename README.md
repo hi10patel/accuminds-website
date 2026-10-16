@@ -36,13 +36,14 @@ npm run check:todo
 
 | Placeholder | Where (search `index.html` for…) | Shown on the live site until done? | What to do |
 |---|---|---|---|
-| Formspree form ID | `data-formspree="TODO"` | Form works, but opens the visitor's email app | Create a free form at formspree.io. Put its ID in **both** `data-formspree="…"` and `action="https://formspree.io/f/…"` on `#contact-form` |
 | WhatsApp number | `data-whatsapp="971509867247"` (2 links) | **Yes** | Confirm the number, or change it in both places (and their `href`). Remove `data-todo` from both links |
 | Reply-time promise | `We usually reply the same business day` | **Yes** | Confirm it, or delete that `<span>` |
 | Numbers (4 stats) | `data-count="TODO"` | No, section hidden | Replace `TODO` with plain numbers (e.g. `data-count="240"`), remove `data-todo` from those spans and `data-todo-slot` from `<section id="numbers">` |
 | Certifications, client logos, testimonial | `class="trust"` | No, hidden | Real items only (logos with permission, testimonials with written consent). Remove `data-todo-slot` when filled; delete what you don't need |
 | Trade licence no. and TRN | `footer-legal` | No, hidden | Fill both, remove `data-todo` and `data-todo-slot` |
 | Structured data extras | `Structured data. TODO` | n/a | Optionally add `geo`, `openingHoursSpecification`, `sameAs` (LinkedIn etc.) and `taxID` to the JSON-LD in `<head>` |
+
+**Contact form:** delivered by Formspree (form ID `xkjokqyk`, free plan, sends to info@accumindsconsulting.ae). Submissions also appear in the Formspree dashboard. To use a different form, put its ID in **both** `data-formspree="…"` and `action="https://formspree.io/f/…"` on `#contact-form`. The free plan can't restrict the form to this domain; the hidden `_gotcha` honeypot field and Formspree's own spam filtering cover that.
 
 Blocks marked `data-todo-slot` **never render on the live site** until you remove that attribute, so nothing invented can go public by accident.
 
@@ -68,7 +69,7 @@ Future edits follow the same pattern: edit, commit, push to `main` (or merge a P
 1. **Add new site → Import an existing project →** pick the GitHub repo.
 2. Build command: *(leave empty)*. Publish directory: `.`
 3. Add the custom domain under **Domain management**.
-4. Forms: either keep Formspree, or switch to Netlify Forms by adding `name="contact" data-netlify="true"` to `#contact-form`, setting `action="/"` and leaving `data-formspree="TODO"`.
+4. Forms: either keep Formspree, or switch to Netlify Forms by adding `name="contact" data-netlify="true"` to `#contact-form`, setting `action="/"` and changing `data-formspree` to `"TODO"`.
 
 `404.html`, `robots.txt` and `sitemap.xml` work on both hosts as they are.
 

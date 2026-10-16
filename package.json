@@ -7,7 +7,8 @@
     "check:todo": "node tools/check-todo.mjs",
     "images": "python tools/optimise_images.py",
     "build:3d": "esbuild assets/js/story/scene.js --bundle --minify --format=esm --target=es2020 --outfile=assets/js/story.bundle.js",
-    "poster:3d": "node tools/story-poster.mjs"
+    "poster:3d": "node tools/story-poster.mjs",
+    "indexnow": "node tools/indexnow.mjs"
   },
   "devDependencies": {
     "esbuild": "0.28.2",

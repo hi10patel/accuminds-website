@@ -4,7 +4,7 @@
 // Above the fold (hero, header) starts immediately; everything below the fold
 // is set up in separate idle tasks so the page stays responsive while loading.
 import { createMotion, initReveals, runWhenIdle } from './motion/core.js';
-import { initHero } from './motion/hero.js';
+import { initStory } from './motion/story.js';
 import { initServiceIcons } from './motion/icons.js';
 import { initProcess } from './motion/process.js';
 import { initShowcase } from './motion/showcase.js';
@@ -14,7 +14,7 @@ import { initMagnetic } from './ui/magnetic.js';
 import { initContact } from './ui/contact.js';
 
 const motion = createMotion();
-initHero(motion);
+initStory(motion);
 initNav(motion);
 
 runWhenIdle([

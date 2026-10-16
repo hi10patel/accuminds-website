@@ -95,9 +95,9 @@
     (function (h) {
       h.classList.add('js');
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        h.classList.add('js-motion');
-        // Safety net: if the motion scripts never start, show the content anyway.
-        setTimeout(function () { if (!window.__amMotion) h.classList.remove('js-motion'); }, 3000);
+        h.classList.add('js-motion', 'story-live');
+        // Safety net: if the motion scripts never start, show the static layout instead.
+        setTimeout(function () { if (!window.__amMotion) h.classList.remove('js-motion', 'story-live'); }, 3000);
       }
       if (/[?&]todo(=|&|$)/.test(location.search)) h.classList.add('show-todo');
     })(document.documentElement);
@@ -110,9 +110,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" /></noscript>
 
-  <link rel="preload" as="image" fetchpriority="high"
-        imagesrcset="assets/img/hero-mark-640.webp 640w, assets/img/hero-mark-720.webp 720w, assets/img/hero-mark-960.webp 960w, assets/img/hero-mark-1380.webp 1380w"
-        imagesizes="(max-width: 868px) calc(100vw - 32px), 820px" />
+  <link rel="preload" as="image" href="assets/img/story-poster.webp" fetchpriority="high" />
 
   <link rel="stylesheet" href="assets/css/tokens.css" />
   <link rel="stylesheet" href="assets/css/main.css" />
@@ -183,46 +181,55 @@
   </header>
 
   <main id="main">
-    <!-- ================= HERO ================= -->
-    <section id="top" class="hero on-dark" aria-labelledby="hero-title">
-      <canvas class="hero-network" aria-hidden="true"></canvas>
-      <div class="container hero-inner">
-        <div class="hero-mark">
-          <span class="hero-mark__shadow" aria-hidden="true"></span>
-          <picture class="hero-mark__clip">
-            <img src="assets/img/hero-mark-960.webp" width="1380" height="560" fetchpriority="high"
-                 srcset="assets/img/hero-mark-640.webp 640w, assets/img/hero-mark-720.webp 720w, assets/img/hero-mark-960.webp 960w, assets/img/hero-mark-1380.webp 1380w"
-                 sizes="(max-width: 868px) calc(100vw - 32px), 820px"
-                 alt="AccuMinds mark: a tangled wire ball unravelling into a clean gold spiral" />
-          </picture>
-        </div>
-        <div class="hero-copy">
-          <p class="eyebrow" data-hero-fade>Accounting · Tax · AI automation</p>
-          <h1 class="hero-title" id="hero-title">
-            <span class="line">Accurate books.</span>
-            <span class="line">Automated workflows.</span>
-            <span class="line accent">Always compliant.</span>
-          </h1>
-          <p class="lead" data-hero-fade>
-            Bookkeeping, VAT and Corporate Tax handled end-to-end for UAE SMEs and
-            free zone entities, with AI-assisted document intake.
-          </p>
+    <!-- ================= HERO: "chaos to clarity" story ================= -->
+    <!-- With motion: a tall scroll track with a sticky full-screen stage. Scroll
+         turns the 3D wire ball (assets/js/story/, three.js) into the gold spiral
+         while TANGLED becomes CLARITY; the final frame is the headline + CTAs.
+         Each giant word exists twice: whole behind the canvas, and a few of its
+         letters (.is-front) in front of it, so the wire weaves through the type.
+         Reduced motion / no JS: a static hero (logo image + headline). -->
+    <section id="top" class="story-track on-dark" aria-labelledby="hero-title">
+      <div class="story">
+        <p class="word word--back word--tangled" aria-hidden="true"><span class="word-mask"><span class="ch">T</span><span class="ch">a</span><span class="ch">n</span><span class="ch">g</span><span class="ch">l</span><span class="ch">e</span><span class="ch">d</span></span></p>
+        <p class="word word--back word--clarity" aria-hidden="true"><span class="word-mask"><span class="ch">C</span><span class="ch">l</span><span class="ch">a</span><span class="ch">r</span><span class="ch">i</span><span class="ch">t</span><span class="ch">y</span></span></p>
+
+        <img class="story-poster" src="assets/img/story-poster.webp" width="760" height="760" alt="" fetchpriority="high" />
+        <canvas class="story-canvas" aria-hidden="true"></canvas>
+
+        <p class="word word--front word--tangled" aria-hidden="true"><span class="word-mask"><span class="ch">T</span><span class="ch">a</span><span class="ch is-front">n</span><span class="ch">g</span><span class="ch">l</span><span class="ch">e</span><span class="ch">d</span></span></p>
+        <p class="word word--front word--clarity" aria-hidden="true"><span class="word-mask"><span class="ch">C</span><span class="ch">l</span><span class="ch">a</span><span class="ch is-front">r</span><span class="ch">i</span><span class="ch is-front">t</span><span class="ch">y</span></span></p>
+
+        <p class="cap cap--1">Receipts in WhatsApp, VAT in a spreadsheet, a filing deadline on Thursday.</p>
+        <p class="cap cap--2">We <b>untangle</b> it: one ledger, every filing on schedule.</p>
+        <span class="story-hint" aria-hidden="true">Scroll</span>
+
+        <img class="story-static-mark" src="assets/img/hero-mark-960.webp" width="1380" height="560" loading="lazy"
+             srcset="assets/img/hero-mark-640.webp 640w, assets/img/hero-mark-720.webp 720w, assets/img/hero-mark-960.webp 960w, assets/img/hero-mark-1380.webp 1380w"
+             sizes="(max-width: 868px) calc(100vw - 32px), 760px"
+             alt="AccuMinds mark: a tangled wire ball unravelling into a clean gold spiral" />
+
+        <div class="story-final">
+          <p class="eyebrow">Accounting · Tax · AI automation</p>
+          <h1 class="story-title" id="hero-title">Accurate books. Automated workflows. <span class="accent">Always compliant.</span></h1>
+          <p class="lead">Bookkeeping, VAT and Corporate Tax handled end-to-end for UAE SMEs and free zone entities, with AI-assisted document intake.</p>
           <div class="hero-ctas">
-            <a class="btn btn-gold" href="#contact" data-hero-fade data-magnetic>Book a consultation</a>
-            <a class="btn btn-ghost-light" href="#services" data-hero-fade data-magnetic>View services <span aria-hidden="true">→</span></a>
+            <a class="btn btn-gold" href="#contact" data-magnetic>Book a consultation</a>
+            <a class="btn btn-ghost-light" href="#services" data-magnetic>View services <span aria-hidden="true">→</span></a>
           </div>
           <ul class="hero-trust">
-            <li data-hero-fade><svg class="icon" aria-hidden="true"><use href="#i-shield" /></svg> FTA-aligned filings</li>
-            <li data-hero-fade><svg class="icon" aria-hidden="true"><use href="#i-landmark" /></svg> Free zone &amp; mainland</li>
-            <li data-hero-fade><svg class="icon" aria-hidden="true"><use href="#i-sparkle" /></svg> AI document intake</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-shield" /></svg> FTA-aligned filings</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-landmark" /></svg> Free zone &amp; mainland</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-sparkle" /></svg> AI document intake</li>
           </ul>
         </div>
+
+        <button class="motion-toggle" type="button">
+          <svg class="icon icon--pause" aria-hidden="true"><use href="#i-pause" /></svg>
+          <svg class="icon icon--play" aria-hidden="true"><use href="#i-play" /></svg>
+          <span class="motion-toggle__label">Pause motion</span>
+        </button>
+        <div class="story-progress" aria-hidden="true"><span></span></div>
       </div>
-      <button class="motion-toggle" type="button">
-        <svg class="icon icon--pause" aria-hidden="true"><use href="#i-pause" /></svg>
-        <svg class="icon icon--play" aria-hidden="true"><use href="#i-play" /></svg>
-        <span class="motion-toggle__label">Pause motion</span>
-      </button>
     </section>
 
     <!-- ================= SERVICES ================= -->

@@ -1,12 +1,13 @@
 {
   "name": "accuminds-website",
   "private": true,
-  "description": "AccuMinds Consulting FZCO website. Static: no build step to deploy. Dev-only: esbuild bundles the 3D hero prototype.",
+  "description": "AccuMinds Consulting FZCO website. Static: no build step to deploy. Dev-only: esbuild bundles the 3D hero (three.js).",
   "scripts": {
     "serve": "node tools/serve.mjs 4173",
     "check:todo": "node tools/check-todo.mjs",
     "images": "python tools/optimise_images.py",
-    "build:3d": "esbuild prototype/src/hero-3d.js --bundle --minify --format=esm --target=es2020 --outfile=prototype/hero-3d.bundle.js"
+    "build:3d": "esbuild assets/js/story/scene.js --bundle --minify --format=esm --target=es2020 --outfile=assets/js/story.bundle.js",
+    "poster:3d": "node tools/story-poster.mjs"
   },
   "devDependencies": {
     "esbuild": "0.28.2",

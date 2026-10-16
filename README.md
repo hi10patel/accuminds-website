@@ -79,8 +79,9 @@ All visible text is in **`index.html`**. Each section starts with a comment bann
 
 | I want to change… | Search `index.html` for… | Notes |
 |---|---|---|
-| Hero headline | `hero-title` | Keep each line in its own `<span class="line">`. Words animate automatically |
-| Hero intro, buttons, trust row | `hero-copy` | |
+| Hero headline, intro, buttons, trust row | `story-final` | The final frame of the hero story; also the whole hero when motion is reduced |
+| Hero captions ("Receipts in WhatsApp…", "We untangle it…") | `cap--1`, `cap--2` | |
+| The giant words TANGLED / CLARITY | `word--tangled`, `word--clarity` | Each word appears twice (behind and in front of the 3D). Letters marked `is-front` sit in front of the wire; keep both copies identical |
 | A service | `svc-card` | Edit the `<h3>`, `<p>` and the `<li>` items. Leave the `<svg>` icons alone |
 | Service names in the form | `<select name="service"` | Keep them in step with the card titles and the `data-service="…"` on each card's link |
 | How we work steps | `process-step` | Four steps; the animation is timed for four |
@@ -114,7 +115,7 @@ The hero logo is WebP only: lossy AVIF added faint noise to the transparent back
 
 | Section | Motion | Reduced motion / no JS |
 |---|---|---|
-| Hero | 3D mark reveal (ball, then strand and spiral), word-by-word headline, canvas line network | Everything visible, static background |
+| Hero story | Scroll turns a real-time 3D wire ball into the gold spiral while TANGLED becomes CLARITY; the wire weaves through the letters; the headline and CTAs arrive at the end | Static hero: logo image + headline, no 3D downloaded |
 | Services | Cards rise in; each icon loops while on screen | Finished icons |
 | How we work | Pinned on desktop, line draws as you scroll, steps light up; vertical rail on smaller screens | All steps lit, no pin |
 | Automation showcase | Workbook cleans itself up, then becomes the dashboard; Replay button | Before and after side by side |
@@ -122,7 +123,7 @@ The hero logo is WebP only: lossy AVIF added faint noise to the transparent back
 | About, Contact | Gentle staggered reveals | Visible immediately |
 | Throughout | Lenis smooth scroll (mouse/trackpad only), magnetic CTAs, gold underline hovers | Native scrolling, no magnetic effect |
 
-- **Pause motion** (bottom of the hero) stops the background and icon loops. The choice is remembered on that device.
+- **Pause motion** (in the hero) stops the 3D ball's idle drift and the icon loops. The choice is remembered on that device.
 - Smaller screens get fewer network nodes at 30 fps, no pinning, no smooth-scroll library and no magnetic buttons.
 - If the scripts fail to load, all content still shows (3-second safety net).
 - To switch a feature off, comment out its `init…(motion)` line in `assets/js/main.js`.
@@ -132,7 +133,8 @@ Code map:
 ```
 assets/js/main.js            entry point
 assets/js/motion/core.js     Lenis + ScrollTrigger, reduced-motion switches, reveals, pause state
-assets/js/motion/hero.js     hero intro          network.js  hero background canvas
+assets/js/motion/story.js    hero story: scroll timeline, poster, loads the 3D on demand
+assets/js/story/            3D source (three.js): scene.js + wires.js → bundled to assets/js/story.bundle.js
 assets/js/motion/icons.js    service icon loops  process.js  pinned timeline
 assets/js/motion/showcase.js automation scene    stats.js    count-up
 assets/js/ui/nav.js          header + mobile menu
@@ -160,17 +162,31 @@ tools/                preview server, TODO checker, image/scene generators
 
 ---
 
-## 7b. 3D hero prototype (branch `redesign-v2`)
+## 7b. The 3D hero
 
-`prototype/hero-3d.html`: a "chaos to clarity" scroll story. A real-time 3D wire ball, generated in code with three.js 0.186.1 (no model files), unravels into the gold spiral as you scroll, weaving through giant TANGLED → CLARITY type.
+The tangled wire ball is generated in code with three.js 0.186.1 (`assets/js/story/wires.js`); there are no model files. Scrolling blends it into the spiral on the GPU, using a vertex shader, so it costs the CPU almost nothing per frame.
 
-- Preview: `npm run serve`, then open http://localhost:4173/prototype/hero-3d.html
-- Source: `prototype/src/` (`wires.js` = the procedural geometry, `hero-3d.js` = scene + scroll). After editing, rebuild the bundle (needs `npm install` once):
-  ```bash
-  npm run build:3d
-  ```
-- Reduced motion or no WebGL 2: static logo image and headline instead
-- Not linked from the live page; it's marked `noindex`
+**How it loads (keeps the page fast):**
+- First paint shows `assets/img/story-poster.webp`, a still of the ball's first frame, positioned exactly where the 3D ball will render.
+- The 3D bundle (`assets/js/story.bundle.js`, about 140 KB gzipped) loads on the visitor's first interaction: a mouse move on desktop, scroll or touch on phones. It then fades in over the poster.
+- Without WebGL 2, or with the Save-Data setting, the poster stays.
+- With reduced motion, the hero is static and nothing 3D is downloaded.
+
+**After editing `assets/js/story/`:** run `npm install` once, then rebuild the bundle:
+
+```bash
+npm run build:3d
+```
+
+**If the shape, materials or camera changed,** also regenerate the poster. Start the preview server first (`npm run serve`), then:
+
+```bash
+npm run poster:3d
+```
+
+```bash
+python tools/optimise_images.py
+```
 
 ## 8. QA results (16 Oct 2026, branch `redesign-motion`)
 
@@ -183,6 +199,15 @@ tools/                preview server, TODO checker, image/scene generators
 | Desktop | **100** | **100** | 100 | **100** | 0.4 s | 0.8 s | 0 ms | 0.002 |
 
 Targets: Performance ≥ 90, Accessibility ≥ 95, SEO ≥ 95. All met.
+
+With the 3D hero (branch `redesign-v2`, same set-up):
+
+| Run | Performance | Accessibility | Best Practices | SEO | FCP | LCP | TBT | CLS |
+|---|---|---|---|---|---|---|---|---|
+| Mobile | **96** | **100** | 100 | **100** | 1.1 s | 2.3 s | 150 ms | 0.004 |
+| Desktop | **100** | **100** | 100 | **100** | 0.3 s | 0.6 s | 0 ms | 0.003 |
+
+Lighthouse doesn't interact with the page, so these runs measure the poster first paint; three.js loads on a visitor's first mouse move, scroll or touch.
 
 To re-run, use a quiet machine; Lighthouse's lab TBT jumps when other heavy apps compete for the CPU:
 

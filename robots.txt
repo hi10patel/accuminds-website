@@ -2,6 +2,5 @@ User-agent: *
 Allow: /
 Disallow: /design/
 Disallow: /tools/
-Disallow: /prototype/
 
 Sitemap: https://www.accumindsconsulting.ae/sitemap.xml

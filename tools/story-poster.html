@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--
+  Renders the hero's first 3D frame for assets/img/story-poster.webp: the still
+  image shown until three.js has loaded (and kept if WebGL 2 is unavailable).
+  Regenerate after changing assets/js/story/ (shape, materials, camera):
+    1. npm run build:3d && npm run serve
+    2. node tools/story-poster.mjs
+  The 1200×1200 stage and crop maths must match BALL in assets/js/motion/story.js.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex" />
+  <title>Story poster source</title>
+  <style>
+    html, body { margin: 0; background: transparent; }
+    #stage { position: relative; width: 1200px; height: 1200px; }
+    canvas { display: block; width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+  <div id="stage"><canvas></canvas></div>
+  <script type="module">
+    import { startScene } from '../assets/js/story.bundle.js';
+    await startScene({
+      canvas: document.querySelector('canvas'),
+      stage: document.getElementById('stage'),
+      state: { t: 0, rise: 0 },
+      small: false,
+      isPaused: () => true,
+      poster: true,
+    });
+  </script>
+</body>
+</html>

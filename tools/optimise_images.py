@@ -51,6 +51,18 @@ def small_3d_mark():
     print(f"mark-3d.webp is {w}x{h} (display at {w // 2}x{h // 2})")
 
 
+def story_poster():
+    # Still of the hero's first 3D frame (rendered by tools/story-poster.mjs).
+    # Shown until three.js loads, and kept when WebGL 2 is unavailable.
+    src_path = ROOT / "tools" / ".out" / "story-poster.png"
+    if not src_path.exists():
+        print("story-poster: no render found, skipped (run: npm run poster:3d)")
+        return
+    img = Image.open(src_path).convert("RGBA").resize((760, 760), Image.LANCZOS)
+    img.putalpha(img.getchannel("A").point(lambda v: 0 if v < 16 else v))
+    img.save(OUT / "story-poster.webp", quality=76, method=6, alpha_quality=100)
+
+
 def icons():
     # The spiral alone reads at favicon sizes; the full mark does not.
     src = Image.open(SRC / "logo-mark-blue-transparent.png").convert("RGBA")
@@ -83,6 +95,7 @@ if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     hero_mark()
     small_3d_mark()
+    story_poster()
     icons()
     for p in sorted(OUT.iterdir()):
         print(f"{p.stat().st_size / 1024:7.1f} KB  {p.name}")

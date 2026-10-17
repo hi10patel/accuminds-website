@@ -41,6 +41,35 @@ export function initStory(motion) {
   new ResizeObserver(placePoster).observe(stage);
   placePoster();
 
+  // ---- Final frame: fit CLARITY and the spiral into the band between the
+  // header and the headline, whatever the screen's shape. Measured on every
+  // ScrollTrigger refresh (resize, font load), so short laptops never overlap.
+  const finalEl = stage.querySelector('.story-final');
+  const clarityWord = stage.querySelector('.word--back.word--clarity');
+  const header = document.getElementById('site-header');
+  const GAP = 24;
+  const fit = { lift: 0, scale: 1 };
+  const measureFinal = () => {
+    const W = stage.clientWidth, H = stage.clientHeight;
+    const unit = (H / 2) / (cameraDistance(W / H) * Math.tan((FOV * Math.PI) / 360));
+    const bandTop = (header?.offsetHeight ?? 0) + 12;
+    const bandBottom = finalEl.offsetTop - GAP;           // offsetTop ignores GSAP transforms
+    const band = Math.max(80, bandBottom - bandTop);
+    // Spiral (2.5 scene units tall at scale 1): as large as fits, bottom on the band's floor.
+    state.riseScale = Math.min(0.86, band / (2.5 * unit));
+    state.riseY = (H / 2 - bandBottom) / unit + 1.1 * state.riseScale;
+    // CLARITY: shrink only if it can't fit, then sit its bottom on the band's floor.
+    const h = clarityWord.offsetHeight;
+    const centre = clarityWord.offsetTop - 0.04 * h;      // CSS centres it with translate(-50%, -54%)
+    fit.scale = Math.min(1, band / h);
+    fit.lift = Math.max(0, centre + (fit.scale * h) / 2 - bandBottom);
+  };
+  measureFinal();
+  window.ScrollTrigger.addEventListener('refreshInit', measureFinal);
+  // Hand the CSS centring (translate(-50%, -54%)) to GSAP, so the y tween below
+  // adds to it instead of replacing it.
+  gsap.set('.word', { xPercent: -50, yPercent: -54, x: 0, y: 0 });
+
   // ---- Scroll timeline
   const tl = gsap.timeline({
     defaults: { ease: 'none' },
@@ -56,8 +85,8 @@ export function initStory(motion) {
     .fromTo('.cap--2', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.1 }, 0.3)
     .to('.cap--2', { opacity: 0, y: -20, duration: 0.1 }, 0.55)
     .to('.story-hint', { opacity: 0, duration: 0.05 }, 0.02)
-    // CLARITY lifts with the spiral to make room for the final headline
-    .to('.word--clarity', { y: () => -window.innerHeight * 0.16, duration: 0.28, ease: 'power2.inOut' }, 0.72)
+    // CLARITY lifts (and shrinks if needed) with the spiral to clear the final headline
+    .to('.word--clarity', { y: () => -fit.lift, scale: () => fit.scale, duration: 0.28, ease: 'power2.inOut' }, 0.72)
     .fromTo('.story-final', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.14, ease: 'power2.out' }, 0.84)
     .fromTo('.story-progress span', { scaleX: 0 }, { scaleX: 1, duration: 1 }, 0);
 

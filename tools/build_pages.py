@@ -149,7 +149,8 @@ def footer(current=None):
       <address class="footer-meta">
         DSO – IFZA, IFZA Properties, Dubai Silicon Oasis, Dubai, UAE ·
         <a class="u-link" href="mailto:info@accumindsconsulting.ae">info@accumindsconsulting.ae</a> ·
-        <a class="u-link" href="tel:+971509867247">+971 50 98 67247</a>
+        <a class="u-link" href="tel:+971509867247">+971 50 98 67247</a> ·
+        <a class="u-link" href="https://www.linkedin.com/company/accuminds-consulting/" rel="me noopener" target="_blank">LinkedIn</a>
       </address>
       <p class="footer-copy">© <span data-year>{date.today().year}</span> AccuMinds Consulting FZCO. All rights reserved.</p>
     </div>
@@ -160,6 +161,7 @@ def org_node():
     return {
         "@type": "ProfessionalService", "@id": ORG_ID, "name": "AccuMinds Consulting FZCO", "url": f"{SITE}/",
         "telephone": "+971509867247", "email": "info@accumindsconsulting.ae",
+        "sameAs": ["https://www.linkedin.com/company/accuminds-consulting/"],
         "address": {"@type": "PostalAddress", "streetAddress": "DSO - IFZA, IFZA Properties, Dubai Silicon Oasis",
                     "addressLocality": "Dubai", "addressRegion": "Dubai", "addressCountry": "AE"},
     }

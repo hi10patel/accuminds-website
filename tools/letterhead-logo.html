@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--
+  Source for the logo lockup in the Word letterhead (on white paper).
+  Render with a transparent background, from the repo root, with `npm run serve` running:
+    chrome --headless=new --hide-scrollbars --default-background-color=00000000 --force-device-scale-factor=4
+      --window-size=520,96 --virtual-time-budget=4000 --screenshot=tools/.out/letterhead-logo.png
+      http://localhost:4173/tools/letterhead-logo.html
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex" />
+  <title>Letterhead logo source</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&display=swap" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <style>
+    html, body { margin: 0; background: transparent; }
+    body { width: 520px; height: 96px; display: flex; align-items: center; gap: 16px; font-family: var(--font); }
+    img { width: 230px; margin: -12px -8px -12px -16px; filter: drop-shadow(0 3px 4px rgba(26, 46, 74, 0.28)); }
+    .word { font-size: 34px; font-weight: 800; letter-spacing: 0.05em; line-height: 1; color: var(--navy); }
+    .sub { margin-top: 7px; font-size: 12.5px; font-weight: 800; letter-spacing: 0.27em; color: var(--gold); }
+  </style>
+</head>
+<body>
+  <img src="../assets/img/hero-mark-1380.webp" alt="" />
+  <div>
+    <div class="word">ACCUMINDS</div>
+    <div class="sub">CONSULTING · FZCO</div>
+  </div>
+</body>
+</html>

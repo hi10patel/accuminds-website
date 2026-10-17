@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+  Source for the LinkedIn Company Page images (rendered at 2x for sharpness):
+    banner  4200×700  (tools/linkedin.html at 1200×200, scale 3.5; LinkedIn rejects covers under 1192×220)
+    logo     400×400  (tools/linkedin.html?logo)
+  Render, from the repo root, with `npm run serve` running:
+    chrome --headless=new --hide-scrollbars --force-device-scale-factor=2 --window-size=1128,191
+      --virtual-time-budget=4000 --screenshot=tools/.out/linkedin-banner.png http://localhost:4173/tools/linkedin.html
+  LinkedIn's page logo covers the left ~29% of the banner, so the copy starts at 33%.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex" />
+  <title>LinkedIn images source</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;800&display=swap" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <style>
+    html, body { margin: 0; }
+    body {
+      position: relative; overflow: hidden; font-family: var(--font); color: #fff;
+      background: linear-gradient(120deg, var(--navy) 0%, var(--navy-900) 55%, var(--navy-950) 100%);
+    }
+    body::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 78% 40%, rgba(201, 151, 43, 0.2), transparent 55%);
+    }
+
+    /* Banner */
+    .banner { width: 100vw; height: 100vh; }
+    .banner::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--gold); }
+    .banner .copy { position: absolute; left: 33%; top: 50%; transform: translateY(-50%); }
+    .banner h1 { margin: 0; font-size: 27px; font-weight: 800; line-height: 1.12; letter-spacing: -0.02em; }
+    .banner h1 em { font-style: normal; color: var(--gold-300); }
+    .banner p { margin: 10px 0 0; font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; color: var(--navy-300); }
+    .banner .mark { position: absolute; right: 24px; top: 50%; width: 250px; transform: translateY(-50%);
+      filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.45)); }
+
+    /* Logo */
+    .logo { width: 400px; height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .logo .mark { position: relative; width: 330px; filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.45)); }
+    .logo .word { position: relative; margin-top: 10px; font-size: 40px; font-weight: 800; letter-spacing: 0.06em; line-height: 1; }
+    .logo .sub { position: relative; margin-top: 10px; font-size: 14px; font-weight: 800; letter-spacing: 0.24em; color: var(--gold-300); }
+    .banner .logo-only, .logo .banner-only { display: none; }
+  </style>
+</head>
+<body class="banner">
+  <img class="mark" src="../assets/img/hero-mark-1380.webp" alt="" />
+  <div class="copy banner-only">
+    <h1>Accurate books. Automated workflows.<br /><em>Always compliant.</em></h1>
+    <p>Accounting · VAT · Corporate Tax · E-invoicing · CFO Advisory · MIS · Dubai</p>
+  </div>
+  <div class="word logo-only">ACCUMINDS</div>
+  <div class="sub logo-only">CONSULTING · FZCO</div>
+  <script>if (location.search.includes('logo')) document.body.className = 'logo';</script>
+</body>
+</html>

@@ -17,7 +17,8 @@ export function cameraDistance(aspect, fov = 32) {
  * @param {object} o
  * @param {HTMLCanvasElement} o.canvas
  * @param {HTMLElement} o.stage        element whose size the canvas fills
- * @param {{t:number, rise:number}} o.state   scroll state (0..1), owned by story.js
+ * @param {{t:number, rise:number, riseY?:number, riseScale?:number}} o.state
+ *        scroll state (t, rise: 0..1) and final-frame fit, owned by story.js
  * @param {() => boolean} o.isPaused   "Pause motion" (stops idle drift)
  * @param {boolean} o.small            lighter mesh + lower pixel ratio
  * @param {boolean} [o.poster]         render one frozen frame (for the poster image)
@@ -100,8 +101,9 @@ export async function startScene({ canvas, stage, state, isPaused, small, poster
       Math.sin(clock * 0.2) * 0.12 * calm,
     );
     // the clean spiral rises and settles above the final headline
-    group.position.y = 0.7 * state.rise;
-    group.scale.setScalar(1 - 0.14 * state.rise);
+    // rise / scale targets are measured by story.js to fit above the final headline
+    group.position.y = (state.riseY ?? 0.7) * state.rise;
+    group.scale.setScalar(1 - (1 - (state.riseScale ?? 0.86)) * state.rise);
     renderer.render(scene, camera);
   };
   gsap.ticker.add(tick);

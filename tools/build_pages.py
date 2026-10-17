@@ -164,6 +164,9 @@ def org_node():
         "sameAs": ["https://www.linkedin.com/company/accuminds-consulting/"],
         "address": {"@type": "PostalAddress", "streetAddress": "DSO - IFZA, IFZA Properties, Dubai Silicon Oasis",
                     "addressLocality": "Dubai", "addressRegion": "Dubai", "addressCountry": "AE"},
+        "openingHoursSpecification": [{"@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00", "closes": "19:00"}],
     }
 
 

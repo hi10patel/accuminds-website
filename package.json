@@ -1,7 +1,7 @@
 {
   "name": "accuminds-website",
   "private": true,
-  "description": "AccuMinds Consulting FZCO website. Static: no build step to deploy. Dev-only: esbuild bundles the 3D hero (three.js).",
+  "description": "Accuminds Consulting FZCO website. Static: no build step to deploy. Dev-only: esbuild bundles the 3D hero (three.js).",
   "scripts": {
     "serve": "node tools/serve.mjs 4173",
     "check:todo": "node tools/check-todo.mjs",

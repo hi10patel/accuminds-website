@@ -62,5 +62,5 @@ createServer(async (req, res) => {
   }
   console.log(`${status} ${req.url}`);
 }).listen(PORT, () => {
-  console.log(`AccuMinds preview: http://localhost:${PORT}`);
+  console.log(`Accuminds preview: http://localhost:${PORT}`);
 });

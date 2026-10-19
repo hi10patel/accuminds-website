@@ -1,4 +1,4 @@
-"""Builds the Word letterhead: tools/.out/AccuMinds-Letterhead.docx (A4).
+"""Builds the Word letterhead: tools/.out/Accuminds-Letterhead.docx (A4).
 
 Needs tools/.out/letterhead-logo.png first (see tools/letterhead-logo.html).
 Run from the repo root:  python tools/build_letterhead.py
@@ -96,7 +96,7 @@ def build():
     foot = s.footer
     p = tight(foot.paragraphs[0], align=WD_ALIGN_PARAGRAPH.CENTER)
     border(p, "top", "1A2E4A", 4, space=6)
-    run(p, "AccuMinds Consulting FZCO", 8.5, NAVY, bold=True)
+    run(p, "Accuminds Consulting FZCO", 8.5, NAVY, bold=True)
     run(p, "  ·  DSO – IFZA, IFZA Properties, Dubai Silicon Oasis, Dubai, UAE", 8.5, GREY)
     p = tight(foot.add_paragraph(), before=2, align=WD_ALIGN_PARAGRAPH.CENTER)
     run(p, "IFZA trade licence no. ", 8.5, GREY)
@@ -122,11 +122,11 @@ def build():
     para("Yours sincerely,", after=36, size=10.5)
     para("[Name]", after=0, size=10.5, colour=NAVY, bold=True)
     para("[Title]", after=0, size=10.5)
-    para("AccuMinds Consulting FZCO", after=0, size=10.5)
+    para("Accuminds Consulting FZCO", after=0, size=10.5)
 
-    doc.core_properties.title = "AccuMinds Consulting FZCO letterhead"
-    doc.core_properties.author = "AccuMinds Consulting FZCO"
-    out = OUT / "AccuMinds-Letterhead.docx"
+    doc.core_properties.title = "Accuminds Consulting FZCO letterhead"
+    doc.core_properties.author = "Accuminds Consulting FZCO"
+    out = OUT / "Accuminds-Letterhead.docx"
     doc.save(out)
     print("wrote", out)
 

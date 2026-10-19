@@ -323,6 +323,11 @@ html:not(.story-live) .motion-toggle { display: none; }
 @media (max-height: 820px) {
   .story-live .hero-trust { display: none; }
 }
+/* Phones, tablets and other portrait screens: the ball is larger next to the
+   word, so the whole word goes in front of it to stay readable. */
+@media (max-width: 1023px), (max-aspect-ratio: 1/1) {
+  .word--front .ch { visibility: visible; }
+}
 @media (max-width: 767px) {
   .story-live .story-track { height: 260vh; }
   .word { font-size: 17vw; top: 44%; }

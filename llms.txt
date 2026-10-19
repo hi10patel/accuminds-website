@@ -16,6 +16,10 @@ Contact: info@accumindsconsulting.ae · +971 50 98 67247 (phone and WhatsApp) ·
 - [MIS & Reporting](https://www.accumindsconsulting.ae/services/mis-reporting-dubai/): Management packs, KPIs, dashboards and variance analysis.
 - [AI Accounting Automation](https://www.accumindsconsulting.ae/services/ai-accounting-automation-uae/): Invoice and receipt capture, reconciliation and approval workflows.
 
+## Free tools
+
+- [Free E-Invoice Readiness Checker](https://www.accumindsconsulting.ae/e-invoice-checker/): Check sample sales invoices against the UAE e-invoicing (PINT AE) mandatory fields in your browser, with a readiness score, gap list and PDF report. Runs in the browser; invoice files are not uploaded.
+
 ## Pages
 
 - [Home](https://www.accumindsconsulting.ae/): overview, how we work, contact form

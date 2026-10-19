@@ -162,6 +162,7 @@ SERVICES = [
         "h1": "E-invoicing in the UAE: readiness and onboarding",
         "lead": "The UAE is moving business invoices onto a mandatory electronic system. We help you work out what changes, appoint a provider and get your data ready in time.",
         "card": "Timelines, accredited service provider onboarding and invoice data readiness.",
+        "tool": "Free readiness check",
         "included": [
             ("Readiness assessment", "Which of your invoices are in scope, when your deadlines fall and what your systems produce today."),
             ("Accredited service provider onboarding", "Support choosing and appointing an Accredited Service Provider (ASP) and connecting it to your accounting system."),

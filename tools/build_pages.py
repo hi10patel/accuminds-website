@@ -27,6 +27,9 @@ WA = "971509867247"
 TODAY = date.today().isoformat()
 BY_SLUG = {s["slug"]: s for s in SERVICES}
 ORG_ID = f"{SITE}/#organization"
+# Free tool published from the uae-einvoice-checker repo (npm run sync:checker).
+CHECKER = {"path": "/e-invoice-checker/", "name": "Free E-Invoice Readiness Checker",
+           "card": "Check sample sales invoices against the UAE e-invoicing (PINT AE) mandatory fields in your browser, with a readiness score, gap list and PDF report."}
 FONT = "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap"
 
 e = lambda t: escape(t, quote=True)  # noqa: E731
@@ -131,6 +134,7 @@ def service_links(current=None, base="/services/"):
     for s in SERVICES:
         cur = ' aria-current="page"' if s["slug"] == current else ""
         items.append(f'<li><a class="u-link" href="{base}{s["slug"]}/"{cur}>{e(s["name"])}</a></li>')
+    items.append(f'<li><a class="u-link" href="{CHECKER["path"]}">{e(CHECKER["name"])}</a></li>')
     return "\n            ".join(items)
 
 
@@ -247,6 +251,11 @@ def service_page(s):
       </div>
     </section>"""
 
+    tool_cta = ""
+    if s.get("tool"):
+        tool_cta = f"""
+          <a class="btn btn-ghost-light" href="{CHECKER["path"]}" data-magnetic>{e(s["tool"])} <span aria-hidden="true">&rarr;</span></a>"""
+
     body = f"""{head(s["title"], s["description"], canonical, ld)}
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -264,7 +273,7 @@ def service_page(s):
           <a class="btn btn-gold" href="/#contact" data-magnetic>Book a consultation</a>
           <a class="btn btn-ghost-light" href="{e(wa_link(s["name"]))}" target="_blank" rel="noopener" data-magnetic>
             <svg class="icon" aria-hidden="true"><use href="#i-whatsapp" /></svg> WhatsApp us<span class="sr-only"> (opens WhatsApp)</span>
-          </a>
+          </a>{tool_cta}
         </div>
       </div>
     </section>
@@ -381,7 +390,7 @@ def hub_page():
 
 
 def sitemap():
-    urls = [f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES]
+    urls = [f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES] + [f"{SITE}{CHECKER['path']}"]
     rows = "\n".join(f"  <url>\n    <loc>{u}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </url>" for u in urls)
     (ROOT / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{rows}\n</urlset>\n',
@@ -402,6 +411,7 @@ def llms_txt():
         "",
     ]
     lines += [f"- [{s['name']}]({url(s['slug'])}): {s['card']}" for s in SERVICES]
+    lines += ["", "## Free tools", "", f"- [{CHECKER['name']}]({SITE}{CHECKER['path']}): {CHECKER['card']} Runs in the browser; invoice files are not uploaded."]
     lines += ["", "## Pages", "", f"- [Home]({SITE}/): overview, how we work, contact form", f"- [All services]({url()})", ""]
     (ROOT / "llms.txt").write_text("\n".join(lines), encoding="utf-8")
 

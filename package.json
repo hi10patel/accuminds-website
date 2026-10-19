@@ -8,7 +8,8 @@
     "images": "python tools/optimise_images.py",
     "build:3d": "esbuild assets/js/story/scene.js --bundle --minify --format=esm --target=es2020 --outfile=assets/js/story.bundle.js",
     "poster:3d": "node tools/story-poster.mjs",
-    "indexnow": "node tools/indexnow.mjs"
+    "indexnow": "node tools/indexnow.mjs",
+    "sync:checker": "node tools/sync-checker.mjs"
   },
   "devDependencies": {
     "esbuild": "0.28.2",

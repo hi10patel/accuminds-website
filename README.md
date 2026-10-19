@@ -1,4 +1,4 @@
-# AccuMinds Consulting FZCO: website
+# Accuminds Consulting FZCO: website
 
 Live at **www.accumindsconsulting.ae**. Static site: plain HTML, CSS and JavaScript.
 There is **no build step** and nothing to install to deploy it.

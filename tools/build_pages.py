@@ -41,7 +41,7 @@ def url(slug=None):
 
 def wa_link(topic):
     from urllib.parse import quote
-    return f"https://wa.me/{WA}?text={quote(f'Hello AccuMinds, I would like to discuss {topic}.')}"
+    return f"https://wa.me/{WA}?text={quote(f'Hello Accuminds, I would like to discuss {topic}.')}"
 
 
 SPRITE = """  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -68,7 +68,7 @@ def head(title, description, canonical, ld):
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href="{canonical}" />
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="AccuMinds Consulting FZCO" />
+  <meta property="og:site_name" content="Accuminds Consulting FZCO" />
   <meta property="og:url" content="{canonical}" />
   <meta property="og:title" content="{e(title)}" />
   <meta property="og:description" content="{e(description)}" />
@@ -107,9 +107,9 @@ def head(title, description, canonical, ld):
 
 HEADER = """  <header class="site-header" id="site-header">
     <div class="container header-inner">
-      <a class="brand" href="/" aria-label="AccuMinds Consulting, home">
+      <a class="brand" href="/" aria-label="Accuminds Consulting, home">
         <img src="/assets/img/mark-3d.webp" width="88" height="32" alt="" />
-        <span class="wordmark">AccuMinds</span>
+        <span class="wordmark">Accuminds</span>
       </a>
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
@@ -143,7 +143,7 @@ def footer(current=None):
     <div class="container footer-inner">
       <a class="footer-brand" href="/">
         <img src="/assets/img/mark-3d.webp" width="77" height="28" alt="" loading="lazy" decoding="async" />
-        <span class="wordmark-light">AccuMinds Consulting · FZCO</span>
+        <span class="wordmark-light">Accuminds Consulting · FZCO</span>
       </a>
       <nav aria-label="Services">
         <ul class="footer-nav footer-services">
@@ -156,14 +156,14 @@ def footer(current=None):
         <a class="u-link" href="tel:+971509867247">+971 50 98 67247</a> ·
         <a class="u-link" href="https://www.linkedin.com/company/accuminds-consulting/" rel="me noopener" target="_blank">LinkedIn</a>
       </address>
-      <p class="footer-copy">© <span data-year>{date.today().year}</span> AccuMinds Consulting FZCO. All rights reserved.</p>
+      <p class="footer-copy">© <span data-year>{date.today().year}</span> Accuminds Consulting FZCO. All rights reserved.</p>
     </div>
   </footer>"""
 
 
 def org_node():
     return {
-        "@type": "ProfessionalService", "@id": ORG_ID, "name": "AccuMinds Consulting FZCO", "url": f"{SITE}/",
+        "@type": "ProfessionalService", "@id": ORG_ID, "name": "Accuminds Consulting FZCO", "url": f"{SITE}/",
         "telephone": "+971509867247", "email": "info@accumindsconsulting.ae",
         "sameAs": ["https://www.linkedin.com/company/accuminds-consulting/"],
         "address": {"@type": "PostalAddress", "streetAddress": "DSO - IFZA, IFZA Properties, Dubai Silicon Oasis",
@@ -344,13 +344,13 @@ def hub_page():
     trail = [("Home", f"{SITE}/"), ("Services", canonical)]
     ld = {"@context": "https://schema.org", "@graph": [
         org_node(), breadcrumbs_ld(trail),
-        {"@type": "ItemList", "name": "AccuMinds services", "itemListElement": [
+        {"@type": "ItemList", "name": "Accuminds services", "itemListElement": [
             {"@type": "ListItem", "position": i + 1, "url": url(s["slug"]), "name": s["name"]} for i, s in enumerate(SERVICES)]},
     ]}
     cards = "\n".join(
         f"""          <a class="related-card" href="/services/{s["slug"]}/"><span class="related-pillar">{e(s["pillar"])}</span><span class="related-name">{e(s["name"])}</span><span class="related-desc">{e(s["card"])}</span><span class="related-go" aria-hidden="true">→</span></a>"""
         for s in SERVICES)
-    body = f"""{head("Accounting, VAT, Corporate Tax & CFO Services in Dubai | AccuMinds",
+    body = f"""{head("Accounting, VAT, Corporate Tax & CFO Services in Dubai | Accuminds",
                  "Accounting, VAT, Corporate Tax, e-invoicing, CFO advisory, MIS reporting and AI automation for UAE SMEs and free zone companies.",
                  canonical, ld)}
 <body>
@@ -399,11 +399,11 @@ def sitemap():
 
 def llms_txt():
     lines = [
-        "# AccuMinds Consulting FZCO",
+        "# Accuminds Consulting FZCO",
         "",
         "> Finance, compliance and automation consultancy for SMEs and free zone companies in the UAE, based in Dubai Silicon Oasis (IFZA).",
         "",
-        "AccuMinds provides bookkeeping and accounting, UAE VAT and Corporate Tax compliance, e-invoicing readiness, part-time CFO advisory, MIS and management reporting, and AI-assisted accounting automation.",
+        "Accuminds provides bookkeeping and accounting, UAE VAT and Corporate Tax compliance, e-invoicing readiness, part-time CFO advisory, MIS and management reporting, and AI-assisted accounting automation.",
         "",
         "Contact: info@accumindsconsulting.ae · +971 50 98 67247 (phone and WhatsApp) · DSO - IFZA, IFZA Properties, Dubai Silicon Oasis, Dubai, UAE",
         "",

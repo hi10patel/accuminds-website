@@ -14,7 +14,7 @@ export function initContact(motion) {
   const waLinks = [...document.querySelectorAll('[data-whatsapp]')];
 
   const setWhatsAppTopic = (topic) => {
-    const text = `Hello AccuMinds, I'd like to discuss ${topic}.`;
+    const text = `Hello Accuminds, I'd like to discuss ${topic}.`;
     waLinks.forEach((a) => {
       a.href = `https://wa.me/${a.dataset.whatsapp}?text=${encodeURIComponent(text)}`;
     });

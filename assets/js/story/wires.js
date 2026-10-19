@@ -28,7 +28,7 @@ const norm = (v) => { const l = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] 
 const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
 const nextTask = () => new Promise((r) => setTimeout(r, 0));
 
-// The clarity path, drawn the way the AccuMinds logo reads: the strand starts
+// The clarity path, drawn the way the Accuminds logo reads: the strand starts
 // low on the left, rises through an S-curve, enters the spiral at its top
 // heading right, then coils clockwise inwards. Arc-length sampled.
 function logoPath(samples, { center = [0.95, 0.15], rOut = 1.25, rIn = 0.14, turns = 3.1 } = {}) {

@@ -23,7 +23,7 @@ const OUT = fileURLToPath(new URL(`..${BASE}`, import.meta.url));
 const CSP = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; "
   + "connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'";
 
-const TITLE = 'Free UAE E-Invoice Readiness Checker (PINT AE) | AccuMinds';
+const TITLE = 'Free UAE E-Invoice Readiness Checker (PINT AE) | Accuminds';
 const DESCRIPTION = 'Check your sales invoices against the UAE e-invoicing (PINT AE) mandatory fields in under a minute. '
   + 'Free readiness score, gap list and PDF report. Your file never leaves your browser.';
 
@@ -79,7 +79,7 @@ const tags = `
     <link rel="canonical" href="${URL_}" />
     <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="AccuMinds Consulting FZCO" />
+    <meta property="og:site_name" content="Accuminds Consulting FZCO" />
     <meta property="og:title" content="${esc(TITLE)}" />
     <meta property="og:description" content="${esc(DESCRIPTION)}" />
     <meta property="og:url" content="${URL_}" />

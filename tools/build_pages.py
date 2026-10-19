@@ -154,7 +154,8 @@ def footer(current=None):
         DSO – IFZA, IFZA Properties, Dubai Silicon Oasis, Dubai, UAE ·
         <a class="u-link" href="mailto:info@accumindsconsulting.ae">info@accumindsconsulting.ae</a> ·
         <a class="u-link" href="tel:+971509867247">+971 50 98 67247</a> ·
-        <a class="u-link" href="https://www.linkedin.com/company/accuminds-consulting/" rel="me noopener" target="_blank">LinkedIn</a>
+        <a class="u-link" href="https://www.linkedin.com/company/accuminds-consulting/" rel="me noopener" target="_blank">LinkedIn</a> ·
+        <a class="u-link" href="https://www.google.com/maps?cid=9046261605626005493" rel="noopener" target="_blank">Google Maps</a>
       </address>
       <p class="footer-copy">© <span data-year>{date.today().year}</span> Accuminds Consulting FZCO. All rights reserved.</p>
     </div>
@@ -165,7 +166,8 @@ def org_node():
     return {
         "@type": "ProfessionalService", "@id": ORG_ID, "name": "Accuminds Consulting FZCO", "url": f"{SITE}/",
         "telephone": "+971509867247", "email": "info@accumindsconsulting.ae",
-        "sameAs": ["https://www.linkedin.com/company/accuminds-consulting/"],
+        "sameAs": ["https://www.linkedin.com/company/accuminds-consulting/", "https://www.google.com/maps?cid=9046261605626005493"],
+        "hasMap": "https://www.google.com/maps?cid=9046261605626005493",
         "address": {"@type": "PostalAddress", "streetAddress": "DSO - IFZA, IFZA Properties, Dubai Silicon Oasis",
                     "addressLocality": "Dubai", "addressRegion": "Dubai", "addressCountry": "AE"},
         "openingHoursSpecification": [{"@type": "OpeningHoursSpecification",

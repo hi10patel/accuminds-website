@@ -5,6 +5,9 @@ Rules for this file:
   link and are re-checked on the date in REVIEWED. Update REVIEWED when you
   re-check them.
 - No invented claims (client numbers, certifications, guarantees, prices).
+- "experience" describes the lead's own background (owner-approved, October
+  2026): no names, no employer names, no figures. Do not present it as
+  Accuminds client results.
 - Plain text only; the builder escapes it. Use '|' nowhere special.
 """
 
@@ -222,6 +225,18 @@ SERVICES = [
             "Groups with several entities or branches",
         ],
         "facts": [],
+        "experience": {
+            "title": "Senior finance experience, part-time.",
+            "lead": "CFO advisory at Accuminds is led by a qualified Cost and Management Accountant (CMA) with more than 20 years in financial control, business planning and treasury, working across the UAE, Saudi Arabia, Iraq (Kurdistan) and India.",
+            "rows": [
+                ("Planning and budgeting", "Annual operating plans and budgets, rolling forecasts, mid-term reviews and five-year business plans."),
+                ("Cash and treasury", "Cash-flow management, banking facilities and foreign-exchange exposure, including hedging."),
+                ("Commercial decisions", "Pricing of new products, business cases for tenders and new product lines, and make-or-buy analysis."),
+                ("Controls and audits", "Month-end close, internal controls, and coordination with internal and external auditors."),
+                ("Industries", "Oil and gas services, paper trading, automotive, capital markets, and consulting and audit."),
+                ("Tools", "Excel financial models, Power BI dashboards and ERP systems."),
+            ],
+        },
         "faq": [
             ("What does a part-time CFO do?",
              "The same strategic work as a full-time CFO (forecasting, cash planning, reporting to owners or investors, and decision support) for a set number of days or hours each month."),
@@ -259,6 +274,17 @@ SERVICES = [
             "Companies reporting to boards, partners or investors",
         ],
         "facts": [],
+        "experience": {
+            "title": "Built by someone who has produced MIS for 20 years.",
+            "lead": "MIS and reporting at Accuminds is led by a qualified Cost and Management Accountant (CMA) with more than 20 years in management reporting, financial control and business planning, working across the UAE, Saudi Arabia, Iraq (Kurdistan) and India.",
+            "rows": [
+                ("Management reporting", "Monthly MIS packs, and consolidated profit and loss and balance sheet reporting with analysis against budget."),
+                ("Variance and profitability", "Budget-versus-actual and quarterly variance reporting, and job, product and segment profitability."),
+                ("Numbers you can trust", "Month-end close, accruals and cut-off, reconciliations including inventory, and internal controls behind every report."),
+                ("Industries", "Oil and gas services, paper trading, automotive, capital markets, and consulting and audit."),
+                ("Tools", "Excel financial models, Power BI dashboards and ERP systems."),
+            ],
+        },
         "faq": [
             ("What is MIS in accounting?",
              "A management information system: the structure, reports and dashboards that turn accounting data into information managers use to run the business."),

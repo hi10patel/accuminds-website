@@ -243,6 +243,24 @@ def service_page(s):
         f"""          <a class="related-card" href="/services/{r}/"><span class="related-name">{e(BY_SLUG[r]["name"])}</span><span class="related-desc">{e(BY_SLUG[r]["card"])}</span><span class="related-go" aria-hidden="true">→</span></a>"""
         for r in s["related"])
 
+    experience_section = ""
+    if s.get("experience"):
+        x = s["experience"]
+        rows = "\n".join(f'          <div class="fact-row"><dt>{e(t)}</dt><dd>{e(d)}</dd></div>' for t, d in x["rows"])
+        experience_section = f"""
+    <section class="section" aria-labelledby="experience-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Experience behind the service</p>
+          <h2 id="experience-title" data-reveal="mask">{e(x["title"])}</h2>
+          <p class="lead" data-reveal>{e(x["lead"])}</p>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{rows}
+        </dl>
+      </div>
+    </section>"""
+
     facts_section = ""
     if s["facts"]:
         rows = "\n".join(
@@ -312,7 +330,7 @@ def service_page(s):
         </ul>
       </div>
     </section>
-{facts_section}
+{experience_section}{facts_section}
     <section class="section section--white" aria-labelledby="faq-title">
       <div class="container">
         <div class="section-head">

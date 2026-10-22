@@ -17,6 +17,10 @@ PINT_AE_RULES = ("Peppol: PINT AE specific rules",
 ZOHO_EINV = ("Zoho Books UAE: eInvoicing", "https://www.zoho.com/ae/books/e-invoicing/")
 TALLY_MENA = ("TallyPrime Middle East", "https://tallysolutions.com/mena/")
 QB_AE = ("QuickBooks UAE", "https://quickbooks.intuit.com/ae/")
+ODOO_UAE = ("Odoo documentation: United Arab Emirates localization",
+            "https://www.odoo.com/documentation/19.0/applications/finance/fiscal_localizations/united_arab_emirates.html")
+ODOO_EDI = ("Odoo documentation: electronic invoicing (Peppol)",
+            "https://www.odoo.com/documentation/19.0/applications/finance/accounting/customer_invoices/electronic_invoicing.html")
 
 # Shared by every guide: the dates and the PINT AE data checks.
 DEADLINES = [
@@ -144,6 +148,43 @@ GUIDES = [
             ("Is Tally an Accredited Service Provider in the UAE?", "Yes. Tally Software Solutions FZCO is on the Ministry of Finance list of eInvoicing Accredited Service Providers, accreditation number 162503, as checked on " + CHECKED + "."),
             ("Do I need a separate e-invoicing provider if I use TallyPrime?", "Not necessarily. You can appoint Tally Software Solutions FZCO as your Accredited Service Provider in EmaraTax, or choose another accredited provider."),
             ("Which TallyPrime release do I need?", "Tally's Middle East website does not state a minimum release for UAE e-invoicing. Update to the latest release and confirm with Tally or your Tally partner."),
+            ("When must my business appoint an ASP?", "By 30 October 2026 if your revenue is AED 50 million or more, and by 31 March 2027 if it is below that."),
+        ],
+    },
+    {
+        "slug": "odoo-e-invoicing-uae",
+        "software": "Odoo",
+        "title": "Odoo and UAE E-Invoicing: Connectors, ASPs and Data Checklist | Accuminds",
+        "description": "Odoo is not a UAE Accredited Service Provider and its UAE localization does not cover e-invoicing. How Odoo users connect through an accredited provider, and the data to fix first.",
+        "h1": "Odoo and UAE e-invoicing: connectors and ASPs",
+        "lead": "Odoo is not on the Ministry of Finance list of Accredited Service Providers, and its official UAE documentation does not cover e-invoicing. Odoo users connect through an accredited provider, usually with a connector module. Here is how to choose well.",
+        "card": "Odoo is not an accredited provider: connector modules, choosing an ASP, and the data to fix first.",
+        "answer": "Odoo S.A. is not on the Ministry of Finance list of eInvoicing Accredited Service Providers, and Odoo's official UAE localization documentation does not describe UAE e-invoicing (PINT AE). Odoo's own Peppol access point is documented for European countries, not the UAE. To comply, Odoo users appoint an Accredited Service Provider (ASP) in EmaraTax and connect Odoo to it, usually through a connector module, then make sure invoices carry the fields PINT AE requires.",
+        "status": [
+            ("Is Odoo an accredited provider?", "No. Odoo does not appear on the Ministry of Finance list of eInvoicing Accredited Service Providers (checked " + CHECKED + ").", MOF_ASP),
+            ("Does Odoo's UAE localization cover e-invoicing?", "Not stated. Odoo's official UAE localization documentation covers VAT and invoice language but does not mention UAE e-invoicing, PINT AE or Peppol endpoint 0235 (checked " + CHECKED + ").", ODOO_UAE),
+            ("Does Odoo's Peppol access point serve the UAE?", "Not as documented. Odoo's electronic invoicing documentation lists European countries for its Peppol access point; the UAE is not among them (checked " + CHECKED + ").", ODOO_EDI),
+        ],
+        "steps_title": "From Odoo to compliant e-invoices",
+        "steps": [
+            ("Note your Odoo version and hosting", "Odoo Online, Odoo.sh or on-premise, and which version. Connector modules differ by version and hosting, and some cannot be installed on Odoo Online."),
+            ("Shortlist ASPs, then connectors", "Start from accredited providers on the Ministry of Finance list, then ask how each connects to Odoo. Several third-party connector modules exist; confirm the provider behind any module is on the official list."),
+            ("Agree the contract, then appoint in EmaraTax", "You appoint your chosen ASP in EmaraTax. The ASP onboards you and sets up your Peppol participant ID, which for UAE businesses is 0235 followed by your 10-digit TIN."),
+            ("Fix data at the source", "Update customer TRNs, taxes mapped to VAT categories, product descriptions and addresses with the emirate in Odoo, so every new invoice is right first time."),
+            ("Test, then go live", "Send test invoices and credit notes through the ASP, check rejections, and confirm how incoming supplier e-invoices become vendor bills in Odoo."),
+        ],
+        "questions_title": "Questions to ask before you choose a connector",
+        "questions": [
+            ("Which ASP is behind it?", "Is the provider on the Ministry of Finance list today, and who supports you when an invoice is rejected: the module author or the ASP?"),
+            ("Which Odoo versions and hosting?", "Does it support your exact version and Odoo Online, Odoo.sh or on-premise? What happens when you upgrade Odoo?"),
+            ("How are PINT AE fields mapped?", "Where do VAT category codes (including reverse charge), emirate codes, item descriptions and AED totals for foreign-currency invoices come from?"),
+            ("Credit notes and incoming invoices", "Do credit notes keep the link to the original invoice, and do received e-invoices arrive as draft vendor bills?"),
+            ("Total cost", "Module licence, ASP fees per invoice or per month, implementation and annual support."),
+        ],
+        "faq": [
+            ("Is Odoo an Accredited Service Provider in the UAE?", "No. Odoo is not on the Ministry of Finance list of eInvoicing Accredited Service Providers as checked on " + CHECKED + "."),
+            ("Can I keep Odoo for UAE e-invoicing?", "Yes. Odoo can stay your accounting system; e-invoices are exchanged through an Accredited Service Provider, usually connected to Odoo with a connector module."),
+            ("Does Odoo's own Peppol access point work in the UAE?", "Odoo's documentation lists European countries for its Peppol access point and does not include the UAE, so plan on an accredited UAE provider."),
             ("When must my business appoint an ASP?", "By 30 October 2026 if your revenue is AED 50 million or more, and by 31 March 2027 if it is below that."),
         ],
     },

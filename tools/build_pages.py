@@ -5,6 +5,8 @@
 Writes:
   services/index.html                 services hub
   services/<slug>/index.html          one page per service
+  guides/index.html                   e-invoicing software guides hub (tools/guides_content.py)
+  guides/<slug>/index.html            one page per guide
   sitemap.xml, llms.txt               regenerated from the same content
   index.html                          refreshes the footer service links
                                       (between the SERVICE-LINKS markers)
@@ -21,6 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 from pages_content import REVIEWED, SERVICES  # noqa: E402
+from guides_content import CHECKED, CHECKLIST, DEADLINES, GUIDES, MOF_ASP, PINT_AE, PINT_AE_RULES  # noqa: E402
 
 SITE = "https://www.accumindsconsulting.ae"
 WA = "971509867247"
@@ -37,6 +40,10 @@ e = lambda t: escape(t, quote=True)  # noqa: E731
 
 def url(slug=None):
     return f"{SITE}/services/{slug}/" if slug else f"{SITE}/services/"
+
+
+def guide_url(slug=None):
+    return f"{SITE}/guides/{slug}/" if slug else f"{SITE}/guides/"
 
 
 def wa_link(topic):
@@ -114,6 +121,7 @@ HEADER = """  <header class="site-header" id="site-header">
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li><a class="u-link" href="/services/">Services</a></li>
+          <li><a class="u-link" href="/guides/">Guides</a></li>
           <li><a class="u-link" href="/#process">How we work</a></li>
           <li><a class="u-link" href="/#about">About</a></li>
           <li><a class="u-link" href="/#contact">Contact</a></li>
@@ -135,6 +143,7 @@ def service_links(current=None, base="/services/"):
         cur = ' aria-current="page"' if s["slug"] == current else ""
         items.append(f'<li><a class="u-link" href="{base}{s["slug"]}/"{cur}>{e(s["name"])}</a></li>')
     items.append(f'<li><a class="u-link" href="{CHECKER["path"]}">{e(CHECKER["name"])}</a></li>')
+    items.append('<li><a class="u-link" href="/guides/">E-Invoicing Software Guides</a></li>')
     return "\n            ".join(items)
 
 
@@ -391,8 +400,222 @@ def hub_page():
     return out
 
 
+def fact_rows(rows):
+    return "\n".join(
+        f"""          <div class="fact-row"><dt>{e(t)}</dt><dd>{e(d)} <a class="fact-src u-link" href="{e(src[1])}" target="_blank" rel="noopener">{e(src[0])}<span class="sr-only"> (opens in a new tab)</span></a></dd></div>"""
+        for t, d, src in rows)
+
+
+def guide_page(g):
+    canonical = guide_url(g["slug"])
+    trail = [("Home", f"{SITE}/"), ("Guides", guide_url()), (g["software"], canonical)]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(),
+        {"@type": "Article", "@id": f"{canonical}#article", "headline": g["h1"], "description": g["description"],
+         "url": canonical, "inLanguage": "en", "dateModified": TODAY, "author": {"@id": ORG_ID}, "publisher": {"@id": ORG_ID},
+         "about": [{"@type": "Thing", "name": "UAE e-invoicing"}, {"@type": "SoftwareApplication", "name": g["software"]}]},
+        breadcrumbs_ld(trail),
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in g["faq"]]},
+    ]}
+    steps = "\n".join(f'          <li><h3>{e(t)}</h3><p>{e(d)}</p></li>' for t, d in g["steps"])
+    questions = "\n".join(f'          <li class="incl"><h3>{e(t)}</h3><p>{e(d)}</p></li>' for t, d in g["questions"])
+    checklist = "\n".join(
+        f'          <div class="fact-row"><dt>{e(t)}</dt><dd>{e(d)}</dd></div>' for t, d in CHECKLIST)
+    faq = "\n".join(
+        f"""          <details class="faq-item">
+            <summary><h3>{e(q)}</h3><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+            <p>{e(a)}</p>
+          </details>""" for q, a in g["faq"])
+    others = [x for x in GUIDES if x["slug"] != g["slug"]]
+    related = "\n".join(
+        [f"""          <a class="related-card" href="/guides/{x["slug"]}/"><span class="related-pillar">Guide</span><span class="related-name">{e(x["software"])} and UAE e-invoicing</span><span class="related-desc">{e(x["card"])}</span><span class="related-go" aria-hidden="true">→</span></a>""" for x in others]
+        + [f"""          <a class="related-card" href="/services/e-invoicing-uae/"><span class="related-pillar">Service</span><span class="related-name">{e(BY_SLUG["e-invoicing-uae"]["name"])}</span><span class="related-desc">{e(BY_SLUG["e-invoicing-uae"]["card"])}</span><span class="related-go" aria-hidden="true">→</span></a>"""])
+
+    body = f"""{head(g["title"], g["description"], canonical, ld)}
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+{SPRITE}
+{HEADER}
+
+  <main id="main">
+    <section class="page-hero on-dark" aria-labelledby="page-title">
+      <div class="container">
+        {breadcrumbs_html(trail)}
+        <p class="eyebrow" data-reveal>Guide · UAE e-invoicing</p>
+        <h1 id="page-title" data-reveal="mask">{e(g["h1"])}</h1>
+        <p class="lead" data-reveal>{e(g["lead"])}</p>
+        <div class="hero-ctas" data-reveal-stagger>
+          <a class="btn btn-gold" href="{CHECKER["path"]}" data-magnetic>Free readiness check <span aria-hidden="true">&rarr;</span></a>
+          <a class="btn btn-ghost-light" href="/#contact" data-magnetic>Book a consultation</a>
+        </div>
+        <p class="guide-meta" data-reveal>Facts checked {e(CHECKED)} against the Ministry of Finance list and official specifications.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="answer-title">
+      <div class="container">
+        <div class="answer-box" data-reveal>
+          <h2 id="answer-title">The short answer</h2>
+          <p>{e(g["answer"])}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="status-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Where {e(g["software"])} stands</p>
+          <h2 id="status-title" data-reveal="mask">The facts, with sources.</h2>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{fact_rows(g["status"])}
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="steps-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Step by step</p>
+          <h2 id="steps-title" data-reveal="mask">{e(g["steps_title"])}</h2>
+        </div>
+        <ol class="guide-steps" data-reveal-stagger>
+{steps}
+        </ol>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="questions-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Before you go live</p>
+          <h2 id="questions-title" data-reveal="mask">{e(g["questions_title"])}</h2>
+        </div>
+        <ul class="incl-grid" data-reveal-stagger>
+{questions}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="data-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Data checklist</p>
+          <h2 id="data-title" data-reveal="mask">What every e-invoice must carry.</h2>
+          <p class="lead" data-reveal>From the UAE e-invoicing specification, PINT AE. These apply whatever software you use. <a class="u-link" href="{e(PINT_AE_RULES[1])}" target="_blank" rel="noopener">{e(PINT_AE_RULES[0])}<span class="sr-only"> (opens in a new tab)</span></a></p>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{checklist}
+        </dl>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="dates-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Deadlines</p>
+          <h2 id="dates-title" data-reveal="mask">When you need to be ready.</h2>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{fact_rows(DEADLINES)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+{faq}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="related-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Related</p>
+          <h2 id="related-title" data-reveal="mask">Keep reading.</h2>
+        </div>
+        <div class="related-grid" data-reveal-stagger>
+{related}
+        </div>
+      </div>
+    </section>
+
+{cta_band(g["software"] + " e-invoicing")}
+  </main>
+
+{footer()}
+</body>
+</html>
+"""
+    out = ROOT / "guides" / g["slug"] / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
+def guides_hub():
+    canonical = guide_url()
+    trail = [("Home", f"{SITE}/"), ("Guides", canonical)]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(), breadcrumbs_ld(trail),
+        {"@type": "ItemList", "name": "UAE e-invoicing software guides", "itemListElement": [
+            {"@type": "ListItem", "position": i + 1, "url": guide_url(g["slug"]), "name": g["h1"]} for i, g in enumerate(GUIDES)]},
+    ]}
+    cards = "\n".join(
+        f"""          <a class="related-card" href="/guides/{g["slug"]}/"><span class="related-pillar">Guide</span><span class="related-name">{e(g["software"])} and UAE e-invoicing</span><span class="related-desc">{e(g["card"])}</span><span class="related-go" aria-hidden="true">→</span></a>"""
+        for g in GUIDES)
+    body = f"""{head("UAE E-Invoicing Guides for QuickBooks, Zoho Books and Tally | Accuminds",
+                 "Practical UAE e-invoicing guides for QuickBooks, Zoho Books and TallyPrime users: Accredited Service Providers, setup steps, data checklists and deadlines.",
+                 canonical, ld)}
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+{SPRITE}
+{HEADER}
+
+  <main id="main">
+    <section class="page-hero on-dark" aria-labelledby="page-title">
+      <div class="container">
+        {breadcrumbs_html(trail)}
+        <p class="eyebrow" data-reveal>Guides</p>
+        <h1 id="page-title" data-reveal="mask">UAE e-invoicing, by accounting software.</h1>
+        <p class="lead" data-reveal>How to meet the e-invoicing mandate with the software you already use: whether it is an Accredited Service Provider, the setup steps, and the data to fix first.</p>
+        <div class="hero-ctas" data-reveal-stagger>
+          <a class="btn btn-gold" href="{CHECKER["path"]}" data-magnetic>Free readiness check <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-label="All guides">
+      <div class="container">
+        <div class="related-grid related-grid--all" data-reveal-stagger>
+{cards}
+        </div>
+      </div>
+    </section>
+
+{cta_band("e-invoicing")}
+  </main>
+
+{footer()}
+</body>
+</html>
+"""
+    out = ROOT / "guides" / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
 def sitemap():
-    urls = [f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES] + [f"{SITE}{CHECKER['path']}"]
+    urls = ([f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES] + [f"{SITE}{CHECKER['path']}"]
+            + [guide_url()] + [guide_url(g["slug"]) for g in GUIDES])
     rows = "\n".join(f"  <url>\n    <loc>{u}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </url>" for u in urls)
     (ROOT / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{rows}\n</urlset>\n',
@@ -414,6 +637,7 @@ def llms_txt():
     ]
     lines += [f"- [{s['name']}]({url(s['slug'])}): {s['card']}" for s in SERVICES]
     lines += ["", "## Free tools", "", f"- [{CHECKER['name']}]({SITE}{CHECKER['path']}): {CHECKER['card']} Runs in the browser; invoice files are not uploaded."]
+    lines += ["", "## Guides", ""] + [f"- [{g['h1']}]({guide_url(g['slug'])}): {g['card']}" for g in GUIDES]
     lines += ["", "## Pages", "", f"- [Home]({SITE}/): overview, how we work, contact form", f"- [All services]({url()})", ""]
     (ROOT / "llms.txt").write_text("\n".join(lines), encoding="utf-8")
 
@@ -437,7 +661,7 @@ def refresh_home_footer():
 
 
 if __name__ == "__main__":
-    written = [hub_page()] + [service_page(s) for s in SERVICES]
+    written = [hub_page()] + [service_page(s) for s in SERVICES] + [guides_hub()] + [guide_page(g) for g in GUIDES]
     sitemap()
     llms_txt()
     refresh_home_footer()

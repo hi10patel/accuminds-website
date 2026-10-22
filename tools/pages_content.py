@@ -121,6 +121,7 @@ SERVICES = [
         "h1": "UAE Corporate Tax services: registration, returns and relief",
         "lead": "Corporate Tax registration, returns and planning for UAE SMEs and free zone entities, built on reconciled books and filed within the deadline.",
         "card": "Registration, Corporate Tax returns, Small Business Relief and free zone reviews.",
+        "tool": ("Free filing check", "/corporate-tax-check/"),
         "included": [
             ("Corporate Tax registration", "Registration with the FTA and confirmation of your tax period."),
             ("Taxable income computation", "From your financial statements to taxable income, with each adjustment documented."),
@@ -259,6 +260,7 @@ SERVICES = [
         "h1": "MIS and management reporting in Dubai",
         "lead": "Custom MIS and management reporting that turn your ledger into clear, decision-ready numbers every month.",
         "card": "Management packs, KPIs, dashboards and variance analysis.",
+        "tool": ("Free MIS template", "/mis-report-template/"),
         "included": [
             ("Monthly management packs", "Results, key ratios and short commentary, ready shortly after month-end."),
             ("KPIs & dashboards", "The handful of measures that matter for your business, tracked consistently."),

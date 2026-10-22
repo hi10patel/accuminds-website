@@ -20,11 +20,17 @@ Contact: info@accumindsconsulting.ae · +971 50 98 67247 (phone and WhatsApp) ·
 
 - [Free E-Invoice Readiness Checker](https://www.accumindsconsulting.ae/e-invoice-checker/): Check sample sales invoices against the UAE e-invoicing (PINT AE) mandatory fields in your browser, with a readiness score, gap list and PDF report. Runs in the browser; invoice files are not uploaded.
 
+## Free tools and templates
+
+- [Corporate Tax Filing Check](https://www.accumindsconsulting.ae/corporate-tax-check/): Answer up to five questions to see whether you must register and file for UAE Corporate Tax, and whether Small Business Relief may apply.
+- [Free Monthly MIS Report Template](https://www.accumindsconsulting.ae/mis-report-template/): An Excel MIS pack for SMEs: P&L against budget, KPIs, working-capital days, a three-month cash outlook and commentary prompts.
+
 ## Guides
 
 - [QuickBooks and UAE e-invoicing: connecting to an ASP](https://www.accumindsconsulting.ae/guides/quickbooks-e-invoicing-uae/): QuickBooks is not an accredited provider: how to connect through one, and what to ask before you sign.
 - [Zoho Books UAE e-invoicing: setup and data checklist](https://www.accumindsconsulting.ae/guides/zoho-books-e-invoicing-uae/): Zoho is an accredited provider with e-invoicing built in: the setup steps and the data to fix first.
 - [TallyPrime UAE e-invoicing: ASP setup and data checklist](https://www.accumindsconsulting.ae/guides/tally-e-invoicing-uae/): Tally is an accredited provider: preparing your TallyPrime masters and appointing Tally in EmaraTax.
+- [Odoo and UAE e-invoicing: connectors and ASPs](https://www.accumindsconsulting.ae/guides/odoo-e-invoicing-uae/): Odoo is not an accredited provider: connector modules, choosing an ASP, and the data to fix first.
 
 ## Pages
 

@@ -6,6 +6,8 @@ Writes:
   services/index.html                 services hub
   services/<slug>/index.html          one page per service
   guides/index.html                   e-invoicing software guides hub (tools/guides_content.py)
+  mis-report-template/index.html      free MIS pack download (file: tools/build_mis_template.py)
+  corporate-tax-check/index.html      Corporate Tax filing check (logic: assets/js/ct-check.js)
   guides/<slug>/index.html            one page per guide
   sitemap.xml, llms.txt               regenerated from the same content
   index.html                          refreshes the footer service links
@@ -30,6 +32,13 @@ WA = "971509867247"
 TODAY = date.today().isoformat()
 BY_SLUG = {s["slug"]: s for s in SERVICES}
 ORG_ID = f"{SITE}/#organization"
+# Free resources on this site.
+MIS_TEMPLATE = {"path": "/mis-report-template/", "file": "/assets/downloads/accuminds-monthly-mis-template.xlsx",
+                "name": "Free Monthly MIS Report Template",
+                "card": "An Excel MIS pack for SMEs: P&L against budget, KPIs, working-capital days, a three-month cash outlook and commentary prompts."}
+CT_CHECK = {"path": "/corporate-tax-check/", "name": "Corporate Tax Filing Check",
+            "card": "Answer up to five questions to see whether you must register and file for UAE Corporate Tax, and whether Small Business Relief may apply."}
+CT_CHECKED = "22 October 2026"
 # Free tool published from the uae-einvoice-checker repo (npm run sync:checker).
 CHECKER = {"path": "/e-invoice-checker/", "name": "Free E-Invoice Readiness Checker",
            "card": "Check sample sales invoices against the UAE e-invoicing (PINT AE) mandatory fields in your browser, with a readiness score, gap list and PDF report."}
@@ -144,6 +153,8 @@ def service_links(current=None, base="/services/"):
         items.append(f'<li><a class="u-link" href="{base}{s["slug"]}/"{cur}>{e(s["name"])}</a></li>')
     items.append(f'<li><a class="u-link" href="{CHECKER["path"]}">{e(CHECKER["name"])}</a></li>')
     items.append('<li><a class="u-link" href="/guides/">E-Invoicing Software Guides</a></li>')
+    items.append(f'<li><a class="u-link" href="{CT_CHECK["path"]}">{e(CT_CHECK["name"])}</a></li>')
+    items.append(f'<li><a class="u-link" href="{MIS_TEMPLATE["path"]}">{e(MIS_TEMPLATE["name"])}</a></li>')
     return "\n            ".join(items)
 
 
@@ -282,8 +293,9 @@ def service_page(s):
 
     tool_cta = ""
     if s.get("tool"):
+        label, path = s["tool"] if isinstance(s["tool"], tuple) else (s["tool"], CHECKER["path"])
         tool_cta = f"""
-          <a class="btn btn-ghost-light" href="{CHECKER["path"]}" data-magnetic>{e(s["tool"])} <span aria-hidden="true">&rarr;</span></a>"""
+          <a class="btn btn-ghost-light" href="{path}" data-magnetic>{e(label)} <span aria-hidden="true">&rarr;</span></a>"""
 
     body = f"""{head(s["title"], s["description"], canonical, ld)}
 <body>
@@ -631,9 +643,221 @@ def guides_hub():
     return out
 
 
+def resource_shell(title, description, canonical, ld, eyebrow, h1, lead, ctas, inner, topic):
+    trail = [("Home", f"{SITE}/"), (h1, canonical)]
+    return f"""{head(title, description, canonical, ld)}
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+{SPRITE}
+{HEADER}
+
+  <main id="main">
+    <section class="page-hero on-dark" aria-labelledby="page-title">
+      <div class="container">
+        {breadcrumbs_html(trail)}
+        <p class="eyebrow" data-reveal>{e(eyebrow)}</p>
+        <h1 id="page-title" data-reveal="mask">{e(h1)}</h1>
+        <p class="lead" data-reveal>{e(lead)}</p>
+        <div class="hero-ctas" data-reveal-stagger>
+{ctas}
+        </div>
+      </div>
+    </section>
+{inner}
+{cta_band(topic)}
+  </main>
+
+{footer()}
+</body>
+</html>
+"""
+
+
+def faq_html(items):
+    return "\n".join(
+        f"""          <details class="faq-item">
+            <summary><h3>{e(q)}</h3><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+            <p>{e(a)}</p>
+          </details>""" for q, a in items)
+
+
+def mis_template_page():
+    canonical = f"{SITE}{MIS_TEMPLATE['path']}"
+    sheets = [
+        ("Settings", "Company name, reporting month and the minimum cash buffer: the pack follows the month you choose."),
+        ("Actuals and Budget", "Monthly figures by line: revenue, cost of sales, operating expenses, and month-end cash, receivables, inventory and payables."),
+        ("P&L vs Budget", "The month and year to date against budget, with variances coloured by whether they help or hurt."),
+        ("KPIs", "Gross and EBITDA margin, cost ratios, receivable, inventory and payable days and the cash conversion cycle, with charts."),
+        ("Cash outlook", "Three months of expected receipts and payments, closing cash, and a warning when cash falls below your buffer."),
+        ("Commentary", "Prompts for what changed, why, and the decisions needed: the part that turns numbers into a management pack."),
+    ]
+    faq = [
+        ("What is a monthly MIS report?", "A management information pack: profit and loss against budget, cash and working capital, key performance indicators and short commentary, prepared every month so owners can make decisions."),
+        ("Is the template free?", "Yes. Download it, replace the fictitious example figures with your own and use it as you like."),
+        ("Does it work with my accounting software?", "Yes. Export monthly totals from QuickBooks, Zoho Books, Tally, Odoo or any other system and enter them in the Actuals sheet. We can also build packs that refresh from your ledger automatically."),
+        ("Which version of Excel do I need?", "Any recent version of Microsoft Excel. It also opens in Google Sheets and LibreOffice, though charts may look slightly different."),
+    ]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(),
+        {"@type": "CreativeWork", "@id": f"{canonical}#template", "name": "Monthly MIS report template (Excel)",
+         "description": MIS_TEMPLATE["card"], "url": canonical, "encodingFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+         "isAccessibleForFree": True, "inLanguage": "en", "author": {"@id": ORG_ID}, "publisher": {"@id": ORG_ID},
+         "associatedMedia": {"@type": "MediaObject", "contentUrl": f"{SITE}{MIS_TEMPLATE['file']}",
+                             "encodingFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}},
+        breadcrumbs_ld([("Home", f"{SITE}/"), ("Monthly MIS report template", canonical)]),
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
+    ]}
+    cards = "\n".join(f'          <li class="incl"><h3>{e(t)}</h3><p>{e(d)}</p></li>' for t, d in sheets)
+    ctas = f"""          <a class="btn btn-gold" href="{MIS_TEMPLATE["file"]}" download data-magnetic>Download the template (Excel) <span aria-hidden="true">&darr;</span></a>
+          <a class="btn btn-ghost-light" href="/services/mis-reporting-dubai/" data-magnetic>MIS &amp; reporting service</a>"""
+    inner = f"""
+    <section class="section" aria-labelledby="inside-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>What is inside</p>
+          <h2 id="inside-title" data-reveal="mask">Everything in one monthly pack.</h2>
+          <p class="lead" data-reveal>Blue cells are inputs and yellow cells are where you start. Everything else is a formula, so the pack updates as you enter your numbers. All example figures are fictitious.</p>
+        </div>
+        <ul class="incl-grid" data-reveal-stagger>
+{cards}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="use-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>How to use it</p>
+          <h2 id="use-title" data-reveal="mask">Four steps each month.</h2>
+        </div>
+        <ol class="guide-steps" data-reveal-stagger>
+          <li><h3>Close the month</h3><p>Post all invoices, bills and bank entries, and reconcile the bank, so the numbers are complete.</p></li>
+          <li><h3>Enter the totals</h3><p>Copy monthly totals by line from your accounting system into the Actuals sheet, and set the reporting month.</p></li>
+          <li><h3>Read the variances</h3><p>Start with the biggest variances against budget and the change in receivable and inventory days.</p></li>
+          <li><h3>Write the commentary</h3><p>Two or three lines on what changed and why, and the decisions needed. Share the pack within a week of month-end.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+{faq_html(faq)}
+        </div>
+      </div>
+    </section>
+"""
+    body = resource_shell(
+        "Free Monthly MIS Report Template for SMEs (Excel) | Accuminds",
+        "Download a free Excel MIS report template: P&L against budget, KPIs, working-capital days, a three-month cash outlook and management commentary prompts.",
+        canonical, ld, "Free template", "Monthly MIS report template",
+        "A ready-to-use Excel management pack for SMEs: P&L against budget, KPIs, working-capital days, a three-month cash outlook and commentary prompts.",
+        ctas, inner, "your monthly reporting")
+    out = ROOT / "mis-report-template" / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
+def ct_check_page():
+    canonical = f"{SITE}{CT_CHECK['path']}"
+    sources = [
+        ("FTA: Corporate Tax registration", "https://tax.gov.ae/en/services/corporate.tax.registration.aspx"),
+        ("FTA: natural persons", "https://tax.gov.ae/en/taxes/corporate.tax/corporate.tax.topics/basis.of.taxation.natural.person.aspx"),
+        ("FTA: Small Business Relief", "https://tax.gov.ae/en/taxes/corporate.tax/corporate.tax.topics/small.business.relief.23.aspx"),
+        ("FTA: exempt persons", "https://tax.gov.ae/en/taxes/corporate.tax/corporate.tax.topics/exempt.person.aspx"),
+        ("Ministry of Finance: Corporate Tax", "https://mof.gov.ae/en/public-finance/tax/corporate-tax/"),
+        ("Ministry of Finance: Small Business Relief extended to 2029",
+         "https://mof.gov.ae/en/news/ministry-of-finance-announces-extension-of-small-business-relief-for-corporate-tax-purposes-until-31-december-2029/"),
+    ]
+    rules = [
+        ("Companies", "UAE companies, including free zone companies, must register for Corporate Tax and file a return, whatever their revenue or profit."),
+        ("Individuals", "An individual doing business must register when business turnover in a calendar year exceeds AED 1 million. Salary, personal investment income and personal real estate investment income are not counted."),
+        ("Small Business Relief", "Resident businesses with revenue of AED 3 million or less in the current and every previous tax period can elect it, for tax periods ending on or before 31 December 2029. Qualifying Free Zone Persons and members of multinational groups with revenue above AED 3.15 billion cannot."),
+        ("Rates", "0% on taxable income up to AED 375,000 and 9% above that."),
+        ("Deadlines and penalty", "Returns are due within 9 months of the end of each tax period. Late registration carries an AED 10,000 penalty, waived if the first return is filed within 7 months of the end of the first tax period."),
+    ]
+    faq = [
+        ("Do I need to file a Corporate Tax return if I made no profit?", "Yes, if you are required to register. Companies file a return for every tax period even when no tax is due."),
+        ("Do free zone companies pay Corporate Tax?", "Free zone companies must register and file. A Qualifying Free Zone Person pays 0% on qualifying income if it meets the conditions, and must keep audited financial statements."),
+        ("Does a freelancer need to register for Corporate Tax?", "Only once business turnover in a calendar year exceeds AED 1 million. Below that, keep records and check again each year."),
+        ("What is Small Business Relief?", "An election for resident businesses with revenue of AED 3 million or less to be treated as having no taxable income for the period. It is claimed in the return, so you still register and file."),
+    ]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(),
+        {"@type": "WebApplication", "@id": f"{canonical}#app", "name": "UAE Corporate Tax filing check", "url": canonical,
+         "description": CT_CHECK["card"], "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in a web browser)",
+         "isAccessibleForFree": True, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "AED"}, "provider": {"@id": ORG_ID}},
+        breadcrumbs_ld([("Home", f"{SITE}/"), ("Corporate Tax filing check", canonical)]),
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
+    ]}
+    rule_rows = "\n".join(f'          <div class="fact-row"><dt>{e(t)}</dt><dd>{e(d)}</dd></div>' for t, d in rules)
+    src_links = " · ".join(
+        f'<a class="u-link" href="{e(u)}" target="_blank" rel="noopener">{e(n)}<span class="sr-only"> (opens in a new tab)</span></a>' for n, u in sources)
+    ctas = """          <a class="btn btn-gold" href="#check" data-magnetic>Start the check <span aria-hidden="true">&darr;</span></a>
+          <a class="btn btn-ghost-light" href="/services/corporate-tax-uae/" data-magnetic>Corporate Tax services</a>"""
+    inner = f"""
+    <section class="section" id="check" aria-labelledby="check-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The check</p>
+          <h2 id="check-title" data-reveal="mask">Five questions at most.</h2>
+          <p class="lead" data-reveal>Your answers stay in your browser. Nothing is sent or stored.</p>
+        </div>
+        <div class="ct-card" id="ct-check" aria-live="polite">
+          <noscript><p>This check needs JavaScript. The rules it applies are summarised below.</p></noscript>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="rules-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The rules it applies</p>
+          <h2 id="rules-title" data-reveal="mask">In brief, with sources.</h2>
+          <p class="lead" data-reveal>Checked {e(CT_CHECKED)} against FTA and Ministry of Finance pages: {src_links}</p>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{rule_rows}
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+{faq_html(faq)}
+        </div>
+      </div>
+    </section>
+    <script type="module" src="/assets/js/ct-check.js"></script>
+"""
+    body = resource_shell(
+        "UAE Corporate Tax: Do I Need to Register and File? Free Check | Accuminds",
+        "A free check for UAE companies, free zone companies and individuals: must you register and file for Corporate Tax, and can you claim Small Business Relief?",
+        canonical, ld, "Free tool", "Do I need to register and file for Corporate Tax?",
+        "Answer up to five questions to see whether you must register and file for UAE Corporate Tax, and whether Small Business Relief may apply.",
+        ctas, inner, "Corporate Tax")
+    out = ROOT / "corporate-tax-check" / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
 def sitemap():
     urls = ([f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES] + [f"{SITE}{CHECKER['path']}"]
-            + [guide_url()] + [guide_url(g["slug"]) for g in GUIDES])
+            + [guide_url()] + [guide_url(g["slug"]) for g in GUIDES]
+            + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}"])
     rows = "\n".join(f"  <url>\n    <loc>{u}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </url>" for u in urls)
     (ROOT / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{rows}\n</urlset>\n',
@@ -655,6 +879,9 @@ def llms_txt():
     ]
     lines += [f"- [{s['name']}]({url(s['slug'])}): {s['card']}" for s in SERVICES]
     lines += ["", "## Free tools", "", f"- [{CHECKER['name']}]({SITE}{CHECKER['path']}): {CHECKER['card']} Runs in the browser; invoice files are not uploaded."]
+    lines += ["", "## Free tools and templates", "",
+              f"- [{CT_CHECK['name']}]({SITE}{CT_CHECK['path']}): {CT_CHECK['card']}",
+              f"- [{MIS_TEMPLATE['name']}]({SITE}{MIS_TEMPLATE['path']}): {MIS_TEMPLATE['card']}"]
     lines += ["", "## Guides", ""] + [f"- [{g['h1']}]({guide_url(g['slug'])}): {g['card']}" for g in GUIDES]
     lines += ["", "## Pages", "", f"- [Home]({SITE}/): overview, how we work, contact form", f"- [All services]({url()})", ""]
     (ROOT / "llms.txt").write_text("\n".join(lines), encoding="utf-8")
@@ -680,6 +907,7 @@ def refresh_home_footer():
 
 if __name__ == "__main__":
     written = [hub_page()] + [service_page(s) for s in SERVICES] + [guides_hub()] + [guide_page(g) for g in GUIDES]
+    written += [mis_template_page(), ct_check_page()]
     sitemap()
     llms_txt()
     refresh_home_footer()

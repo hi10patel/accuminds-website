@@ -8,6 +8,7 @@ Writes:
   guides/index.html                   e-invoicing software guides hub (tools/guides_content.py)
   mis-report-template/index.html      free MIS pack download (file: tools/build_mis_template.py)
   corporate-tax-check/index.html      Corporate Tax filing check (logic: assets/js/ct-check.js)
+  supplier-verification-check/        FTA Decision 13 supplier checks (logic: assets/js/supplier-check.js)
   guides/<slug>/index.html            one page per guide
   sitemap.xml, llms.txt               regenerated from the same content
   index.html                          refreshes the footer service links
@@ -39,6 +40,11 @@ MIS_TEMPLATE = {"path": "/mis-report-template/", "file": "/assets/downloads/accu
 CT_CHECK = {"path": "/corporate-tax-check/", "name": "Corporate Tax Filing Check",
             "card": "Answer up to five questions to see whether you must register and file for UAE Corporate Tax, and whether Small Business Relief may apply."}
 CT_CHECKED = "22 October 2026"
+SV_CHECK = {"path": "/supplier-verification-check/", "name": "Supplier Verification Check (VAT)",
+            "pdf": "/assets/downloads/accuminds-supplier-verification-checklist.pdf",
+            "card": "Which FTA Decision 13 of 2026 checks apply before you claim input VAT on a supplier's invoice, with a printable checklist."}
+FTA_DEC13 = ("FTA Decision No. 13 of 2026 (unofficial English translation)",
+             "https://tax.gov.ae/Datafolder/Files/Legislation/2026/FTA%20Decision%20No.%2013%20of%202026%20on%20Measures%2018%2008%202026.pdf")
 # Free tool published from the uae-einvoice-checker repo (npm run sync:checker).
 CHECKER = {"path": "/e-invoice-checker/", "name": "Free E-Invoice Readiness Checker",
            "card": "Check sample sales invoices against the UAE e-invoicing (PINT AE) mandatory fields in your browser, with a readiness score, gap list and PDF report."}
@@ -154,6 +160,7 @@ def service_links(current=None, base="/services/"):
     items.append(f'<li><a class="u-link" href="{CHECKER["path"]}">{e(CHECKER["name"])}</a></li>')
     items.append('<li><a class="u-link" href="/guides/">E-Invoicing Software Guides</a></li>')
     items.append(f'<li><a class="u-link" href="{CT_CHECK["path"]}">{e(CT_CHECK["name"])}</a></li>')
+    items.append(f'<li><a class="u-link" href="{SV_CHECK["path"]}">{e(SV_CHECK["name"])}</a></li>')
     items.append(f'<li><a class="u-link" href="{MIS_TEMPLATE["path"]}">{e(MIS_TEMPLATE["name"])}</a></li>')
     return "\n            ".join(items)
 
@@ -854,10 +861,118 @@ def ct_check_page():
     return out
 
 
+def supplier_check_page():
+    canonical = f"{SITE}{SV_CHECK['path']}"
+    rules = [
+        ("Who and when", "VAT-registered businesses, for supplies received from 1 October 2026, before deducting input tax (Art. 2, 7). If a supply is connected to tax evasion and the business knew or should have known, the FTA may deny the input tax (Article 54(bis), VAT Law)."),
+        ("Below AED 10,000", "A supply under AED 10,000 excluding VAT can be left out of the checks, unless total supplies from that supplier exceed AED 100,000 in the previous 12 months or are expected to in the next 12 (Art. 6)."),
+        ("Supplier checks", "Companies: incorporation verified and the representative's ID. Individuals: valid ID and a meeting, in person or virtually, before the supply. All: actual place of business and risk indicators (Art. 3.1 to 3.3)."),
+        ("Above AED 375,000", "A written confirmation from an authorised UAE bank that the supplier has a bank account, and a review of clients' recommendations, public reviews and media (Art. 3.4)."),
+        ("Supply checks", "Genuine commercial reason, electronic payment (cash only with a documented reason), explanations for third-party or foreign-account payments, market price, licence-activity match, origin and ownership of goods, and intermediary rationale (Art. 4)."),
+        ("Procedures", "Verify a new supplier, and again after 12 months; check every supply in scope; document the steps and keep the records; keep a written policy naming who implements, reviews and supervises (Art. 5)."),
+    ]
+    faq = [
+        ("Does every supplier need to be verified from 1 October 2026?", "Every supplier whose supplies are in scope. Supplies under AED 10,000 excluding VAT can be left out, unless total supplies from that supplier exceed AED 100,000 in the previous or next 12 months."),
+        ("Is a letter from the supplier confirming its bank account enough?", "No. Above AED 375,000, the Decision asks for a written confirmation issued by an authorised bank in the UAE, without reservations or conditions. It does not have to be addressed to you."),
+        ("How often must suppliers be re-verified?", "When you first deal with them, and again on recurring dealings if they have not been verified in the previous 12 months."),
+        ("What happens if I do not verify?", "If a supply turns out to be connected to tax evasion and you knew or should have known, the FTA may deny your input tax deduction under Article 54(bis) of the VAT Law."),
+    ]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(),
+        {"@type": "WebApplication", "@id": f"{canonical}#app", "name": "Supplier verification check (FTA Decision 13 of 2026)", "url": canonical,
+         "description": SV_CHECK["card"], "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in a web browser)",
+         "isAccessibleForFree": True, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "AED"}, "provider": {"@id": ORG_ID}},
+        breadcrumbs_ld([("Home", f"{SITE}/"), ("Supplier verification check", canonical)]),
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
+    ]}
+    rule_rows = "\n".join(f'          <div class="fact-row"><dt>{e(t)}</dt><dd>{e(d)}</dd></div>' for t, d in rules)
+    ctas = f"""          <a class="btn btn-gold" href="#check" data-magnetic>Check a supplier <span aria-hidden="true">&darr;</span></a>
+          <a class="btn btn-ghost-light" href="{SV_CHECK["pdf"]}" download data-magnetic>Download the checklist (PDF)</a>"""
+    inner = f"""
+    <section class="section" id="check" aria-labelledby="check-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The check</p>
+          <h2 id="check-title" data-reveal="mask">Which checks apply to this supplier?</h2>
+          <p class="lead" data-reveal>Amounts exclude VAT. Your answers stay in your browser; nothing is sent or stored.</p>
+        </div>
+        <div class="sv-grid">
+          <form class="ct-card sv-form" id="sv-form" novalidate>
+            <label class="sv-field"><span>Supplier name (for your record)</span><input name="name" type="text" autocomplete="off" placeholder="e.g. Example Supplies LLC" /></label>
+            <fieldset class="sv-field"><legend>Supplier type</legend>
+              <label class="sv-pill"><input type="radio" name="type" value="company" checked /> Company</label>
+              <label class="sv-pill"><input type="radio" name="type" value="person" /> Individual</label>
+            </fieldset>
+            <label class="sv-field"><span>This invoice (AED, excl. VAT)</span><input name="invoice" inputmode="decimal" placeholder="e.g. 8,500" /></label>
+            <label class="sv-field"><span>Total from this supplier, previous 12 months (AED)</span><input name="prev" inputmode="decimal" placeholder="e.g. 60,000" /></label>
+            <label class="sv-field"><span>Expected total, next 12 months (AED)</span><input name="next" inputmode="decimal" placeholder="e.g. 90,000" /></label>
+            <fieldset class="sv-field"><legend>Verified this supplier in the last 12 months?</legend>
+              <label class="sv-pill"><input type="radio" name="verified" value="no" checked /> No</label>
+              <label class="sv-pill"><input type="radio" name="verified" value="yes" /> Yes</label>
+            </fieldset>
+            <fieldset class="sv-field"><legend>This supply involves</legend>
+              <label class="sv-check"><input type="checkbox" name="flag" value="goods" /> Goods</label>
+              <label class="sv-check"><input type="checkbox" name="flag" value="imported" /> Imported goods</label>
+              <label class="sv-check"><input type="checkbox" name="flag" value="cash" /> Cash payment</label>
+              <label class="sv-check"><input type="checkbox" name="flag" value="thirdparty" /> Payment via a third party, or to an account outside the supplier's country</label>
+              <label class="sv-check"><input type="checkbox" name="flag" value="intermediary" /> Supplier is an agent or intermediary</label>
+            </fieldset>
+            <fieldset class="sv-field"><legend>Risk indicators (Art. 3.3)</legend>
+              <label class="sv-check"><input type="checkbox" name="risk" value="address changed more than twice in 12 months" /> Address changed more than twice in 12 months</label>
+              <label class="sv-check"><input type="checkbox" name="risk" value="key employees changed more than twice in 12 months" /> Key employees changed more than twice in 12 months</label>
+              <label class="sv-check"><input type="checkbox" name="risk" value="transactions out of proportion to the supplier's size or history" /> Transactions out of proportion to the supplier's size or history</label>
+            </fieldset>
+          </form>
+          <div class="ct-card sv-out" id="sv-result" aria-live="polite">
+            <noscript><p>This check needs JavaScript. Download the PDF checklist instead.</p></noscript>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="rules-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The rule</p>
+          <h2 id="rules-title" data-reveal="mask">FTA Decision No. 13 of 2026, in brief.</h2>
+          <p class="lead" data-reveal>Issued 22 July 2026, effective 1 October 2026. Source: <a class="u-link" href="{e(FTA_DEC13[1])}" target="_blank" rel="noopener">{e(FTA_DEC13[0])}<span class="sr-only"> (opens in a new tab)</span></a></p>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{rule_rows}
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+{faq_html(faq)}
+        </div>
+      </div>
+    </section>
+    <script type="module" src="/assets/js/supplier-check.js"></script>
+"""
+    body = resource_shell(
+        "Supplier Verification Before Claiming Input VAT (FTA Decision 13 of 2026): Free Check | Accuminds",
+        "Free check for UAE VAT-registered businesses: which supplier and transaction checks FTA Decision No. 13 of 2026 requires before you claim input VAT, with a printable checklist.",
+        canonical, ld, "Free tool · VAT", "Supplier verification check",
+        "From 1 October 2026 you must verify suppliers and supplies before claiming input VAT. Enter a supplier's amounts to see exactly which checks apply, then print the checklist.",
+        ctas, inner, "supplier checks")
+    out = ROOT / "supplier-verification-check" / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
 def sitemap():
     urls = ([f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES] + [f"{SITE}{CHECKER['path']}"]
             + [guide_url()] + [guide_url(g["slug"]) for g in GUIDES]
-            + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}"])
+            + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}"])
     rows = "\n".join(f"  <url>\n    <loc>{u}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </url>" for u in urls)
     (ROOT / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{rows}\n</urlset>\n',
@@ -881,7 +996,8 @@ def llms_txt():
     lines += ["", "## Free tools", "", f"- [{CHECKER['name']}]({SITE}{CHECKER['path']}): {CHECKER['card']} Runs in the browser; invoice files are not uploaded."]
     lines += ["", "## Free tools and templates", "",
               f"- [{CT_CHECK['name']}]({SITE}{CT_CHECK['path']}): {CT_CHECK['card']}",
-              f"- [{MIS_TEMPLATE['name']}]({SITE}{MIS_TEMPLATE['path']}): {MIS_TEMPLATE['card']}"]
+              f"- [{MIS_TEMPLATE['name']}]({SITE}{MIS_TEMPLATE['path']}): {MIS_TEMPLATE['card']}",
+              f"- [{SV_CHECK['name']}]({SITE}{SV_CHECK['path']}): {SV_CHECK['card']}"]
     lines += ["", "## Guides", ""] + [f"- [{g['h1']}]({guide_url(g['slug'])}): {g['card']}" for g in GUIDES]
     lines += ["", "## Pages", "", f"- [Home]({SITE}/): overview, how we work, contact form", f"- [All services]({url()})", ""]
     (ROOT / "llms.txt").write_text("\n".join(lines), encoding="utf-8")
@@ -907,7 +1023,7 @@ def refresh_home_footer():
 
 if __name__ == "__main__":
     written = [hub_page()] + [service_page(s) for s in SERVICES] + [guides_hub()] + [guide_page(g) for g in GUIDES]
-    written += [mis_template_page(), ct_check_page()]
+    written += [mis_template_page(), ct_check_page(), supplier_check_page()]
     sitemap()
     llms_txt()
     refresh_home_footer()

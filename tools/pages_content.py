@@ -76,6 +76,7 @@ SERVICES = [
         "h1": "VAT services in the UAE: registration, returns and refunds",
         "lead": "VAT registration, returns, refunds and corrections for UAE businesses, prepared against Federal Tax Authority requirements and filed on time.",
         "card": "Registration, VAT returns, refunds, voluntary disclosures and deregistration.",
+        "tool": ("Supplier verification check", "/supplier-verification-check/"),
         "included": [
             ("VAT registration", "Threshold check, registration through the FTA's EmaraTax portal and set-up of your VAT codes."),
             ("VAT returns", "Quarterly or monthly returns prepared from reconciled books, with workings you can see."),

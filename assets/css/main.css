@@ -1006,11 +1006,16 @@ main { counter-reset: chapter; }
 .sv-print-meta { margin-top: 4px; font-size: 0.8125rem; color: var(--ink-700); }
 .sv-print { margin-top: 6px; }
 @media (max-width: 900px) { .sv-grid { grid-template-columns: 1fr; } .sv-out { position: static; } }
+/* Printing: supplier-check.js copies the record to #sv-print-sheet, a direct child of
+   body, so it prints alone and starts at the top of the first page. */
+#sv-print-sheet { display: none; }
 @media print {
-  body:has(#sv-print) * { visibility: hidden; }
-  body:has(#sv-print) #sv-print, body:has(#sv-print) #sv-print * { visibility: visible; color: #000 !important; background: none !important; }
-  body:has(#sv-print) #sv-print { position: absolute; left: 0; top: 0; width: 100%; padding: 12mm; }
-  body:has(#sv-print) .sv-ref { border: 1px solid #999; }
+  body:has(#sv-print-sheet) > :not(#sv-print-sheet) { display: none !important; }
+  #sv-print-sheet { display: block; margin: 0; padding: 10mm 12mm; }
+  #sv-print-sheet .sv-list { gap: 5px; }
+  #sv-print-sheet .sv-h { margin: 12px 0 6px; }
+  #sv-print-sheet, #sv-print-sheet * { color: #000 !important; background: none !important; }
+  #sv-print-sheet .sv-ref { border: 1px solid #999; }
 }
 
 /* ---------- Reduced motion: no transitions, no smooth scroll ---------- */

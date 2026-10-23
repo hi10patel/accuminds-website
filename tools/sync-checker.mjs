@@ -5,9 +5,10 @@
 // The checker is a separate React (Vite) app with its own repo and tests. This
 // script builds it with the /e-invoice-checker/ base path, replaces the
 // e-invoice-checker/ folder here with the build, and adds what the page needs on
-// this site: SEO tags, structured data, and the checker's Content-Security-Policy
-// as a <meta> tag (GitHub Pages cannot send response headers). Run the checker's
-// own `npm ci` and `npm test` first; then commit the folder and open a PR.
+// this site: SEO tags, structured data, a static summary for crawlers, and the
+// checker's Content-Security-Policy as a <meta> tag (GitHub Pages cannot send
+// response headers). Run the checker's own `npm ci` and `npm test` first; then
+// commit the folder and open a PR.
 import { execFileSync } from 'node:child_process';
 import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -24,8 +25,21 @@ const CSP = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 's
   + "connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'";
 
 const TITLE = 'Free UAE E-Invoice Readiness Checker (PINT AE) | Accuminds';
-const DESCRIPTION = 'Check your sales invoices against the UAE e-invoicing (PINT AE) mandatory fields in under a minute. '
-  + 'Free readiness score, gap list and PDF report. Your file never leaves your browser.';
+const DESCRIPTION = 'Check your sales invoices against UAE e-invoicing (PINT AE) mandatory fields. '
+  + 'Free readiness score, gap list and PDF report. Your file stays in your browser.';
+
+// Shown inside #root until the app mounts (React replaces it), so crawlers that do not
+// run JavaScript still see what the page is. Classes must exist in the checker's CSS.
+const STATIC_BODY = `<main class="mx-auto max-w-3xl px-4 py-10 text-slate-700">
+        <h1 class="text-3xl font-bold text-brand-navy">UAE E-Invoice Readiness Checker (PINT AE)</h1>
+        <p class="mt-4">Check a sample of your sales invoices against the PINT AE fields used for UAE e-invoicing. Upload an Excel, CSV or PDF export, match your columns, and get a readiness score, the gaps rule by rule and a PDF report.</p>
+        <ul class="mt-4 list-disc pl-5">
+          <li>27 PINT AE 1.0.4 rules: 25 critical and 2 warnings.</li>
+          <li>Column presets for TallyPrime, Zoho Books, QuickBooks Online, Odoo and SAP Business One.</li>
+          <li>Your file is read inside your browser. Nothing is uploaded, stored or sent.</li>
+        </ul>
+        <p class="mt-4 text-sm">The checker needs JavaScript. See also <a href="/services/e-invoicing-uae/">UAE e-invoicing readiness</a> and the <a href="/guides/">e-invoicing software guides</a>.</p>
+      </main>`;
 
 const repo = process.argv[2] && resolve(process.argv[2]);
 if (!repo || !existsSync(join(repo, 'src', 'rules', 'pint-ae-rules.json'))) {
@@ -98,6 +112,7 @@ const set = (re, value, what) => {
 set(/<title>[^<]*<\/title>/, `<title>${esc(TITLE)}</title>`, '<title>');
 set(/<meta name="description" content="[^"]*"\s*\/?>/, `<meta name="description" content="${esc(DESCRIPTION)}" />`, 'meta description');
 set(/<meta charset="UTF-8"\s*\/?>/i, (m) => m + tags, 'meta charset');
+set(/<div id="root"><\/div>/, `<div id="root">\n      ${STATIC_BODY}\n    </div>`, '<div id="root">');
 writeFileSync(page, html);
 
 console.log(`Published the checker to ${BASE} (${URL_})`);

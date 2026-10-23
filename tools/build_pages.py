@@ -398,7 +398,7 @@ def hub_page():
     cards = "\n".join(
         f"""          <a class="related-card" href="/services/{s["slug"]}/"><span class="related-pillar">{e(s["pillar"])}</span><span class="related-name">{e(s["name"])}</span><span class="related-desc">{e(s["card"])}</span><span class="related-go" aria-hidden="true">→</span></a>"""
         for s in SERVICES)
-    body = f"""{head("Accounting, VAT, Corporate Tax & CFO Services in Dubai | Accuminds",
+    body = f"""{head("Accounting, Tax & CFO Services in Dubai | Accuminds",
                  "Accounting, VAT, Corporate Tax, e-invoicing, CFO advisory, MIS reporting and AI automation for UAE SMEs and free zone companies.",
                  canonical, ld)}
 <body>
@@ -608,7 +608,7 @@ def guides_hub():
     cards = "\n".join(
         f"""          <a class="related-card" href="/guides/{g["slug"]}/"><span class="related-pillar">Guide</span><span class="related-name">{e(g["software"])} and UAE e-invoicing</span><span class="related-desc">{e(g["card"])}</span><span class="related-go" aria-hidden="true">→</span></a>"""
         for g in GUIDES)
-    body = f"""{head("UAE E-Invoicing Guides for QuickBooks, Zoho Books and Tally | Accuminds",
+    body = f"""{head("E-Invoicing Guides: QuickBooks, Zoho, Tally, Odoo | Accuminds",
                  "Practical UAE e-invoicing guides for QuickBooks, Zoho Books and TallyPrime users: Accredited Service Providers, setup steps, data checklists and deadlines.",
                  canonical, ld)}
 <body>
@@ -850,7 +850,7 @@ def ct_check_page():
     <script type="module" src="/assets/js/ct-check.js"></script>
 """
     body = resource_shell(
-        "UAE Corporate Tax: Do I Need to Register and File? Free Check | Accuminds",
+        "Do I Need to File UAE Corporate Tax? Free Check | Accuminds",
         "A free check for UAE companies, free zone companies and individuals: must you register and file for Corporate Tax, and can you claim Small Business Relief?",
         canonical, ld, "Free tool", "Do I need to register and file for Corporate Tax?",
         "Answer up to five questions to see whether you must register and file for UAE Corporate Tax, and whether Small Business Relief may apply.",
@@ -958,8 +958,8 @@ def supplier_check_page():
     <script type="module" src="/assets/js/supplier-check.js"></script>
 """
     body = resource_shell(
-        "Supplier Verification Before Claiming Input VAT (FTA Decision 13 of 2026): Free Check | Accuminds",
-        "Free check for UAE VAT-registered businesses: which supplier and transaction checks FTA Decision No. 13 of 2026 requires before you claim input VAT, with a printable checklist.",
+        "Supplier Verification for Input VAT: Free Check | Accuminds",
+        "Free check: which supplier and transaction checks FTA Decision No. 13 of 2026 requires before you claim input VAT, with a printable checklist.",
         canonical, ld, "Free tool · VAT", "Supplier verification check",
         "From 1 October 2026 you must verify suppliers and supplies before claiming input VAT. Enter a supplier's amounts to see exactly which checks apply, then print the checklist.",
         ctas, inner, "supplier checks")

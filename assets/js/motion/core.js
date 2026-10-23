@@ -100,6 +100,7 @@ export function runWhenIdle(tasks, motion) {
   const idle = window.requestIdleCallback
     ? (fn) => requestIdleCallback(fn, { timeout: 1200 })
     : (fn) => setTimeout(fn, 1);
+  const align = hashAligner(motion);
   const next = () => {
     const task = tasks.shift();
     if (task) {
@@ -108,11 +109,35 @@ export function runWhenIdle(tasks, motion) {
     } else if (motion.enabled) {
       window.ScrollTrigger.sort();
       window.ScrollTrigger.refresh();
+      align();
       // Font swap changes text heights, so re-measure once fonts have loaded.
-      document.fonts?.ready.then(() => idle(() => window.ScrollTrigger.refresh()));
+      document.fonts?.ready.then(() => idle(() => { window.ScrollTrigger.refresh(); align(); }));
     }
   };
   idle(next);
+}
+
+// Arriving from another page via a link such as /#contact, the browser jumps to
+// the target before pinned sections add their spacing, so it ends up mid-page.
+// Re-align to the hash target once layout has settled, unless the visitor has
+// started scrolling in the meantime.
+function hashAligner(motion) {
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (!id) return () => {};
+  let touched = false;
+  const stop = () => { touched = true; };
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((type) => addEventListener(type, stop, { once: true, passive: true }));
+  return () => {
+    const el = document.getElementById(id);
+    if (!el || touched) return;
+    if (motion.lenis) {
+      // Lenis caches the page height; pins just made the page taller.
+      motion.lenis.resize();
+      motion.lenis.scrollTo(el, { immediate: true, force: true });
+    } else {
+      el.scrollIntoView({ block: 'start' });
+    }
+  };
 }
 
 function initAnchors(motion) {

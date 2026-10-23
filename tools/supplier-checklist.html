@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!--
+  Source for assets/downloads/accuminds-supplier-verification-checklist.pdf (A4).
+  Based on FTA Decision No. 13 of 2026 (unofficial English translation, issued 22 July 2026,
+  effective 1 October 2026). Article references below are to that Decision.
+  Render, from the repo root, with `npm run serve` running:
+    chrome --headless=new --no-pdf-header-footer --print-to-pdf=assets/downloads/accuminds-supplier-verification-checklist.pdf
+      http://localhost:4173/tools/supplier-checklist.html
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex" />
+  <title>Supplier Verification Checklist</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" />
+  <style>
+    @page { size: A4; margin: 14mm 14mm 16mm; }
+    :root { --navy: #1A2E4A; --gold: #C9972B; --teal: #0D8A7F; --ink: #2a3442; --muted: #5b6778; --line: #e3ddd2; --sand: #f7f5f1; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body { font-family: 'Plus Jakarta Sans', Arial, sans-serif; color: var(--ink); font-size: 9.2pt; line-height: 1.42;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 3px solid var(--navy); position: relative; }
+    header::after { content: ''; position: absolute; left: 0; bottom: -3px; width: 26%; height: 3px; background: var(--gold); }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand img { width: 118px; margin: -10px -6px -10px -10px; }
+    .brand b { display: block; font-size: 13.5pt; font-weight: 800; color: var(--navy); }
+    .brand small { display: block; font-size: 7pt; font-weight: 800; letter-spacing: 0.16em; color: var(--gold); }
+    .meta { text-align: right; font-size: 7.6pt; color: var(--muted); line-height: 1.6; }
+    .meta b { color: var(--navy); }
+    h1 { margin: 16px 0 2px; font-size: 18pt; font-weight: 800; color: var(--navy); letter-spacing: -0.01em; }
+    .sub { margin: 0 0 12px; font-size: 8.6pt; color: var(--muted); }
+    .sub b { color: var(--teal); }
+    .intro { margin: 0 0 12px; padding: 10px 14px; border-left: 3px solid var(--gold); background: var(--sand); font-size: 8.8pt; }
+    .legend { display: flex; gap: 16px; margin: 0 0 10px; font-size: 7.6pt; color: var(--muted); }
+    .tag { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 6.6pt; font-weight: 800; letter-spacing: 0.04em; vertical-align: 1px; }
+    .req { background: #e3f1ef; color: #0b6b62; }
+    .rec { background: #f3ecdc; color: #8a6a1e; }
+    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .col h2 { display: flex; align-items: center; gap: 9px; margin: 0 0 2px; font-size: 11pt; font-weight: 800; color: var(--navy); }
+    .col h2 i { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 5px; color: #fff; font-style: normal; font-size: 9pt; }
+    .col:first-child h2 i { background: var(--teal); }
+    .col:last-child h2 i { background: var(--gold); }
+    .when { margin: 0 0 8px 29px; font-size: 7pt; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    h3 { margin: 10px 0 4px; font-size: 7.6pt; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+    ul { list-style: none; margin: 0; padding: 0; }
+    li { position: relative; padding: 0 0 6px 20px; break-inside: avoid; }
+    li::before { content: ''; position: absolute; left: 0; top: 2px; width: 10px; height: 10px; border: 1.3px solid var(--navy); border-radius: 2.5px; }
+    li b { color: var(--navy); }
+    .ref { color: var(--muted); font-size: 7.4pt; }
+    .box { margin-top: 8px; padding: 9px 12px 4px; border: 1.3px dashed var(--gold); border-radius: 7px; break-inside: avoid; }
+    .box h3 { margin-top: 0; color: #a3781e; }
+    .note { font-size: 7.6pt; color: #a33; }
+    .scope { margin-top: 6px; padding: 11px 14px; border-radius: 7px; background: var(--navy); color: #fff; font-size: 8.4pt; break-inside: avoid; }
+    .scope h2 { margin: 0 0 4px; font-size: 9.6pt; font-weight: 800; }
+    .scope p { margin: 0 0 4px; }
+    .scope b { color: #e8c56f; }
+    footer { margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--line); font-size: 7pt; color: var(--muted); display: flex; justify-content: space-between; gap: 16px; }
+    footer b { color: var(--navy); }
+    .page2 { break-before: page; }
+    .h1-small { font-size: 14pt; margin-top: 0; }
+    .cols--top { margin-top: 10px; align-items: start; }
+    .cols--top .box { margin-top: 0; }
+    .rec-title { margin: 16px 0 6px; font-size: 11pt; font-weight: 800; color: var(--navy); }
+    .record { width: 100%; border-collapse: collapse; font-size: 8.4pt; table-layout: fixed; }
+    .record th, .record td { border: 1px solid var(--line); padding: 7px 8px; text-align: left; vertical-align: top; }
+    .record th { width: 19%; background: var(--sand); color: var(--navy); font-weight: 800; }
+    .record td { height: 26px; width: 31%; }
+    .record .tall td { height: 110px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <img src="../assets/img/hero-mark-640.webp" alt="" />
+      <div><b>Accuminds Consulting FZCO</b><small>FTA COMPLIANCE · ACCOUNTING · CFO ADVISORY</small></div>
+    </div>
+    <div class="meta"><b>Client Advisory Note</b><br />Updated: October 2026<br />Ref: AC/VAT/13-2026/02</div>
+  </header>
+
+  <h1>Supplier Verification: Document Collection Checklist</h1>
+  <p class="sub">FTA Decision No. 13 of 2026 (issued 22 July 2026) · Article 54(bis), UAE VAT Law · Effective <b>1 October 2026</b></p>
+
+  <p class="intro">From 1 October 2026, VAT-registered businesses must verify each supplier and each supply before deducting input tax. If a supply is connected to tax evasion and the business knew or should have known, the FTA may deny the input tax. Items marked <span class="tag req">REQUIRED</span> come from the Decision; items marked <span class="tag rec">RECOMMENDED</span> are supporting evidence we advise keeping.</p>
+
+  <div class="cols">
+    <section class="col">
+      <h2><i>1</i>Supplier file</h2>
+      <p class="when">At onboarding · again if not verified in the last 12 months (Art. 5.1)</p>
+
+      <h3>Company supplier (Art. 3.1b)</h3>
+      <ul>
+        <li><b>Incorporation verified</b> on an official database, or a copy of the certificate of incorporation or trade licence; name, address and employees match <span class="tag req">REQUIRED</span></li>
+        <li><b>ID of the representative</b> (director, agent or employee you deal with): Emirates ID or passport <span class="tag req">REQUIRED</span></li>
+      </ul>
+
+      <h3>Individual supplier (Art. 3.1a)</h3>
+      <ul>
+        <li><b>Valid ID</b>: Emirates ID or passport <span class="tag req">REQUIRED</span></li>
+        <li><b>Meeting record</b>: met in person or virtually before the supply, with the date <span class="tag req">REQUIRED</span></li>
+      </ul>
+
+      <h3>All suppliers</h3>
+      <ul>
+        <li><b>Actual place of business</b> verified by electronic means or a site visit, and suitable for the supplier's activity (Art. 3.2): Ejari or tenancy contract, utility bill, dated photo or visit note <span class="tag req">REQUIRED</span></li>
+        <li><b>Risk indicators checked</b> (Art. 3.3): address changed more than twice in 12 months; key employees changed more than twice in 12 months; transactions out of proportion to the supplier's size or history. If any applies, keep a written explanation <span class="tag req">REQUIRED</span></li>
+        <li><b>TRN</b> checked on the FTA portal (dated screenshot) and VAT certificate on file <span class="tag rec">RECOMMENDED</span></li>
+        <li><b>Memorandum or incorporation documents</b> showing shareholders and managers <span class="tag rec">RECOMMENDED</span></li>
+        <li><b>Official contact details</b>: company-domain email, landline, website; flag personal-email-only suppliers <span class="tag rec">RECOMMENDED</span></li>
+      </ul>
+
+    </section>
+
+    <section class="col">
+      <h2><i>2</i>Transaction file</h2>
+      <p class="when">With every purchase invoice in scope (Art. 4, 5.2)</p>
+      <ul>
+        <li><b>Commercial reason</b>: a general assessment that the supplier's involvement is genuine, e.g. purchase order, contract or accepted quotation (Art. 4.1) <span class="tag req">REQUIRED</span></li>
+        <li><b>Electronic payment</b>: bank transfer advice matching the supplier (Art. 4.2b) <span class="tag req">REQUIRED</span></li>
+        <li><b>Cash payments</b>: only with a documented commercial reason, within legal limits, and easily verifiable (Art. 4.2b) <span class="tag req">REQUIRED</span></li>
+        <li><b>Third-party payment, or an account outside the supplier's country of incorporation</b>: written commercial explanation (Art. 4.2a) <span class="tag req">REQUIRED</span></li>
+        <li><b>Price check</b>: price or margin in line with the market, or the reason it differs, e.g. two comparable quotes (Art. 4.3a) <span class="tag req">REQUIRED</span></li>
+        <li><b>Licence-activity match</b>: the goods or services fall within the supplier's ordinary or licensed activities (Art. 4.3b) <span class="tag req">REQUIRED</span></li>
+        <li><b>Goods: origin and ownership</b>: authenticity and origin of the goods and the supplier's right to sell them, e.g. delivery note or GRN; for imports, bill of lading, packing list and customs declaration (Art. 4.3c) <span class="tag req">REQUIRED</span></li>
+        <li><b>Intermediary rationale</b>: a clear commercial reason for any agent or middleman (Art. 4.3d) <span class="tag req">REQUIRED</span></li>
+        <li><b>Valid tax invoice</b>: supplier TRN, your TRN, invoice number and date, VAT shown separately; needed to deduct input tax under the VAT Law <span class="tag req">REQUIRED</span></li>
+      </ul>
+
+    </section>
+  </div>
+
+
+  <section class="page2">
+    <h1 class="h1-small">Thresholds, enhanced checks and your policy</h1>
+<section class="scope">
+    <h2>Which supplies this applies to (Art. 6)</h2>
+    <p>Supplies below <b>AED 10,000</b> (excluding VAT) can be left out of these checks, unless total supplies from that supplier exceed <b>AED 100,000</b> in the previous 12 months or are expected to in the next 12 months. Then every supply from that supplier is in scope.</p>
+    <p>Above <b>AED 375,000</b> from one supplier (previous or next 12 months), the enhanced bank and reputation checks also apply.</p>
+  </section>
+    <div class="cols cols--top">
+<div class="box">
+        <h3>Enhanced: supplier above AED 375,000 in 12 months (Art. 3.4)</h3>
+        <ul>
+          <li><b>Bank confirmation</b>: a written confirmation from an authorised UAE bank that the supplier holds a bank account, with no reservations or conditions. It need not be addressed to you <span class="tag req">REQUIRED</span><br /><span class="note">A letter on the supplier's own letterhead is not enough.</span></li>
+          <li><b>Reputation review</b>: clients' recommendations where available, and public reviews and media from reliable sources, consistent with the supplier's size and with no signs of tax evasion; dated and saved <span class="tag req">REQUIRED</span></li>
+        </ul>
+      </div>
+<div class="box">
+        <h3>Your verification policy (Art. 5.3, 5.4)</h3>
+        <ul>
+          <li><b>Written policy</b> naming the people who implement, review and supervise the checks, with their powers and responsibilities <span class="tag req">REQUIRED</span></li>
+          <li><b>Records</b>: document each verification step and keep the supporting documents where the FTA can review them <span class="tag req">REQUIRED</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="rec-title">Supplier record</h2>
+    <table class="record">
+      <tr><th>Supplier name</th><td></td><th>Supplier type</th><td>&#9744; Company &nbsp; &#9744; Individual</td></tr>
+      <tr><th>TRN</th><td></td><th>Trade licence no. and expiry</th><td></td></tr>
+      <tr><th>Supplies, previous 12 months (AED)</th><td></td><th>Expected, next 12 months (AED)</th><td></td></tr>
+      <tr><th>Scope</th><td colspan="3">&#9744; Below AED 10,000 and total &le; AED 100,000 (exempt) &nbsp; &#9744; Full checks &nbsp; &#9744; Full + enhanced (above AED 375,000)</td></tr>
+      <tr><th>Risk indicators</th><td colspan="3">&#9744; None &nbsp; &#9744; Present: explanation attached</td></tr>
+      <tr><th>Supplier verified on</th><td></td><th>Next re-verification due</th><td></td></tr>
+      <tr><th>Checked by</th><td></td><th>Reviewed by</th><td></td></tr>
+      <tr class="tall"><th>Notes</th><td colspan="3"></td></tr>
+    </table>
+
+  <footer>
+    <span><b>Accuminds Consulting FZCO</b> · DSO – IFZA, Dubai Silicon Oasis, UAE · info@accumindsconsulting.ae · +971 50 98 67247<br />
+      Check which checks apply to a supplier: <b>accumindsconsulting.ae/supplier-verification-check</b></span>
+    <span>Summary for client guidance, not a tax ruling. Based on the FTA's unofficial English translation of Decision No. 13 of 2026.</span>
+  </footer>
+  </section>
+</body>
+</html>

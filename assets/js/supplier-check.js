@@ -78,12 +78,23 @@ function render() {
   const flags = new Set(d.getAll('flag'));
   const risks = d.getAll('risk');
   const name = String(d.get('name') || '').trim() || 'Supplier';
+  const blank = (k) => !String(d.get(k) ?? '').trim();
 
   const aggregate = prev > 100000 || next > 100000;
   const enhanced = prev > 375000 || next > 375000;
   const exempt = invoice < 10000 && !aggregate;
   seq = 0;
   out.replaceChildren();
+
+  if (blank('invoice')) {
+    out.append(
+      el('p', { class: 'ct-step' }, 'Your result'),
+      el('h3', { class: 'ct-question' }, 'Enter the invoice amount to see which checks apply.'),
+      el('p', { class: 'ct-hint' }, 'Add the totals from this supplier for the previous and next 12 months too: above AED 100,000, every invoice from them is in scope.'),
+      el('div', { class: 'ct-actions' },
+        el('a', { class: 'btn btn-ghost-light', href: '/assets/downloads/accuminds-supplier-verification-checklist.pdf', download: true }, 'Download the full checklist (PDF)')));
+    return;
+  }
 
   const head = el('div', { class: 'sv-head' },
     el('p', { class: 'ct-step' }, 'Your result'),
@@ -98,6 +109,9 @@ function render() {
       enhanced ? `Above AED 375,000 in 12 months: bank confirmation and reputation review also required (Art. 3.4).` : '',
     ].filter(Boolean).join(' '));
   out.append(head, why);
+  if (blank('prev') || blank('next')) {
+    out.append(el('p', { class: 'sv-muted sv-small' }, 'A 12-month total left blank is treated as AED 0.'));
+  }
 
   if (!exempt) {
     const print = el('div', { id: 'sv-print', class: 'sv-print' },
@@ -128,7 +142,23 @@ function render() {
     el('a', { class: 'btn btn-ghost-light', href: '/assets/downloads/accuminds-supplier-verification-checklist.pdf', download: true }, 'Download the full checklist (PDF)')));
 }
 
+// Copies the record to a top-level sheet for printing (see the print rules in main.css),
+// keeping the ticks the visitor has made. Runs for the button and for Ctrl+P alike.
+function buildPrintSheet() {
+  document.getElementById('sv-print-sheet')?.remove();
+  const record = document.getElementById('sv-print');
+  if (!record) return;
+  const sheet = record.cloneNode(true);
+  sheet.id = 'sv-print-sheet';
+  const ticks = record.querySelectorAll('input');
+  sheet.querySelectorAll('input').forEach((box, i) => { box.checked = ticks[i].checked; box.removeAttribute('id'); });
+  sheet.querySelectorAll('label').forEach((label) => label.removeAttribute('for'));
+  document.body.append(sheet);
+}
+
 if (form && out) {
+  addEventListener('beforeprint', buildPrintSheet);
+  addEventListener('afterprint', () => document.getElementById('sv-print-sheet')?.remove());
   form.addEventListener('input', render);
   form.addEventListener('change', render);
   form.addEventListener('submit', (ev) => { ev.preventDefault(); render(); out.querySelector('h3')?.focus?.(); });

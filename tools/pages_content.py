@@ -184,13 +184,13 @@ SERVICES = [
         ],
         "facts": [
             ("Legal basis", "Ministerial Decisions No. 243 and 244 of 2025, amended by Ministerial Decision No. 66 of 2026.", MOF_EINV),
-            ("Revenue of AED 50 million or more", "Appoint an Accredited Service Provider by 30 October 2026 and implement by 1 January 2027.", MOF_EINV),
+            ("Revenue of AED 50 million or more", "Deadline to appoint an Accredited Service Provider: 30 October 2026 (if it has passed, appoint one now). Implement by 1 January 2027.", MOF_EINV),
             ("Revenue below AED 50 million", "Appoint an Accredited Service Provider by 31 March 2027 and implement by 1 July 2027.", MOF_EINV_GUIDE),
             ("Voluntary adoption", "Businesses may implement e-invoicing voluntarily from 1 July 2026. Business-to-consumer invoices are excluded for now.", FTA_EINV),
         ],
         "faq": [
             ("When does e-invoicing become mandatory in the UAE?",
-             "On 1 January 2027 for businesses with revenue of AED 50 million or more, and on 1 July 2027 for businesses below that. Each group must appoint an Accredited Service Provider first: by 30 October 2026 and 31 March 2027 respectively."),
+             "On 1 January 2027 for businesses with revenue of AED 50 million or more, and on 1 July 2027 for businesses below that. Each group must appoint an Accredited Service Provider first; the deadlines are 30 October 2026 and 31 March 2027 respectively."),
             ("What is an Accredited Service Provider (ASP)?",
              "A provider approved by the authorities to exchange and report e-invoices on your behalf. You appoint one and connect it to the system that raises your invoices."),
             ("Is a PDF invoice sent by email an e-invoice?",

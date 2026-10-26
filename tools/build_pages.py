@@ -13,6 +13,7 @@ Writes:
   sitemap.xml, llms.txt               regenerated from the same content
   index.html                          refreshes the footer service links
                                       (between the SERVICE-LINKS markers)
+  CSS/JS version tags                 on every page, via tools/asset_versions.py
 The pages share the home page's CSS/JS, header and footer. Paths are
 root-absolute (/assets/...), which works on the custom domain and in
 `npm run serve`.
@@ -27,6 +28,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 from pages_content import REVIEWED, SERVICES  # noqa: E402
 from guides_content import CHECKED, CHECKLIST, DEADLINES, GUIDES, MOF_ASP, PINT_AE, PINT_AE_RULES  # noqa: E402
+from asset_versions import stamp_all  # noqa: E402
 
 SITE = "https://www.accumindsconsulting.ae"
 WA = "971509867247"
@@ -1030,3 +1032,5 @@ if __name__ == "__main__":
     for w in written:
         print("wrote", w.relative_to(ROOT))
     print("wrote sitemap.xml, llms.txt")
+    # Last, so the tags match the CSS/JS on disk now.
+    print("versioned assets on", len(stamp_all()), "pages")

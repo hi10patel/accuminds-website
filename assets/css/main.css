@@ -22,6 +22,8 @@ img, svg, picture { display: block; max-width: 100%; }
 img { height: auto; }
 h1, h2, h3, h4 { margin: 0; font-weight: var(--fw-extrabold); letter-spacing: -0.02em; line-height: 1.12; color: var(--navy); text-wrap: balance; }
 p { margin: 0; text-wrap: pretty; }
+/* A heading made of short sentences breaks between them, never inside one. */
+.phrase { display: inline-block; }
 ul, ol { margin: 0; padding: 0; }
 address { font-style: normal; }
 a { color: inherit; }
@@ -764,6 +766,8 @@ main { counter-reset: chapter; }
   max-width: 17ch;
   font-size: clamp(2.25rem, 1.2rem + 4vw, 4.75rem); line-height: 1.02; letter-spacing: -0.035em;
 }
+/* Small phones: a size at which a short sentence ("One accountable firm.") fits on one line. */
+@media (max-width: 420px) { .section-head h2 { font-size: 2rem; } }
 .section-head .lead { grid-column: 2; max-width: 54ch; margin-top: 22px; }
 @media (max-width: 760px) {
   .section-head { grid-template-columns: 1fr; }

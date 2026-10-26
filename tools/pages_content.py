@@ -23,6 +23,8 @@ FTA_SBR = ("FTA: Small Business Relief returns",
 MOF_EINV = ("Ministry of Finance: e-invoicing amendments (2026)",
             "https://mof.gov.ae/en/news/ministry-of-finance-announces-targeted-amendments-to-einvoicing-system-decisions/")
 MOF_EINV_GUIDE = ("Ministry of Finance: UAE e-invoicing", "https://mof.gov.ae/en/about-us/initiatives/einvoicing/")
+MOF_EINV_OCT = ("Ministry of Finance: e-invoicing amendments (19 October 2026)",
+                "https://mof.gov.ae/en/news/ministry-of-finance-amends-electronic-invoicing-regulations-to-ease-the-burden-on-businesses/")
 FTA_EINV = ("FTA: UAE e-invoicing", "https://tax.gov.ae/en/content/uae.einvoicing.aspx")
 
 SERVICES = [
@@ -183,10 +185,12 @@ SERVICES = [
             "Finance teams that want to adopt early, voluntarily",
         ],
         "facts": [
-            ("Legal basis", "Ministerial Decisions No. 243 and 244 of 2025, amended by Ministerial Decision No. 66 of 2026.", MOF_EINV),
+            ("Legal basis", "Ministerial Decisions No. 243 and 244 of 2025, amended by Ministerial Decisions No. 66 and No. 197 of 2026.", MOF_EINV),
             ("Revenue of AED 50 million or more", "Deadline to appoint an Accredited Service Provider: 30 October 2026 (if it has passed, appoint one now). Implement by 1 January 2027.", MOF_EINV),
             ("Revenue below AED 50 million", "Appoint an Accredited Service Provider by 31 March 2027 and implement by 1 July 2027.", MOF_EINV_GUIDE),
             ("Voluntary adoption", "Businesses may implement e-invoicing voluntarily from 1 July 2026. Business-to-consumer invoices are excluded for now.", FTA_EINV),
+            ("Tax group transactions", "Transactions between members of the same Tax Group are excluded from e-invoicing for 24 months from 1 January 2027 (Ministerial Decision No. 197 of 2026).", MOF_EINV_OCT),
+            ("Record keeping", "Keep e-invoices, e-credit notes and their data for the period set by the Tax Procedures Law and provide them to the FTA on request. Since 1 October 2026 they no longer have to be stored inside the UAE.", MOF_EINV_OCT),
         ],
         "faq": [
             ("When does e-invoicing become mandatory in the UAE?",
@@ -197,6 +201,10 @@ SERVICES = [
              "No. Under the UAE system an e-invoice is a structured data file exchanged through accredited providers, not a PDF or scanned document."),
             ("Do invoices to individual consumers have to be e-invoices?",
              "Not for now. Business-to-consumer transactions are excluded from the current phase."),
+            ("Are transactions within a tax group covered?",
+             "Not at first. Ministerial Decision No. 197 of 2026 excludes transactions between members of the same Tax Group from e-invoicing for 24 months from 1 January 2027."),
+            ("Do e-invoices have to be stored inside the UAE?",
+             "No, not since Ministerial Decision No. 197 of 2026, effective 1 October 2026. You must still keep e-invoices, e-credit notes and their data for the period set by the Tax Procedures Law and provide them to the FTA on request."),
             ("What should we do first?",
              "Confirm your revenue band and deadlines, check what your accounting system can export, and shortlist providers. That assessment is our first step with every client."),
         ],

@@ -2,7 +2,9 @@
 // Rules are summarised from FTA and Ministry of Finance pages (linked on the page) and were
 // checked on the date shown there. Indicative only: not tax advice.
 
-const AED = (n) => `AED ${n.toLocaleString('en-US')}`;
+// Large amounts also get words in brackets, e.g. "AED 3,000,000 (3 million)".
+const inWords = (n) => (n >= 1e9 ? `${n / 1e9} billion` : `${n / 1e6} million`);
+const AED = (n) => `AED ${n.toLocaleString('en-US')}${n >= 1e6 ? ` (${inWords(n)})` : ''}`;
 
 const QUESTIONS = {
   who: {

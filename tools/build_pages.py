@@ -702,6 +702,7 @@ def mis_template_page():
     ]
     faq = [
         ("What is a monthly MIS report?", "A management information pack: profit and loss against budget, cash and working capital, key performance indicators and short commentary, prepared every month so owners can make decisions."),
+        ("What should a monthly MIS report format include?", "At least the month and year to date against budget, the main KPIs (margins, cost ratios, receivable, inventory and payable days), a short cash outlook and commentary on what changed and what needs a decision. This template has a sheet for each."),
         ("Is the template free?", "Yes. Download it, replace the fictitious example figures with your own and use it as you like."),
         ("Does it work with my accounting software?", "Yes. Export monthly totals from QuickBooks, Zoho Books, Tally, Odoo or any other system and enter them in the Actuals sheet. We can also build packs that refresh from your ledger automatically."),
         ("Which version of Excel do I need?", "Any recent version of Microsoft Excel. It also opens in Google Sheets and LibreOffice, though charts may look slightly different."),
@@ -718,7 +719,7 @@ def mis_template_page():
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
     ]}
     cards = "\n".join(f'          <li class="incl"><h3>{e(t)}</h3><p>{e(d)}</p></li>' for t, d in sheets)
-    ctas = f"""          <a class="btn btn-gold" href="{MIS_TEMPLATE["file"]}" download data-magnetic>Download the template (Excel) <span aria-hidden="true">&darr;</span></a>
+    ctas = f"""          <a class="btn btn-gold" href="{MIS_TEMPLATE["file"]}" download data-magnetic>Download free (Excel) <span aria-hidden="true">&darr;</span></a>
           <a class="btn btn-ghost-light" href="/services/mis-reporting-dubai/" data-magnetic>MIS &amp; reporting service</a>"""
     inner = f"""
     <section class="section" aria-labelledby="inside-title">
@@ -762,9 +763,9 @@ def mis_template_page():
     </section>
 """
     body = resource_shell(
-        "Free Monthly MIS Report Template for SMEs (Excel) | Accuminds",
-        "Download a free Excel MIS report template: P&L against budget, KPIs, working-capital days, a three-month cash outlook and management commentary prompts.",
-        canonical, ld, "Free template", "Monthly MIS report template",
+        "Monthly MIS Report Format in Excel: Free Download | Accuminds",
+        "Free download: a monthly MIS report format in Excel for SMEs, with P&L against budget, KPIs, working-capital days, a cash outlook and commentary prompts.",
+        canonical, ld, "Free Excel download", "Monthly MIS report format in Excel",
         "A ready-to-use Excel management pack for SMEs: P&L against budget, KPIs, working-capital days, a three-month cash outlook and commentary prompts.",
         ctas, inner, "your monthly reporting")
     out = ROOT / "mis-report-template" / "index.html"

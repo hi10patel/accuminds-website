@@ -7,8 +7,9 @@
 // e-invoice-checker/ folder here with the build, and adds what the page needs on
 // this site: SEO tags, structured data, a static summary for crawlers, and the
 // checker's Content-Security-Policy as a <meta> tag (GitHub Pages cannot send
-// response headers). Run the checker's own `npm ci` and `npm test` first; then
-// commit the folder and open a PR.
+// response headers). It also copies the rule set to tools/data/pint-ae-rules.json
+// for the /pint-ae-rules/ pages (then run `python tools/build_pages.py`).
+// Run the checker's own `npm ci` and `npm test` first; then commit and open a PR.
 import { execFileSync } from 'node:child_process';
 import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -56,6 +57,9 @@ execFileSync(process.execPath, [vite, 'build', '--base', BASE, '--outDir', tmp, 
 rmSync(OUT, { recursive: true, force: true });
 cpSync(tmp, OUT, { recursive: true, filter: (src) => !/[\\/](_headers|_redirects)$/.test(src) });
 rmSync(tmp, { recursive: true, force: true });
+
+// 2b. Keep the rule set the /pint-ae-rules/ pages are built from in step with the checker.
+cpSync(join(repo, 'src', 'rules', 'pint-ae-rules.json'), fileURLToPath(new URL('./data/pint-ae-rules.json', import.meta.url)));
 
 // 3. Page head: SEO, social, structured data and the security policy.
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');

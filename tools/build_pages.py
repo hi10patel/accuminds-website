@@ -10,6 +10,7 @@ Writes:
   corporate-tax-check/index.html      Corporate Tax filing check (logic: assets/js/ct-check.js)
   supplier-verification-check/        FTA Decision 13 supplier checks (logic: assets/js/supplier-check.js)
   guides/<slug>/index.html            one page per guide
+  pint-ae-rules/                      PINT AE rules hub and topic pages (tools/pint_rules_content.py)
   sitemap.xml, llms.txt               regenerated from the same content
   index.html                          refreshes the footer service links
                                       (between the SERVICE-LINKS markers)
@@ -19,6 +20,7 @@ root-absolute (/assets/...), which works on the custom domain and in
 `npm run serve`.
 """
 import json
+import re
 import sys
 from datetime import date
 from html import escape
@@ -29,6 +31,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 from pages_content import REVIEWED, SERVICES  # noqa: E402
 from guides_content import CHECKED, CHECKLIST, DEADLINES, GUIDES, MOF_ASP, PINT_AE, PINT_AE_RULES  # noqa: E402
 from asset_versions import stamp_all  # noqa: E402
+from pint_rules_content import BY_ID as PINT_BY_ID, HUB as PINT_HUB, SPEC_AS_OF, TOPICS as PINT_TOPICS  # noqa: E402
 
 SITE = "https://www.accumindsconsulting.ae"
 WA = "971509867247"
@@ -48,6 +51,8 @@ SV_CHECK = {"path": "/supplier-verification-check/", "name": "Supplier Verificat
 FTA_DEC13 = ("FTA Decision No. 13 of 2026 (unofficial English translation)",
              "https://tax.gov.ae/Datafolder/Files/Legislation/2026/FTA%20Decision%20No.%2013%20of%202026%20on%20Measures%2018%2008%202026.pdf")
 # Free tool published from the uae-einvoice-checker repo (npm run sync:checker).
+PINT_RULES = {"path": "/pint-ae-rules/", "name": "PINT AE Rules Explained",
+              "card": "The PINT AE rules UAE e-invoices are validated against, grouped by topic, with official rule numbers and fixes."}
 CHECKER = {"path": "/e-invoice-checker/", "name": "Free E-Invoice Readiness Checker",
            "card": "Check sample sales invoices against the UAE e-invoicing (PINT AE) mandatory fields in your browser, with a readiness score, gap list and PDF report."}
 FONT = "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap"
@@ -61,6 +66,10 @@ def url(slug=None):
 
 def guide_url(slug=None):
     return f"{SITE}/guides/{slug}/" if slug else f"{SITE}/guides/"
+
+
+def pint_url(slug=None):
+    return f"{SITE}{PINT_RULES['path']}{slug + '/' if slug else ''}"
 
 
 def wa_link(topic):
@@ -161,6 +170,7 @@ def service_links(current=None, base="/services/"):
         items.append(f'<li><a class="u-link" href="{base}{s["slug"]}/"{cur}>{e(s["name"])}</a></li>')
     items.append(f'<li><a class="u-link" href="{CHECKER["path"]}">{e(CHECKER["name"])}</a></li>')
     items.append('<li><a class="u-link" href="/guides/">E-Invoicing Software Guides</a></li>')
+    items.append(f'<li><a class="u-link" href="{PINT_RULES["path"]}">{e(PINT_RULES["name"])}</a></li>')
     items.append(f'<li><a class="u-link" href="{CT_CHECK["path"]}">{e(CT_CHECK["name"])}</a></li>')
     items.append(f'<li><a class="u-link" href="{SV_CHECK["path"]}">{e(SV_CHECK["name"])}</a></li>')
     items.append(f'<li><a class="u-link" href="{MIS_TEMPLATE["path"]}">{e(MIS_TEMPLATE["name"])}</a></li>')
@@ -611,7 +621,7 @@ def guides_hub():
         f"""          <a class="related-card" href="/guides/{g["slug"]}/"><span class="related-pillar">Guide</span><span class="related-name">{e(g["software"])} and UAE e-invoicing</span><span class="related-desc">{e(g["card"])}</span><span class="related-go" aria-hidden="true">→</span></a>"""
         for g in GUIDES)
     body = f"""{head("E-Invoicing Guides: QuickBooks, Zoho, Tally, Odoo | Accuminds",
-                 "Practical UAE e-invoicing guides for QuickBooks, Zoho Books and TallyPrime users: Accredited Service Providers, setup steps, data checklists and deadlines.",
+                 "Practical UAE e-invoicing guides for QuickBooks, Zoho Books, TallyPrime and Odoo users: Accredited Service Providers, setup steps, data checklists and deadlines.",
                  canonical, ld)}
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -972,10 +982,239 @@ def supplier_check_page():
     return out
 
 
+# ---------------------------------------------------------------- PINT AE rule pages
+PINT_ID = re.compile(r"\b(?:IBR-(?:CO-|SR-|CL-)?\d+(?:-AE)?|IBT-\d+(?:-\d+)?|BTAE-\d+|IBG-\d+|ALIGNED-IBRP-[A-Z]+-\d+(?:-AE)?)\b")
+
+
+def pint_ids(topic):
+    """Official PINT AE rule and field numbers a topic covers, in order of first mention."""
+    text = topic["answer"] + " " + " ".join(PINT_BY_ID[r]["source_reference"] for r in topic["rules"])
+    return list(dict.fromkeys(PINT_ID.findall(text)))
+
+
+def applies_to(rule):
+    w = rule["applies_when"]
+    if not w:
+        return "All invoices"
+    if w["field"] == "transaction_type":
+        return "B2B and B2G invoices"
+    if w["field"] == "invoice_type_code":
+        return "Credit notes (type codes " + " and ".join(w["in"]) + ")"
+    if w["field"] == "currency_code" and "not_in" in w:
+        return "Invoices not in " + ", ".join(w["not_in"])
+    return "Some invoices"
+
+
+def rule_card(rule):
+    sev = rule["severity"]
+    rows = [("Official references", rule["source_reference"]), ("Applies to", applies_to(rule)), ("How to fix", rule["fix_hint"])]
+    if rule.get("verify_note"):
+        rows.append(("Note", rule["verify_note"]))
+    meta = "\n".join(f"              <div><dt>{e(t)}</dt><dd>{keep_together(e(d))}</dd></div>" for t, d in rows)
+    return f"""          <article class="rule-card">
+            <div class="rule-head"><span class="rule-sev rule-sev--{sev}">{e(sev.capitalize())}</span><span class="rule-check">Checker rule {e(rule["id"])}</span></div>
+            <h3>{e(rule["description"])}</h3>
+            <dl class="rule-meta">
+{meta}
+            </dl>
+          </article>"""
+
+
+def keep_together(text):
+    """Stops lines breaking inside "e-invoices" or a rule number such as IBR-132-AE (escaped text in, HTML out)."""
+    text = re.sub(r"\b(e-invoic\w*)", r'<span class="nowrap">\1</span>', text)
+    return PINT_ID.sub(lambda m: f'<span class="nowrap">{m.group(0)}</span>', text)
+
+
+def pint_shell(title, description, canonical, ld, trail, eyebrow, h1, lead, inner):
+    return f"""{head(title, description, canonical, ld)}
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+{SPRITE}
+{HEADER}
+
+  <main id="main">
+    <section class="page-hero on-dark" aria-labelledby="page-title">
+      <div class="container">
+        {breadcrumbs_html(trail)}
+        <p class="eyebrow" data-reveal>{e(eyebrow)}</p>
+        <h1 id="page-title" data-reveal="mask">{keep_together(e(h1))}</h1>
+        <p class="lead" data-reveal>{e(lead)}</p>
+        <div class="hero-ctas" data-reveal-stagger>
+          <a class="btn btn-gold" href="{CHECKER["path"]}" data-magnetic>Check your invoices free <span aria-hidden="true">&rarr;</span></a>
+          <a class="btn btn-ghost-light" href="/services/e-invoicing-uae/" data-magnetic>E-invoicing readiness service</a>
+        </div>
+        <p class="guide-meta" data-reveal>Plain-English summary of the published specification, checked against {e(SPEC_AS_OF)}. The specification itself is authoritative.</p>
+      </div>
+    </section>
+{inner}
+{cta_band("e-invoicing")}
+  </main>
+
+{footer()}
+</body>
+</html>
+"""
+
+
+def pint_topic_page(t):
+    canonical = pint_url(t["slug"])
+    trail = [("Home", f"{SITE}/"), ("PINT AE rules", pint_url()), (t["name"], canonical)]
+    ids = pint_ids(t)
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(),
+        {"@type": "TechArticle", "@id": f"{canonical}#article", "headline": t["h1"], "description": t["description"],
+         "url": canonical, "inLanguage": "en", "dateModified": TODAY, "author": {"@id": ORG_ID}, "publisher": {"@id": ORG_ID},
+         "keywords": ", ".join(ids), "about": [{"@type": "Thing", "name": "PINT AE"}, {"@type": "Thing", "name": "UAE e-invoicing"}]},
+        breadcrumbs_ld(trail),
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in t["faq"]]},
+    ]}
+    chips = "\n".join(f"            <li>{e(i)}</li>" for i in ids)
+    cards = "\n".join(rule_card(PINT_BY_ID[r]) for r in t["rules"])
+    others = [x for x in PINT_TOPICS if x["slug"] != t["slug"]]
+    related = "\n".join(
+        f"""          <a class="related-card" href="{PINT_RULES["path"]}{x["slug"]}/"><span class="related-pillar">PINT AE</span><span class="related-name">{e(x["name"])}</span><span class="related-desc">{e(x["card"])}</span><span class="related-go" aria-hidden="true">→</span></a>"""
+        for x in others)
+    inner = f"""
+    <section class="section" aria-labelledby="answer-title">
+      <div class="container">
+        <div class="answer-box" data-reveal>
+          <h2 id="answer-title">The short answer</h2>
+          <p>{keep_together(e(t["answer"]))}</p>
+          <ul class="rule-ids" aria-label="Rule and field numbers on this page">
+{chips}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="checks-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The checks</p>
+          <h2 id="checks-title" data-reveal="mask">What we check, and how to fix it.</h2>
+          <p class="lead" data-reveal>Each check below runs in our free e-invoice readiness checker. Critical checks count towards the readiness score; warnings are listed but carry no weight.</p>
+        </div>
+        <div class="rule-list" data-reveal-stagger>
+{cards}
+        </div>
+        <p class="guide-meta"><a class="u-link" href="{e(PINT_AE_RULES[1])}" target="_blank" rel="noopener">{e(PINT_AE_RULES[0])}<span class="sr-only"> (opens in a new tab)</span></a> · <a class="u-link" href="{e(PINT_AE[1])}" target="_blank" rel="noopener">{e(PINT_AE[0])}<span class="sr-only"> (opens in a new tab)</span></a></p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+{faq_html(t["faq"])}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="more-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>More PINT AE rules</p>
+          <h2 id="more-title" data-reveal="mask">The other topics.</h2>
+        </div>
+        <div class="related-grid related-grid--all" data-reveal-stagger>
+{related}
+        </div>
+      </div>
+    </section>
+"""
+    body = pint_shell(t["title"], t["description"], canonical, ld, trail, "PINT AE rules · UAE e-invoicing", t["h1"], t["card"], inner)
+    out = ROOT / "pint-ae-rules" / t["slug"] / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
+PINT_KINDS = ("IBR", "ALIGNED", "IBT", "IBG", "BTAE")
+
+
+def pint_sort_key(i):
+    kind = i.split("-")[0]
+    num = (re.findall(r"\d+", i) or ["0"])[0]
+    return (PINT_KINDS.index(kind) if kind in PINT_KINDS else len(PINT_KINDS), i.replace(num, num.zfill(4), 1))
+
+
+def pint_hub_page():
+    canonical = pint_url()
+    trail = [("Home", f"{SITE}/"), ("PINT AE rules", canonical)]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(), breadcrumbs_ld(trail),
+        {"@type": "ItemList", "name": "PINT AE rules by topic", "itemListElement": [
+            {"@type": "ListItem", "position": i + 1, "url": pint_url(t["slug"]), "name": t["h1"]} for i, t in enumerate(PINT_TOPICS)]},
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in PINT_HUB["faq"]]},
+    ]}
+    cards = "\n".join(
+        f"""          <a class="related-card" href="{PINT_RULES["path"]}{t["slug"]}/"><span class="related-pillar">PINT AE</span><span class="related-name">{e(t["name"])}</span><span class="related-desc">{e(t["card"])}</span><span class="related-go" aria-hidden="true">→</span></a>"""
+        for t in PINT_TOPICS)
+    index = {}
+    for t in PINT_TOPICS:
+        for i in pint_ids(t):
+            index.setdefault(i, [])
+            if t not in index[i]:
+                index[i].append(t)
+    rows = "\n".join(
+        f"""            <tr><td>{e(i)}</td><td>{", ".join(f'<a class="u-link" href="{PINT_RULES["path"]}{t["slug"]}/">{e(t["name"])}</a>' for t in ts)}</td></tr>"""
+        for i, ts in sorted(index.items(), key=lambda kv: pint_sort_key(kv[0])))
+    inner = f"""
+    <section class="section" aria-label="Topics">
+      <div class="container">
+        <div class="related-grid related-grid--all" data-reveal-stagger>
+{cards}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="index-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Index</p>
+          <h2 id="index-title" data-reveal="mask">Find a rule or field number.</h2>
+          <p class="lead" data-reveal>Every PINT AE rule (IBR), field (IBT, BTAE) and group (IBG) number these pages cover, and where it is explained.</p>
+        </div>
+        <table class="rule-index">
+          <thead><tr><th scope="col">Rule or field</th><th scope="col">Explained in</th></tr></thead>
+          <tbody>
+{rows}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+{faq_html(PINT_HUB["faq"])}
+        </div>
+      </div>
+    </section>
+"""
+    body = pint_shell(PINT_HUB["title"], PINT_HUB["description"], canonical, ld, trail, "PINT AE rules · UAE e-invoicing",
+                      PINT_HUB["h1"], PINT_HUB["lead"], inner)
+    out = ROOT / "pint-ae-rules" / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
 def sitemap():
     urls = ([f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES] + [f"{SITE}{CHECKER['path']}"]
             + [guide_url()] + [guide_url(g["slug"]) for g in GUIDES]
-            + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}"])
+            + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}"]
+            + [pint_url()] + [pint_url(t["slug"]) for t in PINT_TOPICS])
     rows = "\n".join(f"  <url>\n    <loc>{u}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </url>" for u in urls)
     (ROOT / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{rows}\n</urlset>\n',
@@ -1002,6 +1241,8 @@ def llms_txt():
               f"- [{MIS_TEMPLATE['name']}]({SITE}{MIS_TEMPLATE['path']}): {MIS_TEMPLATE['card']}",
               f"- [{SV_CHECK['name']}]({SITE}{SV_CHECK['path']}): {SV_CHECK['card']}"]
     lines += ["", "## Guides", ""] + [f"- [{g['h1']}]({guide_url(g['slug'])}): {g['card']}" for g in GUIDES]
+    lines += ["", "## PINT AE rules (UAE e-invoicing)", "", f"- [{PINT_HUB['h1']}]({pint_url()}): {PINT_RULES['card']}"]
+    lines += [f"- [{t['h1']}]({pint_url(t['slug'])}): {t['card']}" for t in PINT_TOPICS]
     lines += ["", "## Pages", "", f"- [Home]({SITE}/): overview, how we work, contact form", f"- [All services]({url()})", ""]
     (ROOT / "llms.txt").write_text("\n".join(lines), encoding="utf-8")
 
@@ -1027,6 +1268,7 @@ def refresh_home_footer():
 if __name__ == "__main__":
     written = [hub_page()] + [service_page(s) for s in SERVICES] + [guides_hub()] + [guide_page(g) for g in GUIDES]
     written += [mis_template_page(), ct_check_page(), supplier_check_page()]
+    written += [pint_hub_page()] + [pint_topic_page(t) for t in PINT_TOPICS]
     sitemap()
     llms_txt()
     refresh_home_footer()

@@ -33,6 +33,20 @@ Contact: info@accumindsconsulting.ae · +971 50 98 67247 (phone and WhatsApp) ·
 - [TallyPrime UAE e-invoicing: ASP setup and data checklist](https://www.accumindsconsulting.ae/guides/tally-e-invoicing-uae/): Tally is an accredited provider: preparing your TallyPrime masters and appointing Tally in EmaraTax.
 - [Odoo and UAE e-invoicing: connectors and ASPs](https://www.accumindsconsulting.ae/guides/odoo-e-invoicing-uae/): Odoo is not an accredited provider: connector modules, choosing an ASP, and the data to fix first.
 
+## PINT AE rules (UAE e-invoicing)
+
+- [UAE PINT AE e-invoice rules, explained](https://www.accumindsconsulting.ae/pint-ae-rules/): The PINT AE rules UAE e-invoices are validated against, grouped by topic, with official rule numbers and fixes.
+- [Seller TRN on UAE e-invoices (IBR-132-AE)](https://www.accumindsconsulting.ae/pint-ae-rules/seller-trn/): The 15-digit TRN format, and when PINT AE requires it.
+- [Buyer TRN on UAE e-invoices (IBT-048)](https://www.accumindsconsulting.ae/pint-ae-rules/buyer-trn/): Optional for buyers without a TRN, required on reverse charge lines.
+- [Peppol Participant ID for UAE e-invoicing (0235)](https://www.accumindsconsulting.ae/pint-ae-rules/peppol-participant-id/): IBT-034 and IBT-049, the 0235 scheme and the 10-digit TIN.
+- [Invoice number and issue date in PINT AE](https://www.accumindsconsulting.ae/pint-ae-rules/invoice-number-and-date/): IBT-001 and IBT-002: unique numbers and valid dates.
+- [PINT AE invoice type codes: 380, 480, 381 and 81](https://www.accumindsconsulting.ae/pint-ae-rules/invoice-type-codes-and-credit-notes/): Which code each document uses, and linking credit notes to invoices.
+- [Foreign-currency e-invoices and the AED VAT total](https://www.accumindsconsulting.ae/pint-ae-rules/currency-and-aed-vat/): ISO currency codes, and the AED figures a non-AED invoice needs.
+- [PINT AE VAT category codes: S, Z, E, O, AE and N](https://www.accumindsconsulting.ae/pint-ae-rules/vat-category-codes/): Mapping your tax codes to the six categories, with the right rates.
+- [Invoice line rules in PINT AE](https://www.accumindsconsulting.ae/pint-ae-rules/invoice-lines/): Item names, quantities, prices, line totals and line VAT.
+- [Invoice totals in PINT AE](https://www.accumindsconsulting.ae/pint-ae-rules/invoice-totals/): Why totals must add up exactly, and the usual causes when they don't.
+- [Seller and buyer names and addresses in PINT AE](https://www.accumindsconsulting.ae/pint-ae-rules/seller-and-buyer-details/): Legal names, address lines, cities and emirate codes.
+
 ## Pages
 
 - [Home](https://www.accumindsconsulting.ae/): overview, how we work, contact form

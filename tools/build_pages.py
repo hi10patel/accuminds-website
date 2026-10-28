@@ -54,7 +54,7 @@ FTA_DEC13 = ("FTA Decision No. 13 of 2026 (unofficial English translation)",
 # Free tool published from the uae-einvoice-checker repo (npm run sync:checker).
 GRATUITY = {"path": "/gratuity-calculator/", "name": "UAE Gratuity Calculator",
             "card": "End-of-service gratuity under the federal Labour Law: 21 and 30 days' basic wage, part years, part-time work and the cap."}
-GRATUITY_CHECKED = "29 October 2026"
+GRATUITY_CHECKED = "28 October 2026"
 LABOUR_LAW = ("UAE Legislation: Federal Decree-Law No. 33 of 2021", "https://uaelegislation.gov.ae/en/legislations/1541")
 EXEC_REG = ("UAE Legislation: Cabinet Resolution No. 1 of 2022", "https://uaelegislation.gov.ae/en/legislations/1547")
 PINT_RULES = {"path": "/pint-ae-rules/", "name": "PINT AE Rules Explained",

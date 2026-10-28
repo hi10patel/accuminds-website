@@ -25,6 +25,7 @@ Contact: info@accumindsconsulting.ae · +971 50 98 67247 (phone and WhatsApp) ·
 - [Corporate Tax Filing Check](https://www.accumindsconsulting.ae/corporate-tax-check/): Answer up to five questions to see whether you must register and file for UAE Corporate Tax, and whether Small Business Relief may apply.
 - [Free Monthly MIS Report Template](https://www.accumindsconsulting.ae/mis-report-template/): An Excel MIS pack for SMEs: P&L against budget, KPIs, working-capital days, a three-month cash outlook and commentary prompts.
 - [Supplier Verification Check (VAT)](https://www.accumindsconsulting.ae/supplier-verification-check/): Which FTA Decision 13 of 2026 checks apply before you claim input VAT on a supplier's invoice, with a printable checklist.
+- [UAE Gratuity Calculator](https://www.accumindsconsulting.ae/gratuity-calculator/): End-of-service gratuity under the federal Labour Law: 21 and 30 days' basic wage, part years, part-time work and the cap. Runs in the browser; nothing is sent.
 
 ## Guides
 

@@ -9,6 +9,7 @@ Writes:
   mis-report-template/index.html      free MIS pack download (file: tools/build_mis_template.py)
   corporate-tax-check/index.html      Corporate Tax filing check (logic: assets/js/ct-check.js)
   supplier-verification-check/        FTA Decision 13 supplier checks (logic: assets/js/supplier-check.js)
+  gratuity-calculator/                UAE end-of-service gratuity (logic: assets/js/gratuity.js)
   guides/<slug>/index.html            one page per guide
   pint-ae-rules/                      PINT AE rules hub and topic pages (tools/pint_rules_content.py)
   sitemap.xml, llms.txt               regenerated from the same content
@@ -51,6 +52,11 @@ SV_CHECK = {"path": "/supplier-verification-check/", "name": "Supplier Verificat
 FTA_DEC13 = ("FTA Decision No. 13 of 2026 (unofficial English translation)",
              "https://tax.gov.ae/Datafolder/Files/Legislation/2026/FTA%20Decision%20No.%2013%20of%202026%20on%20Measures%2018%2008%202026.pdf")
 # Free tool published from the uae-einvoice-checker repo (npm run sync:checker).
+GRATUITY = {"path": "/gratuity-calculator/", "name": "UAE Gratuity Calculator",
+            "card": "End-of-service gratuity under the federal Labour Law: 21 and 30 days' basic wage, part years, part-time work and the cap."}
+GRATUITY_CHECKED = "29 October 2026"
+LABOUR_LAW = ("UAE Legislation: Federal Decree-Law No. 33 of 2021", "https://uaelegislation.gov.ae/en/legislations/1541")
+EXEC_REG = ("UAE Legislation: Cabinet Resolution No. 1 of 2022", "https://uaelegislation.gov.ae/en/legislations/1547")
 PINT_RULES = {"path": "/pint-ae-rules/", "name": "PINT AE Rules Explained",
               "card": "The PINT AE rules UAE e-invoices are validated against, grouped by topic, with official rule numbers and fixes."}
 CHECKER = {"path": "/e-invoice-checker/", "name": "Free E-Invoice Readiness Checker",
@@ -174,6 +180,7 @@ def service_links(current=None, base="/services/"):
     items.append(f'<li><a class="u-link" href="{CT_CHECK["path"]}">{e(CT_CHECK["name"])}</a></li>')
     items.append(f'<li><a class="u-link" href="{SV_CHECK["path"]}">{e(SV_CHECK["name"])}</a></li>')
     items.append(f'<li><a class="u-link" href="{MIS_TEMPLATE["path"]}">{e(MIS_TEMPLATE["name"])}</a></li>')
+    items.append(f'<li><a class="u-link" href="{GRATUITY["path"]}">{e(GRATUITY["name"])}</a></li>')
     return "\n            ".join(items)
 
 
@@ -662,6 +669,11 @@ def guides_hub():
     return out
 
 
+def nowrap_hyphenated(text):
+    """Keeps hyphenated words such as "end-of-service" on one line in headings (escaped text in, HTML out)."""
+    return re.sub(r"\b(\w+(?:-\w+)+)\b", r'<span class="nowrap">\1</span>', text)
+
+
 def resource_shell(title, description, canonical, ld, eyebrow, h1, lead, ctas, inner, topic):
     trail = [("Home", f"{SITE}/"), (h1, canonical)]
     return f"""{head(title, description, canonical, ld)}
@@ -675,7 +687,7 @@ def resource_shell(title, description, canonical, ld, eyebrow, h1, lead, ctas, i
       <div class="container">
         {breadcrumbs_html(trail)}
         <p class="eyebrow" data-reveal>{e(eyebrow)}</p>
-        <h1 id="page-title" data-reveal="mask">{e(h1)}</h1>
+        <h1 id="page-title" data-reveal="mask">{nowrap_hyphenated(e(h1))}</h1>
         <p class="lead" data-reveal>{e(lead)}</p>
         <div class="hero-ctas" data-reveal-stagger>
 {ctas}
@@ -982,6 +994,126 @@ def supplier_check_page():
     return out
 
 
+def gratuity_page():
+    canonical = f"{SITE}{GRATUITY['path']}"
+    rules = [
+        ("Who is entitled", "Foreign full-time workers who have completed one or more years of continuous service (Article 51(2)). UAE nationals are covered by the pensions and social security law instead (Article 51(1)).", LABOUR_LAW),
+        ("The rate", "The basic wage of 21 days for each of the first five years of service, and of 30 days for each year after that (Article 51(2)).", LABOUR_LAW),
+        ("Which wage", "The last basic wage received: the wage in the contract, without allowances or benefits in kind (Article 51(5) and Article 1).", LABOUR_LAW),
+        ("Part years and absence", "Parts of a year are paid in proportion once one year of continuous service is completed, and days of unpaid absence do not count as service (Article 51(3) and (4)).", LABOUR_LAW),
+        ("The cap", "The total gratuity may not exceed two years' wage (Article 51(6)).", LABOUR_LAW),
+        ("Part-time work", "A share of the full-time gratuity: contracted annual hours divided by full-time annual hours. No gratuity under the temporary work model or for service under a year (Article 30).", EXEC_REG),
+        ("Deductions", "Only amounts due by law or a court judgment, such as loans, overpayments or approved penalties, under the conditions in Article 29.", EXEC_REG),
+        ("When it is paid", "Within 14 days of the end of the contract, together with wages and other final dues (Article 53).", LABOUR_LAW),
+    ]
+    faq = [
+        ("Is UAE gratuity calculated on basic salary or total salary?", "On the last basic salary. The Labour Law defines basic wage as the wage in the contract without allowances or benefits in kind, so housing and transport allowances are left out."),
+        ("Do I get gratuity if I resign?", "Yes, once you have completed one year of continuous service. Article 51 of the current Labour Law gives the same formula whether the contract ends by resignation or termination."),
+        ("What if I worked less than one year?", "Full-time foreign workers become entitled after one year of continuous service, so there is no gratuity for less. After that, part years are paid in proportion."),
+        ("When must my employer pay my gratuity?", "Within 14 days of the end of the contract, with your other final dues (Article 53)."),
+        ("Does this apply in free zones?", "It follows the federal Labour Law. DIFC and ADGM have their own employment laws, and domestic workers have a separate law, so the calculation can differ there."),
+        ("What if my employer enrolled me in the savings scheme?", "Article 51(8) lets the Cabinet approve alternatives to gratuity, such as the voluntary end-of-service savings scheme. While you are enrolled, the scheme's contributions replace gratuity for that period."),
+        ("Should employers set aside gratuity every month?", "Yes. Gratuity builds up as people work, so accruing it monthly keeps the liability in your accounts and avoids a large one-off cost when someone leaves."),
+    ]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(),
+        {"@type": "WebApplication", "@id": f"{canonical}#app", "name": "UAE end-of-service gratuity calculator", "url": canonical,
+         "description": GRATUITY["card"], "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in a web browser)",
+         "isAccessibleForFree": True, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "AED"}, "provider": {"@id": ORG_ID}},
+        breadcrumbs_ld([("Home", f"{SITE}/"), ("Gratuity calculator", canonical)]),
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
+    ]}
+    ctas = """          <a class="btn btn-gold" href="#calculate" data-magnetic>Calculate gratuity <span aria-hidden="true">&darr;</span></a>
+          <a class="btn btn-ghost-light" href="/services/bookkeeping-accounting-dubai/" data-magnetic>Payroll and accounting help</a>"""
+    inner = f"""
+    <section class="section" id="calculate" aria-labelledby="calc-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The calculator</p>
+          <h2 id="calc-title" data-reveal="mask">Your <span class="nowrap">end-of-service</span> gratuity.</h2>
+          <p class="lead" data-reveal>Your answers stay in your browser; nothing is sent or stored.</p>
+        </div>
+        <div class="sv-grid">
+          <form class="ct-card sv-form" id="gr-form" novalidate>
+            <fieldset class="sv-field"><legend>Employee</legend>
+              <label class="sv-pill"><input type="radio" name="who" value="foreign" checked /> Expatriate</label>
+              <label class="sv-pill"><input type="radio" name="who" value="national" /> UAE national</label>
+            </fieldset>
+            <fieldset class="sv-field"><legend>Work model</legend>
+              <label class="sv-pill"><input type="radio" name="kind" value="full" checked /> Full-time</label>
+              <label class="sv-pill"><input type="radio" name="kind" value="part" /> Part-time</label>
+              <label class="sv-pill"><input type="radio" name="kind" value="temp" /> Temporary</label>
+            </fieldset>
+            <label class="sv-field"><span>Last monthly basic salary (AED, without allowances)</span><input name="basic" inputmode="decimal" placeholder="e.g. 8,000" /></label>
+            <label class="sv-field"><span>Start date</span><input name="start" type="date" /></label>
+            <label class="sv-field"><span>Last working day</span><input name="end" type="date" /></label>
+            <label class="sv-field"><span>Unpaid leave or absence (days, if any)</span><input name="unpaid" inputmode="numeric" placeholder="0" /></label>
+            <div id="gr-part" class="gr-part" hidden>
+              <label class="sv-field"><span>Your contracted hours per week</span><input name="parthours" inputmode="decimal" placeholder="e.g. 24" /></label>
+              <label class="sv-field"><span>Full-time hours per week at your employer</span><input name="fullhours" inputmode="decimal" placeholder="48" /></label>
+            </div>
+          </form>
+          <div class="ct-card sv-out" id="gr-result" aria-live="polite">
+            <noscript><p>The calculator needs JavaScript. The rules it follows are set out below.</p></noscript>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="rules-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The law</p>
+          <h2 id="rules-title" data-reveal="mask">How gratuity is worked out.</h2>
+          <p class="lead" data-reveal>Federal Decree-Law No. 33 of 2021 on labour relations and its Executive Regulation, Cabinet Resolution No. 1 of 2022. Checked {e(GRATUITY_CHECKED)} on the UAE Legislation portal.</p>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{fact_rows(rules)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="example-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Worked example</p>
+          <h2 id="example-title" data-reveal="mask">Seven years on AED 8,000 basic.</h2>
+        </div>
+        <ol class="guide-steps" data-reveal-stagger>
+          <li><h3>Daily basic wage</h3><p>AED 8,000 &divide; 30 = AED 266.67.</p></li>
+          <li><h3>First five years</h3><p>5 &times; 21 days &times; AED 266.67 = AED 28,000.</p></li>
+          <li><h3>Years six and seven</h3><p>2 &times; 30 days &times; AED 266.67 = AED 16,000.</p></li>
+          <li><h3>Total gratuity</h3><p>AED 44,000, well under the cap of two years' wage.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+{faq_html(faq)}
+        </div>
+      </div>
+    </section>
+    <script type="module" src="/assets/js/gratuity.js"></script>
+"""
+    body = resource_shell(
+        "UAE Gratuity Calculator: End of Service Benefits | Accuminds",
+        "Free UAE end-of-service gratuity calculator under the federal Labour Law: 21 and 30 days' basic wage, part years, part-time work and the cap.",
+        canonical, ld, "Free tool · Labour Law", "UAE end-of-service gratuity calculator",
+        "Work out the gratuity due at the end of employment under the federal Labour Law: 21 days' basic wage a year for the first five years, 30 days after that.",
+        ctas, inner, "payroll and gratuity")
+    out = ROOT / "gratuity-calculator" / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
 # ---------------------------------------------------------------- PINT AE rule pages
 PINT_ID = re.compile(r"\b(?:IBR-(?:CO-|SR-|CL-)?\d+(?:-AE)?|IBT-\d+(?:-\d+)?|BTAE-\d+|IBG-\d+|ALIGNED-IBRP-[A-Z]+-\d+(?:-AE)?)\b")
 
@@ -1214,6 +1346,7 @@ def sitemap():
     urls = ([f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES] + [f"{SITE}{CHECKER['path']}"]
             + [guide_url()] + [guide_url(g["slug"]) for g in GUIDES]
             + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}"]
+            + [f"{SITE}{GRATUITY['path']}"]
             + [pint_url()] + [pint_url(t["slug"]) for t in PINT_TOPICS])
     rows = "\n".join(f"  <url>\n    <loc>{u}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </url>" for u in urls)
     (ROOT / "sitemap.xml").write_text(
@@ -1239,7 +1372,8 @@ def llms_txt():
     lines += ["", "## Free tools and templates", "",
               f"- [{CT_CHECK['name']}]({SITE}{CT_CHECK['path']}): {CT_CHECK['card']}",
               f"- [{MIS_TEMPLATE['name']}]({SITE}{MIS_TEMPLATE['path']}): {MIS_TEMPLATE['card']}",
-              f"- [{SV_CHECK['name']}]({SITE}{SV_CHECK['path']}): {SV_CHECK['card']}"]
+              f"- [{SV_CHECK['name']}]({SITE}{SV_CHECK['path']}): {SV_CHECK['card']}",
+              f"- [{GRATUITY['name']}]({SITE}{GRATUITY['path']}): {GRATUITY['card']} Runs in the browser; nothing is sent."]
     lines += ["", "## Guides", ""] + [f"- [{g['h1']}]({guide_url(g['slug'])}): {g['card']}" for g in GUIDES]
     lines += ["", "## PINT AE rules (UAE e-invoicing)", "", f"- [{PINT_HUB['h1']}]({pint_url()}): {PINT_RULES['card']}"]
     lines += [f"- [{t['h1']}]({pint_url(t['slug'])}): {t['card']}" for t in PINT_TOPICS]
@@ -1268,6 +1402,7 @@ def refresh_home_footer():
 if __name__ == "__main__":
     written = [hub_page()] + [service_page(s) for s in SERVICES] + [guides_hub()] + [guide_page(g) for g in GUIDES]
     written += [mis_template_page(), ct_check_page(), supplier_check_page()]
+    written += [gratuity_page()]
     written += [pint_hub_page()] + [pint_topic_page(t) for t in PINT_TOPICS]
     sitemap()
     llms_txt()

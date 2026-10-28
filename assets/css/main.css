@@ -1015,6 +1015,8 @@ main { counter-reset: chapter; }
 #sv-print-sheet { display: none; }
 @media print {
   body:has(#sv-print-sheet) > :not(#sv-print-sheet) { display: none !important; }
+  /* White paper even when "Background graphics" is on (the site's page background is dark navy). */
+  html:has(#sv-print-sheet), body:has(#sv-print-sheet) { background: #fff !important; color-scheme: light; }
   #sv-print-sheet { display: block; margin: 0; padding: 10mm 12mm; }
   #sv-print-sheet .sv-list { gap: 5px; }
   #sv-print-sheet .sv-h { margin: 12px 0 6px; }

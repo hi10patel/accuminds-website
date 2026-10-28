@@ -121,7 +121,7 @@
   <link rel="preload" as="image" href="assets/img/story-poster.webp" fetchpriority="high" />
 
   <link rel="stylesheet" href="assets/css/tokens.css?v=9504035abf" />
-  <link rel="stylesheet" href="assets/css/main.css?v=53e727fbca" />
+  <link rel="stylesheet" href="assets/css/main.css?v=4856947b07" />
 
   <script defer src="assets/vendor/gsap-3.15.0.min.js"></script>
   <script defer src="assets/vendor/ScrollTrigger-3.15.0.min.js"></script>
@@ -859,8 +859,10 @@
         <span class="wordmark-light">Accuminds Consulting · FZCO</span>
       </a>
       <!-- SERVICE-LINKS:START -->
-      <nav aria-label="Services">
-        <ul class="footer-nav footer-services">
+      <div class="footer-cols">
+        <nav class="footer-col" aria-label="Services">
+          <p class="footer-col__title">Services</p>
+          <ul class="footer-links">
             <li><a class="u-link" href="/services/bookkeeping-accounting-dubai/">Bookkeeping &amp; Accounting</a></li>
             <li><a class="u-link" href="/services/vat-services-uae/">VAT Services</a></li>
             <li><a class="u-link" href="/services/corporate-tax-uae/">Corporate Tax Services</a></li>
@@ -868,15 +870,26 @@
             <li><a class="u-link" href="/services/cfo-advisory-dubai/">CFO Advisory</a></li>
             <li><a class="u-link" href="/services/mis-reporting-dubai/">MIS &amp; Reporting</a></li>
             <li><a class="u-link" href="/services/ai-accounting-automation-uae/">AI Accounting Automation</a></li>
-            <li><a class="u-link" href="/e-invoice-checker/">Free E-Invoice Readiness Checker</a></li>
-            <li><a class="u-link" href="/guides/">E-Invoicing Software Guides</a></li>
-            <li><a class="u-link" href="/pint-ae-rules/">PINT AE Rules Explained</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="Free tools">
+          <p class="footer-col__title">Free tools</p>
+          <ul class="footer-links">
+            <li><a class="u-link" href="/e-invoice-checker/">E-Invoice Readiness Checker</a></li>
             <li><a class="u-link" href="/corporate-tax-check/">Corporate Tax Filing Check</a></li>
             <li><a class="u-link" href="/supplier-verification-check/">Supplier Verification Check (VAT)</a></li>
-            <li><a class="u-link" href="/mis-report-template/">Free Monthly MIS Report Template</a></li>
-            <li><a class="u-link" href="/gratuity-calculator/">UAE Gratuity Calculator</a></li>
-        </ul>
-      </nav>
+            <li><a class="u-link" href="/mis-report-template/">MIS Report Template</a></li>
+            <li><a class="u-link" href="/gratuity-calculator/">Gratuity Calculator</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="Guides">
+          <p class="footer-col__title">Guides</p>
+          <ul class="footer-links">
+            <li><a class="u-link" href="/guides/">E-Invoicing Software Guides</a></li>
+            <li><a class="u-link" href="/pint-ae-rules/">PINT AE Rules Explained</a></li>
+          </ul>
+        </nav>
+      </div>
       <!-- SERVICE-LINKS:END -->
       <nav aria-label="Footer">
         <ul class="footer-nav">

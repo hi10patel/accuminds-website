@@ -169,19 +169,37 @@ HEADER = """  <header class="site-header" id="site-header">
   </header>"""
 
 
-def service_links(current=None, base="/services/"):
-    items = []
-    for s in SERVICES:
-        cur = ' aria-current="page"' if s["slug"] == current else ""
-        items.append(f'<li><a class="u-link" href="{base}{s["slug"]}/"{cur}>{e(s["name"])}</a></li>')
-    items.append(f'<li><a class="u-link" href="{CHECKER["path"]}">{e(CHECKER["name"])}</a></li>')
-    items.append('<li><a class="u-link" href="/guides/">E-Invoicing Software Guides</a></li>')
-    items.append(f'<li><a class="u-link" href="{PINT_RULES["path"]}">{e(PINT_RULES["name"])}</a></li>')
-    items.append(f'<li><a class="u-link" href="{CT_CHECK["path"]}">{e(CT_CHECK["name"])}</a></li>')
-    items.append(f'<li><a class="u-link" href="{SV_CHECK["path"]}">{e(SV_CHECK["name"])}</a></li>')
-    items.append(f'<li><a class="u-link" href="{MIS_TEMPLATE["path"]}">{e(MIS_TEMPLATE["name"])}</a></li>')
-    items.append(f'<li><a class="u-link" href="{GRATUITY["path"]}">{e(GRATUITY["name"])}</a></li>')
-    return "\n            ".join(items)
+def footer_columns(current=None, base="/services/"):
+    """Footer links in three labelled columns: services, free tools, guides.
+    Labels are short because the column heading carries "Free"; the pages keep their full names."""
+    def li(href, name, cur=False):
+        attr = ' aria-current="page"' if cur else ""
+        return f'<li><a class="u-link" href="{href}"{attr}>{e(name)}</a></li>'
+
+    cols = [
+        ("Services", [li(f'{base}{s["slug"]}/', s["name"], s["slug"] == current) for s in SERVICES]),
+        ("Free tools", [
+            li(CHECKER["path"], "E-Invoice Readiness Checker"),
+            li(CT_CHECK["path"], "Corporate Tax Filing Check"),
+            li(SV_CHECK["path"], "Supplier Verification Check (VAT)"),
+            li(MIS_TEMPLATE["path"], "MIS Report Template"),
+            li(GRATUITY["path"], "Gratuity Calculator"),
+        ]),
+        ("Guides", [
+            li("/guides/", "E-Invoicing Software Guides"),
+            li(PINT_RULES["path"], "PINT AE Rules Explained"),
+        ]),
+    ]
+    out = []
+    for title, items in cols:
+        links = "\n            ".join(items)
+        out.append(f"""        <nav class="footer-col" aria-label="{title}">
+          <p class="footer-col__title">{title}</p>
+          <ul class="footer-links">
+            {links}
+          </ul>
+        </nav>""")
+    return '      <div class="footer-cols">\n' + "\n".join(out) + "\n      </div>"
 
 
 def footer(current=None):
@@ -191,11 +209,7 @@ def footer(current=None):
         <img src="/assets/img/mark-3d.webp" width="77" height="28" alt="" loading="lazy" decoding="async" />
         <span class="wordmark-light">Accuminds Consulting · FZCO</span>
       </a>
-      <nav aria-label="Services">
-        <ul class="footer-nav footer-services">
-            {service_links(current)}
-        </ul>
-      </nav>
+{footer_columns(current)}
       <address class="footer-meta">
         DSO – IFZA, IFZA Properties, Dubai Silicon Oasis, Dubai, UAE ·
         <a class="u-link" href="mailto:info@accumindsconsulting.ae">info@accumindsconsulting.ae</a> ·
@@ -1389,13 +1403,7 @@ def refresh_home_footer():
         print("index.html: SERVICE-LINKS markers not found, footer links not refreshed")
         return
     a, b = s.index(start) + len(start), s.index(end)
-    block = f"""
-      <nav aria-label="Services">
-        <ul class="footer-nav footer-services">
-            {service_links()}
-        </ul>
-      </nav>
-      """
+    block = f"\n{footer_columns()}\n      "
     p.write_text(s[:a] + block + s[b:], encoding="utf-8")
 
 

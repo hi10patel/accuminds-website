@@ -2,74 +2,118 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.accumindsconsulting.ae/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/services/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/services/bookkeeping-accounting-dubai/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/services/vat-services-uae/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/services/corporate-tax-uae/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/services/e-invoicing-uae/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/services/cfo-advisory-dubai/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/services/mis-reporting-dubai/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/services/ai-accounting-automation-uae/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/e-invoice-checker/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/guides/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/guides/quickbooks-e-invoicing-uae/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/guides/zoho-books-e-invoicing-uae/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/guides/tally-e-invoicing-uae/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/guides/odoo-e-invoicing-uae/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/corporate-tax-check/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/mis-report-template/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://www.accumindsconsulting.ae/supplier-verification-check/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.accumindsconsulting.ae/pint-ae-rules/</loc>
+    <lastmod>2026-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.accumindsconsulting.ae/pint-ae-rules/seller-trn/</loc>
+    <lastmod>2026-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.accumindsconsulting.ae/pint-ae-rules/buyer-trn/</loc>
+    <lastmod>2026-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.accumindsconsulting.ae/pint-ae-rules/peppol-participant-id/</loc>
+    <lastmod>2026-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.accumindsconsulting.ae/pint-ae-rules/invoice-number-and-date/</loc>
+    <lastmod>2026-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.accumindsconsulting.ae/pint-ae-rules/invoice-type-codes-and-credit-notes/</loc>
+    <lastmod>2026-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.accumindsconsulting.ae/pint-ae-rules/currency-and-aed-vat/</loc>
+    <lastmod>2026-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.accumindsconsulting.ae/pint-ae-rules/vat-category-codes/</loc>
+    <lastmod>2026-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.accumindsconsulting.ae/pint-ae-rules/invoice-lines/</loc>
+    <lastmod>2026-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.accumindsconsulting.ae/pint-ae-rules/invoice-totals/</loc>
+    <lastmod>2026-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.accumindsconsulting.ae/pint-ae-rules/seller-and-buyer-details/</loc>
+    <lastmod>2026-10-28</lastmod>
   </url>
 </urlset>

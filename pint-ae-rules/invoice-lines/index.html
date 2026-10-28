@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invoice Line Rules in PINT AE (IBR-147-AE) | Accuminds</title>
+  <meta name="description" content="What every UAE e-invoice line needs in PINT AE: item name and description, quantity, net price, line net amount (IBR-147-AE) and line VAT amount." />
+  <meta name="theme-color" content="#1A2E4A" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://www.accumindsconsulting.ae/pint-ae-rules/invoice-lines/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Accuminds Consulting FZCO" />
+  <meta property="og:url" content="https://www.accumindsconsulting.ae/pint-ae-rules/invoice-lines/" />
+  <meta property="og:title" content="Invoice Line Rules in PINT AE (IBR-147-AE) | Accuminds" />
+  <meta property="og:description" content="What every UAE e-invoice line needs in PINT AE: item name and description, quantity, net price, line net amount (IBR-147-AE) and line VAT amount." />
+  <meta property="og:image" content="https://www.accumindsconsulting.ae/assets/img/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon-32.png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://www.accumindsconsulting.ae/#organization",
+      "name": "Accuminds Consulting FZCO",
+      "url": "https://www.accumindsconsulting.ae/",
+      "telephone": "+971509867247",
+      "email": "info@accumindsconsulting.ae",
+      "sameAs": [
+        "https://www.linkedin.com/company/accuminds-consulting/",
+        "https://www.google.com/maps?cid=9046261605626005493"
+      ],
+      "hasMap": "https://www.google.com/maps?cid=9046261605626005493",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "DSO - IFZA, IFZA Properties, Dubai Silicon Oasis",
+        "addressLocality": "Dubai",
+        "addressRegion": "Dubai",
+        "addressCountry": "AE"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ],
+          "opens": "09:00",
+          "closes": "19:00"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://www.accumindsconsulting.ae/pint-ae-rules/invoice-lines/#article",
+      "headline": "Invoice line rules in PINT AE",
+      "description": "What every UAE e-invoice line needs in PINT AE: item name and description, quantity, net price, line net amount (IBR-147-AE) and line VAT amount.",
+      "url": "https://www.accumindsconsulting.ae/pint-ae-rules/invoice-lines/",
+      "inLanguage": "en",
+      "dateModified": "2026-10-28",
+      "author": {
+        "@id": "https://www.accumindsconsulting.ae/#organization"
+      },
+      "publisher": {
+        "@id": "https://www.accumindsconsulting.ae/#organization"
+      },
+      "keywords": "IBT-153, IBR-025, IBT-154, IBR-125-AE, IBT-129, IBR-022, IBT-146, IBT-131, IBR-024, IBR-147-AE, BTAE-08, IBR-162-AE, IBR-165-AE, IBR-026, IBR-027, IBR-104-AE, IBR-123-AE, IBR-108-AE",
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "PINT AE"
+        },
+        {
+          "@type": "Thing",
+          "name": "UAE e-invoicing"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.accumindsconsulting.ae/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PINT AE rules",
+          "item": "https://www.accumindsconsulting.ae/pint-ae-rules/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Invoice lines",
+          "item": "https://www.accumindsconsulting.ae/pint-ae-rules/invoice-lines/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is a short item code enough as the line description?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. PINT AE carries an item name (IBR-025) and an item description (IBR-125-AE), so each line needs a readable description of the goods or services."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does the line net amount not match quantity times price?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually because prices are stored with VAT included, a line discount is missing, or the amount is not rounded to 2 decimals (IBR-147-AE)."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script>
+    (function (h) {
+      h.classList.add('js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        h.classList.add('js-motion');
+        setTimeout(function () { if (!window.__amMotion) h.classList.remove('js-motion'); }, 3000);
+      }
+    })(document.documentElement);
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" /></noscript>
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=9504035abf" />
+  <link rel="stylesheet" href="/assets/css/main.css?v=2c64a237b3" />
+  <script defer src="/assets/vendor/gsap-3.15.0.min.js"></script>
+  <script defer src="/assets/vendor/ScrollTrigger-3.15.0.min.js"></script>
+  <script defer src="/assets/vendor/lenis-1.3.27.min.js"></script>
+  <script type="importmap">{"imports":{"/assets/js/ct-check.js":"/assets/js/ct-check.js?v=a2eb5b02c1","/assets/js/main.js":"/assets/js/main.js?v=83b70e6839","/assets/js/motion/core.js":"/assets/js/motion/core.js?v=bfcac893cd","/assets/js/motion/icons.js":"/assets/js/motion/icons.js?v=4b7bd7f52f","/assets/js/motion/process.js":"/assets/js/motion/process.js?v=b353711422","/assets/js/motion/showcase.js":"/assets/js/motion/showcase.js?v=87906f93c6","/assets/js/motion/stats.js":"/assets/js/motion/stats.js?v=01af0fdf7d","/assets/js/motion/story.js":"/assets/js/motion/story.js?v=08d5534ed4","/assets/js/story.bundle.js":"/assets/js/story.bundle.js?v=dff84a4dbf","/assets/js/story/scene.js":"/assets/js/story/scene.js?v=1e9c8839b5","/assets/js/story/wires.js":"/assets/js/story/wires.js?v=81f3c4ef47","/assets/js/supplier-check.js":"/assets/js/supplier-check.js?v=514028397e","/assets/js/ui/contact.js":"/assets/js/ui/contact.js?v=8d518e2e10","/assets/js/ui/magnetic.js":"/assets/js/ui/magnetic.js?v=6b3f98be0c","/assets/js/ui/nav.js":"/assets/js/ui/nav.js?v=02c658bc0b"}}</script>
+  <script type="module" src="/assets/js/main.js?v=83b70e6839"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-whatsapp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.8L3.5 20.5l4.3-1.1A8.5 8.5 0 1 0 12 3.5z" />
+        <path d="M9.3 8.4c.4-.5 1-.4 1.2.1l.6 1.4c.1.3 0 .6-.2.8l-.5.5a6 6 0 0 0 2.6 2.6l.5-.5c.2-.2.5-.3.8-.2l1.4.6c.5.2.6.8.1 1.2-.8.6-1.8.8-2.8.3a8.3 8.3 0 0 1-3.9-3.9c-.5-1-.3-2.1.2-2.9z" fill="currentColor" stroke="none" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></symbol>
+    </defs>
+  </svg>
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="Accuminds Consulting, home">
+        <img src="/assets/img/mark-3d.webp" width="88" height="32" alt="" />
+        <span class="wordmark">Accuminds</span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul>
+          <li><a class="u-link" href="/services/">Services</a></li>
+          <li><a class="u-link" href="/guides/">Guides</a></li>
+          <li><a class="u-link" href="/#process">How we work</a></li>
+          <li><a class="u-link" href="/#about">About</a></li>
+          <li><a class="u-link" href="/#contact">Contact</a></li>
+        </ul>
+        <a class="btn btn-gold nav-cta" href="/#contact">Book a consultation</a>
+      </nav>
+      <a class="btn btn-gold btn-sm header-cta" href="/#contact" data-magnetic>Book a consultation</a>
+      <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">
+        <span class="sr-only">Open menu</span>
+        <span class="nav-toggle__bars" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero on-dark" aria-labelledby="page-title">
+      <div class="container">
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a class="u-link" href="/">Home</a></li><li><a class="u-link" href="/pint-ae-rules/">PINT AE rules</a></li><li aria-current="page">Invoice lines</li></ol></nav>
+        <p class="eyebrow" data-reveal>PINT AE rules · UAE e-invoicing</p>
+        <h1 id="page-title" data-reveal="mask">Invoice line rules in PINT AE</h1>
+        <p class="lead" data-reveal>Item names, quantities, prices, line totals and line VAT.</p>
+        <div class="hero-ctas" data-reveal-stagger>
+          <a class="btn btn-gold" href="/e-invoice-checker/" data-magnetic>Check your invoices free <span aria-hidden="true">&rarr;</span></a>
+          <a class="btn btn-ghost-light" href="/services/e-invoicing-uae/" data-magnetic>E-invoicing readiness service</a>
+        </div>
+        <p class="guide-meta" data-reveal>Plain-English summary of the published specification, checked against 19 October 2026 (PINT AE Billing 1.0.4). The specification itself is authoritative.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="answer-title">
+      <div class="container">
+        <div class="answer-box" data-reveal>
+          <h2 id="answer-title">The short answer</h2>
+          <p>Each line needs an item name (<span class="nowrap">IBT-153</span>, <span class="nowrap">IBR-025</span>) and description (<span class="nowrap">IBT-154</span>, <span class="nowrap">IBR-125-AE</span>), a quantity (<span class="nowrap">IBT-129</span>, <span class="nowrap">IBR-022</span>), a net price (<span class="nowrap">IBT-146</span>) and a line net amount (<span class="nowrap">IBT-131</span>, <span class="nowrap">IBR-024</span>). The line net amount must equal quantity times net price (per base quantity), plus line charges, minus line allowances (<span class="nowrap">IBR-147-AE</span>). Each line also carries its VAT amount (<span class="nowrap">BTAE-08</span>), which is zero on reverse charge and zero-rated lines (<span class="nowrap">IBR-162-AE</span>, <span class="nowrap">IBR-165-AE</span>).</p>
+          <ul class="rule-ids" aria-label="Rule and field numbers on this page">
+            <li>IBT-153</li>
+            <li>IBR-025</li>
+            <li>IBT-154</li>
+            <li>IBR-125-AE</li>
+            <li>IBT-129</li>
+            <li>IBR-022</li>
+            <li>IBT-146</li>
+            <li>IBT-131</li>
+            <li>IBR-024</li>
+            <li>IBR-147-AE</li>
+            <li>BTAE-08</li>
+            <li>IBR-162-AE</li>
+            <li>IBR-165-AE</li>
+            <li>IBR-026</li>
+            <li>IBR-027</li>
+            <li>IBR-104-AE</li>
+            <li>IBR-123-AE</li>
+            <li>IBR-108-AE</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="checks-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The checks</p>
+          <h2 id="checks-title" data-reveal="mask">What we check, and how to fix it.</h2>
+          <p class="lead" data-reveal>Each check below runs in our free e-invoice readiness checker. Critical checks count towards the readiness score; warnings are listed but carry no weight.</p>
+        </div>
+        <div class="rule-list" data-reveal-stagger>
+          <article class="rule-card">
+            <div class="rule-head"><span class="rule-sev rule-sev--critical">Critical</span><span class="rule-check">Checker rule AE-013</span></div>
+            <h3>Line item description present</h3>
+            <dl class="rule-meta">
+              <div><dt>Official references</dt><dd>PINT AE <span class="nowrap">IBT-153</span> Item name (<span class="nowrap">IBR-025</span>); <span class="nowrap">IBT-154</span> Item description (<span class="nowrap">IBR-125-AE</span>)</dd></div>
+              <div><dt>Applies to</dt><dd>All invoices</dd></div>
+              <div><dt>How to fix</dt><dd>Every invoice line needs an item name or description of the goods or services supplied.</dd></div>
+              <div><dt>Note</dt><dd>PINT AE carries both an item name and an item description; one description column is checked here.</dd></div>
+            </dl>
+          </article>
+          <article class="rule-card">
+            <div class="rule-head"><span class="rule-sev rule-sev--critical">Critical</span><span class="rule-check">Checker rule AE-014</span></div>
+            <h3>Line quantity present and numeric</h3>
+            <dl class="rule-meta">
+              <div><dt>Official references</dt><dd>PINT AE <span class="nowrap">IBT-129</span> Invoiced quantity; <span class="nowrap">IBR-022</span></dd></div>
+              <div><dt>Applies to</dt><dd>All invoices</dd></div>
+              <div><dt>How to fix</dt><dd>Export quantity as a number on every line (service lines usually use 1).</dd></div>
+            </dl>
+          </article>
+          <article class="rule-card">
+            <div class="rule-head"><span class="rule-sev rule-sev--critical">Critical</span><span class="rule-check">Checker rule AE-015</span></div>
+            <h3>Line unit price present and numeric</h3>
+            <dl class="rule-meta">
+              <div><dt>Official references</dt><dd>PINT AE <span class="nowrap">IBT-146</span> Item net price; <span class="nowrap">IBR-026</span>, <span class="nowrap">IBR-027</span></dd></div>
+              <div><dt>Applies to</dt><dd>All invoices</dd></div>
+              <div><dt>How to fix</dt><dd>Export the net unit price (excluding VAT) as a number on every line.</dd></div>
+            </dl>
+          </article>
+          <article class="rule-card">
+            <div class="rule-head"><span class="rule-sev rule-sev--critical">Critical</span><span class="rule-check">Checker rule AE-016</span></div>
+            <h3>Line net amount present and numeric</h3>
+            <dl class="rule-meta">
+              <div><dt>Official references</dt><dd>PINT AE <span class="nowrap">IBT-131</span> Invoice line net amount; <span class="nowrap">IBR-024</span></dd></div>
+              <div><dt>Applies to</dt><dd>All invoices</dd></div>
+              <div><dt>How to fix</dt><dd>Export the line amount excluding VAT as a number on every line.</dd></div>
+            </dl>
+          </article>
+          <article class="rule-card">
+            <div class="rule-head"><span class="rule-sev rule-sev--critical">Critical</span><span class="rule-check">Checker rule AE-019</span></div>
+            <h3>Line net amount = quantity x unit price (less line discount), tolerance 0.01</h3>
+            <dl class="rule-meta">
+              <div><dt>Official references</dt><dd>PINT AE <span class="nowrap">IBR-147-AE</span>: line net amount = quantity x (net price / base quantity) + line charges - line allowances</dd></div>
+              <div><dt>Applies to</dt><dd>All invoices</dd></div>
+              <div><dt>How to fix</dt><dd>Recalculate line net = quantity x unit price - line discount, rounded to 2 decimals. Check for prices stored with VAT included.</dd></div>
+              <div><dt>Note</dt><dd>Assumes a price base quantity of 1 and treats line discounts as allowances.</dd></div>
+            </dl>
+          </article>
+          <article class="rule-card">
+            <div class="rule-head"><span class="rule-sev rule-sev--critical">Critical</span><span class="rule-check">Checker rule AE-020</span></div>
+            <h3>Line VAT amount = line net x VAT rate (zero on reverse charge and additional VAT lines), tolerance 0.01</h3>
+            <dl class="rule-meta">
+              <div><dt>Official references</dt><dd>PINT AE <span class="nowrap">BTAE-08</span> VAT line amount (<span class="nowrap">IBR-104-AE</span>, <span class="nowrap">IBR-123-AE</span>); <span class="nowrap">IBR-162-AE</span> (zero on reverse charge lines), <span class="nowrap">IBR-165-AE</span> (zero on zero rated lines), <span class="nowrap">IBR-108-AE</span> (additional VAT tax amount is zero)</dd></div>
+              <div><dt>Applies to</dt><dd>All invoices</dd></div>
+              <div><dt>How to fix</dt><dd>Export the VAT amount per line and make sure it equals line net x rate, rounded to 2 decimals.</dd></div>
+              <div><dt>Note</dt><dd>For non-AED invoices PINT AE needs the line VAT in AED as well; this check compares amounts in the invoice currency.</dd></div>
+            </dl>
+          </article>
+        </div>
+        <p class="guide-meta"><a class="u-link" href="https://docs.peppol.eu/poac/ae/pint-ae/trn-invoice/rule/PINT-jurisdiction-aligned-rules/" target="_blank" rel="noopener">Peppol: PINT AE specific rules<span class="sr-only"> (opens in a new tab)</span></a> · <a class="u-link" href="https://docs.peppol.eu/poac/ae/pint-ae/" target="_blank" rel="noopener">Peppol: PINT AE billing specification<span class="sr-only"> (opens in a new tab)</span></a></p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+          <details class="faq-item">
+            <summary><h3>Is a short item code enough as the line description?</h3><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+            <p>No. PINT AE carries an item name (IBR-025) and an item description (IBR-125-AE), so each line needs a readable description of the goods or services.</p>
+          </details>
+          <details class="faq-item">
+            <summary><h3>Why does the line net amount not match quantity times price?</h3><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+            <p>Usually because prices are stored with VAT included, a line discount is missing, or the amount is not rounded to 2 decimals (IBR-147-AE).</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="more-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>More PINT AE rules</p>
+          <h2 id="more-title" data-reveal="mask">The other topics.</h2>
+        </div>
+        <div class="related-grid related-grid--all" data-reveal-stagger>
+          <a class="related-card" href="/pint-ae-rules/seller-trn/"><span class="related-pillar">PINT AE</span><span class="related-name">Seller TRN</span><span class="related-desc">The 15-digit TRN format, and when PINT AE requires it.</span><span class="related-go" aria-hidden="true">→</span></a>
+          <a class="related-card" href="/pint-ae-rules/buyer-trn/"><span class="related-pillar">PINT AE</span><span class="related-name">Buyer TRN</span><span class="related-desc">Optional for buyers without a TRN, required on reverse charge lines.</span><span class="related-go" aria-hidden="true">→</span></a>
+          <a class="related-card" href="/pint-ae-rules/peppol-participant-id/"><span class="related-pillar">PINT AE</span><span class="related-name">Peppol Participant ID</span><span class="related-desc">IBT-034 and IBT-049, the 0235 scheme and the 10-digit TIN.</span><span class="related-go" aria-hidden="true">→</span></a>
+          <a class="related-card" href="/pint-ae-rules/invoice-number-and-date/"><span class="related-pillar">PINT AE</span><span class="related-name">Invoice number and date</span><span class="related-desc">IBT-001 and IBT-002: unique numbers and valid dates.</span><span class="related-go" aria-hidden="true">→</span></a>
+          <a class="related-card" href="/pint-ae-rules/invoice-type-codes-and-credit-notes/"><span class="related-pillar">PINT AE</span><span class="related-name">Invoice type codes and credit notes</span><span class="related-desc">Which code each document uses, and linking credit notes to invoices.</span><span class="related-go" aria-hidden="true">→</span></a>
+          <a class="related-card" href="/pint-ae-rules/currency-and-aed-vat/"><span class="related-pillar">PINT AE</span><span class="related-name">Currency and AED VAT</span><span class="related-desc">ISO currency codes, and the AED figures a non-AED invoice needs.</span><span class="related-go" aria-hidden="true">→</span></a>
+          <a class="related-card" href="/pint-ae-rules/vat-category-codes/"><span class="related-pillar">PINT AE</span><span class="related-name">VAT category codes</span><span class="related-desc">Mapping your tax codes to the six categories, with the right rates.</span><span class="related-go" aria-hidden="true">→</span></a>
+          <a class="related-card" href="/pint-ae-rules/invoice-totals/"><span class="related-pillar">PINT AE</span><span class="related-name">Invoice totals</span><span class="related-desc">Why totals must add up exactly, and the usual causes when they don&#x27;t.</span><span class="related-go" aria-hidden="true">→</span></a>
+          <a class="related-card" href="/pint-ae-rules/seller-and-buyer-details/"><span class="related-pillar">PINT AE</span><span class="related-name">Seller and buyer details</span><span class="related-desc">Legal names, address lines, cities and emirate codes.</span><span class="related-go" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark cta-band">
+      <div class="container cta-inner">
+        <h2 data-reveal="mask">Let&rsquo;s talk about e-invoicing.</h2>
+        <p class="lead" data-reveal>Tell us where things stand. We reply within two business days.</p>
+        <div class="hero-ctas" data-reveal-stagger>
+          <a class="btn btn-gold" href="/#contact" data-magnetic>Book a consultation</a>
+          <a class="btn btn-whatsapp" href="https://wa.me/971509867247?text=Hello%20Accuminds%2C%20I%20would%20like%20to%20discuss%20e-invoicing." target="_blank" rel="noopener" data-magnetic>
+            <svg class="icon" aria-hidden="true"><use href="#i-whatsapp" /></svg> Chat on WhatsApp<span class="sr-only"> (opens WhatsApp)</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="footer-brand" href="/">
+        <img src="/assets/img/mark-3d.webp" width="77" height="28" alt="" loading="lazy" decoding="async" />
+        <span class="wordmark-light">Accuminds Consulting · FZCO</span>
+      </a>
+      <nav aria-label="Services">
+        <ul class="footer-nav footer-services">
+            <li><a class="u-link" href="/services/bookkeeping-accounting-dubai/">Bookkeeping &amp; Accounting</a></li>
+            <li><a class="u-link" href="/services/vat-services-uae/">VAT Services</a></li>
+            <li><a class="u-link" href="/services/corporate-tax-uae/">Corporate Tax Services</a></li>
+            <li><a class="u-link" href="/services/e-invoicing-uae/">E-Invoicing Readiness</a></li>
+            <li><a class="u-link" href="/services/cfo-advisory-dubai/">CFO Advisory</a></li>
+            <li><a class="u-link" href="/services/mis-reporting-dubai/">MIS &amp; Reporting</a></li>
+            <li><a class="u-link" href="/services/ai-accounting-automation-uae/">AI Accounting Automation</a></li>
+            <li><a class="u-link" href="/e-invoice-checker/">Free E-Invoice Readiness Checker</a></li>
+            <li><a class="u-link" href="/guides/">E-Invoicing Software Guides</a></li>
+            <li><a class="u-link" href="/pint-ae-rules/">PINT AE Rules Explained</a></li>
+            <li><a class="u-link" href="/corporate-tax-check/">Corporate Tax Filing Check</a></li>
+            <li><a class="u-link" href="/supplier-verification-check/">Supplier Verification Check (VAT)</a></li>
+            <li><a class="u-link" href="/mis-report-template/">Free Monthly MIS Report Template</a></li>
+        </ul>
+      </nav>
+      <address class="footer-meta">
+        DSO – IFZA, IFZA Properties, Dubai Silicon Oasis, Dubai, UAE ·
+        <a class="u-link" href="mailto:info@accumindsconsulting.ae">info@accumindsconsulting.ae</a> ·
+        <a class="u-link" href="tel:+971509867247">+971 50 98 67247</a> ·
+        <a class="u-link" href="https://www.linkedin.com/company/accuminds-consulting/" rel="me noopener" target="_blank">LinkedIn</a> ·
+        <a class="u-link" href="https://www.google.com/maps?cid=9046261605626005493" rel="noopener" target="_blank">Google Maps</a>
+      </address>
+      <p class="footer-copy">© <span data-year>2026</span> Accuminds Consulting FZCO. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1061,6 +1061,20 @@ main { counter-reset: chapter; }
 .sv-print-meta { margin-top: 4px; font-size: 0.8125rem; color: var(--ink-700); }
 .sv-print { margin-top: 6px; }
 @media (max-width: 900px) { .sv-grid { grid-template-columns: 1fr; } .sv-out { position: static; } }
+/* Embed code box on /gratuity-calculator/, and the bare calculator other sites iframe (/embed/...) */
+.gr-embed { display: grid; gap: 14px; max-width: none; }
+.gr-embed textarea {
+  width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line); resize: vertical;
+  background: rgba(255, 255, 255, 0.04); color: var(--heading); font: 0.8125rem/1.55 ui-monospace, Consolas, monospace;
+}
+.gr-embed__row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 0; }
+.embed-main { padding: 12px; }
+.embed .sv-out { position: static; }
+.embed-credit { margin: 12px 4px 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; font-size: 0.8125rem; color: var(--ink-600); }
+.embed-credit a { color: var(--heading); text-decoration: none; }
+.embed-credit a:hover { text-decoration: underline; }
+.embed-credit b { color: var(--gold-300); }
+@media (max-width: 560px) { .embed-main { padding: 8px; } }
 /* Printing: supplier-check.js copies the record to #sv-print-sheet, a direct child of
    body, so it prints alone and starts at the top of the first page. */
 #sv-print-sheet { display: none; }

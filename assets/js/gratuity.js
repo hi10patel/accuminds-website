@@ -124,3 +124,20 @@ if (form && out) {
   form.addEventListener('submit', (ev) => { ev.preventDefault(); render(); });
   render();
 }
+
+// "Add this calculator to your website": copy the embed code.
+const code = document.getElementById('gr-embed-code');
+const copy = document.getElementById('gr-embed-copy');
+const status = document.getElementById('gr-embed-status');
+if (code && copy) {
+  copy.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(code.value);
+      status.textContent = 'Copied. Paste it into your page’s HTML.';
+    } catch {
+      code.focus();
+      code.select();
+      status.textContent = 'Press Ctrl+C (or Cmd+C) to copy.';
+    }
+  });
+}

@@ -1008,6 +1008,96 @@ def supplier_check_page():
     return out
 
 
+GRATUITY_EMBED = "/embed/gratuity-calculator/"
+# What other sites paste. The plain link under the iframe is the credit (and the backlink);
+# the script line resizes the iframe from the height the embed page posts.
+GRATUITY_EMBED_CODE = (
+    f'<iframe src="{SITE}{GRATUITY_EMBED}" title="UAE end-of-service gratuity calculator" '
+    'width="100%" height="900" loading="lazy" style="border:0;max-width:980px;display:block"></iframe>\n'
+    f'<p style="font-size:13px;margin:6px 0 0">UAE <a href="{SITE}{GRATUITY["path"]}">gratuity calculator</a> by Accuminds Consulting</p>\n'
+    '<script>addEventListener("message",function(e){if(e.origin==="' + SITE + '"&&e.data&&e.data.type==="accuminds-embed-height")'
+    '{document.querySelectorAll("iframe").forEach(function(f){if(f.contentWindow===e.source)f.style.height=e.data.height+"px"})}})</script>'
+)
+
+
+def gratuity_calculator(noscript_tail):
+    """The form and result panel, shared by the calculator page and the embed (logic: assets/js/gratuity.js)."""
+    return f"""        <div class="sv-grid">
+          <form class="ct-card sv-form" id="gr-form" novalidate>
+            <fieldset class="sv-field"><legend>Employee</legend>
+              <label class="sv-pill"><input type="radio" name="who" value="foreign" checked /> Expatriate</label>
+              <label class="sv-pill"><input type="radio" name="who" value="national" /> UAE national</label>
+            </fieldset>
+            <fieldset class="sv-field"><legend>Work model</legend>
+              <label class="sv-pill"><input type="radio" name="kind" value="full" checked /> Full-time</label>
+              <label class="sv-pill"><input type="radio" name="kind" value="part" /> Part-time</label>
+              <label class="sv-pill"><input type="radio" name="kind" value="temp" /> Temporary</label>
+            </fieldset>
+            <label class="sv-field"><span>Last monthly basic salary (AED, without allowances)</span><input name="basic" inputmode="decimal" placeholder="e.g. 8,000" /></label>
+            <label class="sv-field"><span>Start date</span><input name="start" type="date" /></label>
+            <label class="sv-field"><span>Last working day</span><input name="end" type="date" /></label>
+            <label class="sv-field"><span>Unpaid leave or absence (days, if any)</span><input name="unpaid" inputmode="numeric" placeholder="0" /></label>
+            <div id="gr-part" class="gr-part" hidden>
+              <label class="sv-field"><span>Your contracted hours per week</span><input name="parthours" inputmode="decimal" placeholder="e.g. 24" /></label>
+              <label class="sv-field"><span>Full-time hours per week at your employer</span><input name="fullhours" inputmode="decimal" placeholder="48" /></label>
+            </div>
+          </form>
+          <div class="ct-card sv-out" id="gr-result" aria-live="polite">
+            <noscript><p>The calculator needs JavaScript. {noscript_tail}</p></noscript>
+          </div>
+        </div>"""
+
+
+def gratuity_embed_page():
+    """Bare calculator for other sites to iframe. noindex, with the canonical on the full page,
+    so it never competes with /gratuity-calculator/ in search."""
+    full = f"{SITE}{GRATUITY['path']}"
+    body = f"""<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UAE Gratuity Calculator | Accuminds</title>
+  <meta name="description" content="{e(GRATUITY['card'])}" />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="{full}" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon-32.png" sizes="32x32" />
+  <link rel="stylesheet" href="{FONT}" />
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body class="embed">
+  <main class="embed-main">
+{gratuity_calculator('See <a href="' + full + '" target="_blank" rel="noopener">the full calculator</a>.')}
+    <p class="embed-credit">
+      <a href="{full}" target="_blank" rel="noopener">Gratuity calculator by <b>Accuminds Consulting</b></a>
+      <span>Federal Decree-Law No. 33 of 2021 · Estimate only, not legal advice</span>
+    </p>
+  </main>
+  <script type="module" src="/assets/js/gratuity.js"></script>
+  <script>
+    // Tell the host page how tall the calculator is, so its iframe can fit it without scrolling.
+    (function () {{
+      if (window.parent === window) return;
+      var last = 0;
+      function post(force) {{
+        var h = Math.ceil(document.body.getBoundingClientRect().height);
+        if (force === true || h !== last) {{ last = h; parent.postMessage({{ type: 'accuminds-embed-height', height: h }}, '*'); }}
+      }}
+      new ResizeObserver(post).observe(document.body);
+      // Repeat early on, in case the host page's listener was not ready for the first message.
+      addEventListener('load', function () {{ [0, 400, 1500, 4000].forEach(function (ms) {{ setTimeout(post, ms, true); }}); }});
+    }})();
+  </script>
+</body>
+</html>
+"""
+    out = ROOT / GRATUITY_EMBED.strip("/") / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
 def gratuity_page():
     canonical = f"{SITE}{GRATUITY['path']}"
     rules = [
@@ -1048,29 +1138,21 @@ def gratuity_page():
           <h2 id="calc-title" data-reveal="mask">Your <span class="nowrap">end-of-service</span> gratuity.</h2>
           <p class="lead" data-reveal>Your answers stay in your browser; nothing is sent or stored.</p>
         </div>
-        <div class="sv-grid">
-          <form class="ct-card sv-form" id="gr-form" novalidate>
-            <fieldset class="sv-field"><legend>Employee</legend>
-              <label class="sv-pill"><input type="radio" name="who" value="foreign" checked /> Expatriate</label>
-              <label class="sv-pill"><input type="radio" name="who" value="national" /> UAE national</label>
-            </fieldset>
-            <fieldset class="sv-field"><legend>Work model</legend>
-              <label class="sv-pill"><input type="radio" name="kind" value="full" checked /> Full-time</label>
-              <label class="sv-pill"><input type="radio" name="kind" value="part" /> Part-time</label>
-              <label class="sv-pill"><input type="radio" name="kind" value="temp" /> Temporary</label>
-            </fieldset>
-            <label class="sv-field"><span>Last monthly basic salary (AED, without allowances)</span><input name="basic" inputmode="decimal" placeholder="e.g. 8,000" /></label>
-            <label class="sv-field"><span>Start date</span><input name="start" type="date" /></label>
-            <label class="sv-field"><span>Last working day</span><input name="end" type="date" /></label>
-            <label class="sv-field"><span>Unpaid leave or absence (days, if any)</span><input name="unpaid" inputmode="numeric" placeholder="0" /></label>
-            <div id="gr-part" class="gr-part" hidden>
-              <label class="sv-field"><span>Your contracted hours per week</span><input name="parthours" inputmode="decimal" placeholder="e.g. 24" /></label>
-              <label class="sv-field"><span>Full-time hours per week at your employer</span><input name="fullhours" inputmode="decimal" placeholder="48" /></label>
-            </div>
-          </form>
-          <div class="ct-card sv-out" id="gr-result" aria-live="polite">
-            <noscript><p>The calculator needs JavaScript. The rules it follows are set out below.</p></noscript>
-          </div>
+{gratuity_calculator("The rules it follows are set out below.")}
+      </div>
+    </section>
+
+    <section class="section section--white" id="embed" aria-labelledby="embed-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>For HR teams and websites</p>
+          <h2 id="embed-title" data-reveal="mask">Add this calculator to your website.</h2>
+          <p class="lead" data-reveal>Free to use on your HR portal, blog or intranet. Paste this code where you want the calculator to appear. It runs in your visitors' browsers, and nothing they enter is sent anywhere.</p>
+        </div>
+        <div class="ct-card gr-embed">
+          <label class="sv-field"><span>Embed code</span><textarea id="gr-embed-code" rows="6" readonly spellcheck="false">{e(GRATUITY_EMBED_CODE)}</textarea></label>
+          <p class="gr-embed__row"><button class="btn btn-gold btn-sm" type="button" id="gr-embed-copy">Copy code</button> <span class="ct-hint" id="gr-embed-status" aria-live="polite"></span></p>
+          <p class="ct-note">The last line keeps the calculator the right height; if your site does not allow scripts, leave it out and the calculator scrolls instead. Please keep the credit link.</p>
         </div>
       </div>
     </section>
@@ -1410,7 +1492,7 @@ def refresh_home_footer():
 if __name__ == "__main__":
     written = [hub_page()] + [service_page(s) for s in SERVICES] + [guides_hub()] + [guide_page(g) for g in GUIDES]
     written += [mis_template_page(), ct_check_page(), supplier_check_page()]
-    written += [gratuity_page()]
+    written += [gratuity_page(), gratuity_embed_page()]
     written += [pint_hub_page()] + [pint_topic_page(t) for t in PINT_TOPICS]
     sitemap()
     llms_txt()

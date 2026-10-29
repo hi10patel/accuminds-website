@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UAE Gratuity Calculator | Accuminds</title>
+  <meta name="description" content="End-of-service gratuity under the federal Labour Law: 21 and 30 days&#x27; basic wage, part years, part-time work and the cap." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://www.accumindsconsulting.ae/gratuity-calculator/" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon-32.png" sizes="32x32" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" />
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=9504035abf" />
+  <link rel="stylesheet" href="/assets/css/main.css?v=f30f94f81f" />
+</head>
+<body class="embed">
+  <main class="embed-main">
+        <div class="sv-grid">
+          <form class="ct-card sv-form" id="gr-form" novalidate>
+            <fieldset class="sv-field"><legend>Employee</legend>
+              <label class="sv-pill"><input type="radio" name="who" value="foreign" checked /> Expatriate</label>
+              <label class="sv-pill"><input type="radio" name="who" value="national" /> UAE national</label>
+            </fieldset>
+            <fieldset class="sv-field"><legend>Work model</legend>
+              <label class="sv-pill"><input type="radio" name="kind" value="full" checked /> Full-time</label>
+              <label class="sv-pill"><input type="radio" name="kind" value="part" /> Part-time</label>
+              <label class="sv-pill"><input type="radio" name="kind" value="temp" /> Temporary</label>
+            </fieldset>
+            <label class="sv-field"><span>Last monthly basic salary (AED, without allowances)</span><input name="basic" inputmode="decimal" placeholder="e.g. 8,000" /></label>
+            <label class="sv-field"><span>Start date</span><input name="start" type="date" /></label>
+            <label class="sv-field"><span>Last working day</span><input name="end" type="date" /></label>
+            <label class="sv-field"><span>Unpaid leave or absence (days, if any)</span><input name="unpaid" inputmode="numeric" placeholder="0" /></label>
+            <div id="gr-part" class="gr-part" hidden>
+              <label class="sv-field"><span>Your contracted hours per week</span><input name="parthours" inputmode="decimal" placeholder="e.g. 24" /></label>
+              <label class="sv-field"><span>Full-time hours per week at your employer</span><input name="fullhours" inputmode="decimal" placeholder="48" /></label>
+            </div>
+          </form>
+          <div class="ct-card sv-out" id="gr-result" aria-live="polite">
+            <noscript><p>The calculator needs JavaScript. See <a href="https://www.accumindsconsulting.ae/gratuity-calculator/" target="_blank" rel="noopener">the full calculator</a>.</p></noscript>
+          </div>
+        </div>
+    <p class="embed-credit">
+      <a href="https://www.accumindsconsulting.ae/gratuity-calculator/" target="_blank" rel="noopener">Gratuity calculator by <b>Accuminds Consulting</b></a>
+      <span>Federal Decree-Law No. 33 of 2021 · Estimate only, not legal advice</span>
+    </p>
+  </main>
+  <script type="importmap">{"imports":{"/assets/js/ct-check.js":"/assets/js/ct-check.js?v=a2eb5b02c1","/assets/js/gratuity.js":"/assets/js/gratuity.js?v=210c13558f","/assets/js/main.js":"/assets/js/main.js?v=83b70e6839","/assets/js/motion/core.js":"/assets/js/motion/core.js?v=bfcac893cd","/assets/js/motion/icons.js":"/assets/js/motion/icons.js?v=4b7bd7f52f","/assets/js/motion/process.js":"/assets/js/motion/process.js?v=b353711422","/assets/js/motion/showcase.js":"/assets/js/motion/showcase.js?v=87906f93c6","/assets/js/motion/stats.js":"/assets/js/motion/stats.js?v=01af0fdf7d","/assets/js/motion/story.js":"/assets/js/motion/story.js?v=08d5534ed4","/assets/js/story.bundle.js":"/assets/js/story.bundle.js?v=dff84a4dbf","/assets/js/story/scene.js":"/assets/js/story/scene.js?v=1e9c8839b5","/assets/js/story/wires.js":"/assets/js/story/wires.js?v=81f3c4ef47","/assets/js/supplier-check.js":"/assets/js/supplier-check.js?v=514028397e","/assets/js/ui/contact.js":"/assets/js/ui/contact.js?v=8d518e2e10","/assets/js/ui/magnetic.js":"/assets/js/ui/magnetic.js?v=6b3f98be0c","/assets/js/ui/nav.js":"/assets/js/ui/nav.js?v=02c658bc0b"}}</script>
+  <script type="module" src="/assets/js/gratuity.js?v=210c13558f"></script>
+  <script>
+    // Tell the host page how tall the calculator is, so its iframe can fit it without scrolling.
+    (function () {
+      if (window.parent === window) return;
+      var last = 0;
+      function post(force) {
+        var h = Math.ceil(document.body.getBoundingClientRect().height);
+        if (force === true || h !== last) { last = h; parent.postMessage({ type: 'accuminds-embed-height', height: h }, '*'); }
+      }
+      new ResizeObserver(post).observe(document.body);
+      // Repeat early on, in case the host page's listener was not ready for the first message.
+      addEventListener('load', function () { [0, 400, 1500, 4000].forEach(function (ms) { setTimeout(post, ms, true); }); });
+    })();
+  </script>
+</body>
+</html>

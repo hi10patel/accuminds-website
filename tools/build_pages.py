@@ -51,6 +51,11 @@ SV_CHECK = {"path": "/supplier-verification-check/", "name": "Supplier Verificat
             "card": "Which FTA Decision 13 of 2026 checks apply before you claim input VAT on a supplier's invoice, with a printable checklist."}
 FTA_DEC13 = ("FTA Decision No. 13 of 2026 (unofficial English translation)",
              "https://tax.gov.ae/Datafolder/Files/Legislation/2026/FTA%20Decision%20No.%2013%20of%202026%20on%20Measures%2018%2008%202026.pdf")
+TRN_CHECK = {"path": "/trn-verification-uae/", "name": "TRN Verification and Format Check",
+             "card": "Check that a UAE TRN has the right format, then confirm it on the FTA website: the steps, and when a TRN must be on a tax invoice."}
+TRN_CHECKED = "31 October 2026"
+FTA_HOME = ("FTA website: TRN/TIN verification", "https://tax.gov.ae/en/default.aspx")
+VAT_EXEC_REG = ("UAE Legislation: Cabinet Resolution No. 52 of 2017", "https://uaelegislation.gov.ae/en/legislations/1226")
 # Free tool published from the uae-einvoice-checker repo (npm run sync:checker).
 GRATUITY = {"path": "/gratuity-calculator/", "name": "UAE Gratuity Calculator",
             "card": "End-of-service gratuity under the federal Labour Law: 21 and 30 days' basic wage, part years, part-time work and the cap."}
@@ -182,6 +187,7 @@ def footer_columns(current=None, base="/services/"):
             li(CHECKER["path"], "E-Invoice Readiness Checker"),
             li(CT_CHECK["path"], "Corporate Tax Filing Check"),
             li(SV_CHECK["path"], "Supplier Verification Check (VAT)"),
+            li(TRN_CHECK["path"], "TRN Verification"),
             li(MIS_TEMPLATE["path"], "MIS Report Template"),
             li(GRATUITY["path"], "Gratuity Calculator"),
         ]),
@@ -1008,6 +1014,126 @@ def supplier_check_page():
     return out
 
 
+def trn_page():
+    canonical = f"{SITE}{TRN_CHECK['path']}"
+    rules = [
+        ("What a TRN is", "A unique number the FTA assigns to each person registered for tax (Article 1).", VAT_EXEC_REG),
+        ("Format", "15 digits. On UAE e-invoices a VAT TRN must start with 1 and end with 03, with no spaces, dashes or prefix (rule IBR-132-AE).", PINT_AE_RULES),
+        ("Full tax invoice", "Shows the supplier's name, address and TRN, and the recipient's name, address and TRN if the recipient is VAT registered (Article 59(1)).", VAT_EXEC_REG),
+        ("Simplified tax invoice", "Shows the supplier's TRN only. Allowed when the recipient is not VAT registered, or is registered and the supply is AED 10,000 or less, and reverse charge does not apply (Article 59(2) and (5)).", VAT_EXEC_REG),
+        ("Where to verify", "The TRN/TIN verification on the FTA website: a 15-digit TRN or a 10-digit TIN, plus a security code. No login is needed.", FTA_HOME),
+    ]
+    faq = [
+        ("How do I verify a TRN number in the UAE?", "On the FTA website (tax.gov.ae), open TRN/TIN verification at the top of the page, choose TRN, enter the 15 digits and the security code, and submit. Check that the result matches the business named on the invoice."),
+        ("How many digits is a UAE TRN?", "15. On UAE e-invoices a VAT TRN must start with 1 and end with 03 (PINT AE rule IBR-132-AE)."),
+        ("Can I check a TRN without logging in to EmaraTax?", "Yes. The TRN/TIN verification on the FTA website is open to anyone and needs only the number and the security code."),
+        ("What is the difference between a TRN and a TIN?", "A TRN has 15 digits; a TIN has 10. The FTA's verification accepts either: choose TRN or TIN before you enter the number."),
+        ("Must my customer's TRN be on my tax invoice?", "Yes, if the customer is VAT registered and you issue a full tax invoice (Article 59(1)). A simplified tax invoice shows only your own TRN."),
+        ("What if the TRN is not found or the name does not match?", "Ask the supplier for its VAT registration certificate and a corrected invoice before you claim the input VAT. A tax invoice must show the supplier's TRN (Article 59(1))."),
+        ("Does this tool check the FTA register?", "No. It checks the format only, in your browser, and nothing is sent. Only the FTA's own verification confirms that a TRN is registered."),
+    ]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(),
+        {"@type": "WebApplication", "@id": f"{canonical}#app", "name": "UAE TRN format check", "url": canonical,
+         "description": TRN_CHECK["card"], "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in a web browser)",
+         "isAccessibleForFree": True, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "AED"}, "provider": {"@id": ORG_ID}},
+        {"@type": "HowTo", "@id": f"{canonical}#howto", "name": "How to verify a TRN on the FTA website",
+         "step": [{"@type": "HowToStep", "position": i, "name": n, "text": t} for i, (n, t) in enumerate([
+             ("Open the FTA website", "Go to tax.gov.ae and open TRN/TIN verification at the top of the page."),
+             ("Enter the number", "Choose TRN and enter the 15 digits, or choose TIN for a 10-digit number."),
+             ("Enter the security code", "Type the code shown in the image and submit."),
+             ("Compare the result", "Check that the result matches the business named on the invoice."),
+         ], 1)]},
+        breadcrumbs_ld([("Home", f"{SITE}/"), ("TRN verification", canonical)]),
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
+    ]}
+    ctas = f"""          <a class="btn btn-gold" href="#check" data-magnetic>Check a TRN <span aria-hidden="true">&darr;</span></a>
+          <a class="btn btn-ghost-light" href="{SV_CHECK["path"]}" data-magnetic>Supplier verification check</a>"""
+    inner = f"""
+    <section class="section" id="check" aria-labelledby="check-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Format check</p>
+          <h2 id="check-title" data-reveal="mask">Is this TRN in the right format?</h2>
+          <p class="lead" data-reveal>Catches typos and wrong numbers before you look the TRN up. It runs in your browser; nothing is sent or stored.</p>
+        </div>
+        <div class="sv-grid">
+          <form class="ct-card sv-form" id="trn-form" novalidate>
+            <label class="sv-field"><span>TRN or TIN</span><input name="trn" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="15 digits, e.g. 1XXXXXXXXXXXX03" /></label>
+            <p class="ct-note">Spaces, dashes and a "TRN" label are ignored.</p>
+          </form>
+          <div class="ct-card sv-out" id="trn-result" aria-live="polite">
+            <noscript><p>The format check needs JavaScript. A UAE VAT TRN has 15 digits, starting with 1 and ending with 03.</p></noscript>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="steps-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>On the FTA website</p>
+          <h2 id="steps-title" data-reveal="mask">Confirm the TRN is registered.</h2>
+          <p class="lead" data-reveal>Only the FTA's own verification confirms that a TRN is registered. It is open to anyone, with no EmaraTax login. <a class="u-link" href="{e(FTA_HOME[1])}" target="_blank" rel="noopener">Open tax.gov.ae<span class="sr-only"> (opens in a new tab)</span></a></p>
+        </div>
+        <ol class="guide-steps" data-reveal-stagger>
+          <li><h3>Open TRN/TIN verification</h3><p>On tax.gov.ae, it is at the top of the page.</p></li>
+          <li><h3>Enter the number</h3><p>Choose TRN and enter the 15 digits, or choose TIN for a 10-digit number.</p></li>
+          <li><h3>Enter the security code</h3><p>Type the code shown in the image and submit.</p></li>
+          <li><h3>Compare the result</h3><p>It should match the business named on the invoice. If it is not found or the name differs, ask the supplier for its VAT registration certificate before you claim the input VAT.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="rules-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The rules</p>
+          <h2 id="rules-title" data-reveal="mask">When a TRN must be on an invoice.</h2>
+          <p class="lead" data-reveal>Cabinet Resolution No. 52 of 2017 (the VAT Executive Regulation, as amended) and the PINT AE specification. Checked {e(TRN_CHECKED)}.</p>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{fact_rows(rules)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="supplier-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Before you claim input VAT</p>
+          <h2 id="supplier-title" data-reveal="mask">A valid TRN is only the first check.</h2>
+          <p class="lead" data-reveal>From 1 October 2026, FTA Decision No. 13 of 2026 also asks you to verify the supplier and the supply before you claim input VAT. See which checks apply in the <a class="u-link" href="{SV_CHECK["path"]}">Supplier Verification Check</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+{faq_html(faq)}
+        </div>
+      </div>
+    </section>
+    <script type="module" src="/assets/js/trn-check.js"></script>
+"""
+    body = resource_shell(
+        "TRN Verification UAE: Check a TRN Number | Accuminds",
+        "How to verify a UAE TRN on the FTA website, with a free format check: 15 digits, starting with 1 and ending with 03. Plus when a TRN must be on a tax invoice.",
+        canonical, ld, "Free tool · VAT", "TRN verification in the UAE",
+        "Check that a TRN has the right format, then confirm it on the FTA website in four steps. Plus when a TRN must appear on a tax invoice.",
+        ctas, inner, "VAT and supplier checks")
+    out = ROOT / TRN_CHECK["path"].strip("/") / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
 GRATUITY_EMBED = "/embed/gratuity-calculator/"
 # What other sites paste. The plain link under the iframe is the credit (and the backlink);
 # the script line resizes the iframe from the height the embed page posts.
@@ -1441,7 +1567,7 @@ def pint_hub_page():
 def sitemap():
     urls = ([f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES] + [f"{SITE}{CHECKER['path']}"]
             + [guide_url()] + [guide_url(g["slug"]) for g in GUIDES]
-            + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}"]
+            + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}", f"{SITE}{TRN_CHECK['path']}"]
             + [f"{SITE}{GRATUITY['path']}"]
             + [pint_url()] + [pint_url(t["slug"]) for t in PINT_TOPICS])
     rows = "\n".join(f"  <url>\n    <loc>{u}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </url>" for u in urls)
@@ -1469,6 +1595,7 @@ def llms_txt():
               f"- [{CT_CHECK['name']}]({SITE}{CT_CHECK['path']}): {CT_CHECK['card']}",
               f"- [{MIS_TEMPLATE['name']}]({SITE}{MIS_TEMPLATE['path']}): {MIS_TEMPLATE['card']}",
               f"- [{SV_CHECK['name']}]({SITE}{SV_CHECK['path']}): {SV_CHECK['card']}",
+              f"- [{TRN_CHECK['name']}]({SITE}{TRN_CHECK['path']}): {TRN_CHECK['card']} The format check runs in the browser; nothing is sent.",
               f"- [{GRATUITY['name']}]({SITE}{GRATUITY['path']}): {GRATUITY['card']} Runs in the browser; nothing is sent."]
     lines += ["", "## Guides", ""] + [f"- [{g['h1']}]({guide_url(g['slug'])}): {g['card']}" for g in GUIDES]
     lines += ["", "## PINT AE rules (UAE e-invoicing)", "", f"- [{PINT_HUB['h1']}]({pint_url()}): {PINT_RULES['card']}"]
@@ -1491,7 +1618,7 @@ def refresh_home_footer():
 
 if __name__ == "__main__":
     written = [hub_page()] + [service_page(s) for s in SERVICES] + [guides_hub()] + [guide_page(g) for g in GUIDES]
-    written += [mis_template_page(), ct_check_page(), supplier_check_page()]
+    written += [mis_template_page(), ct_check_page(), supplier_check_page(), trn_page()]
     written += [gratuity_page(), gratuity_embed_page()]
     written += [pint_hub_page()] + [pint_topic_page(t) for t in PINT_TOPICS]
     sitemap()

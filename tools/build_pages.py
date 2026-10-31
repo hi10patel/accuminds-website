@@ -59,6 +59,12 @@ VAT_EXEC_REG = ("UAE Legislation: Cabinet Resolution No. 52 of 2017", "https://u
 VAT_REG = {"path": "/vat-registration-uae/", "name": "VAT Registration Check",
            "card": "Do you have to register for UAE VAT, or can you choose to? Check the AED 375,000 and AED 187,500 thresholds, then see the documents and EmaraTax steps."}
 VAT_REG_CHECKED = "31 October 2026"
+CT_REG = {"path": "/corporate-tax-registration-uae/", "name": "Corporate Tax Registration Deadline",
+          "card": "Find your UAE Corporate Tax registration deadline under FTA Decision No. 3 of 2024, then see the documents, EmaraTax steps and the late registration penalty waiver."}
+CT_REG_CHECKED = "31 October 2026"
+FTA_CT_REG = ("FTA: Corporate Tax registration service", "https://tax.gov.ae/en/services/corporate.tax.registration.aspx")
+FTA_DEC3 = ("FTA Decision No. 3 of 2024 (unofficial translation)",
+            "https://tax.gov.ae/Datafolder/Files/Legislation/FTA%20Decision%20No.%203%20of%202024%20on%20Registration%20Timeline%20for%20Corporate%20Tax%20-%20For%20publishing.pdf")
 FTA_PENALTIES = ("FTA: Cabinet Decision No. 40 of 2017 as amended (unofficial translation)",
                  "https://tax.gov.ae/Datafolder/Files/Legislation/2025/Cabinet%20Decision%20No.%2040%20of%202017%20and%20its%20amendments%20-%20publishing%2011%202025.pdf")
 # Free tool published from the uae-einvoice-checker repo (npm run sync:checker).
@@ -193,6 +199,7 @@ def footer_columns(current=None, base="/services/"):
             li(CT_CHECK["path"], "Corporate Tax Filing Check"),
             li(SV_CHECK["path"], "Supplier Verification Check (VAT)"),
             li(VAT_REG["path"], "VAT Registration Check"),
+            li(CT_REG["path"], "Corporate Tax Registration Deadline"),
             li(TRN_CHECK["path"], "TRN Verification"),
             li(MIS_TEMPLATE["path"], "MIS Report Template"),
             li(GRATUITY["path"], "Gratuity Calculator"),
@@ -1282,6 +1289,146 @@ def vat_registration_page():
     return out
 
 
+def ct_registration_page():
+    canonical = f"{SITE}{CT_REG['path']}"
+    rules = [
+        ("UAE companies, from 1 March 2024", "Including free zone companies: within 3 months of incorporation, establishment or recognition (Art. 3.3).", FTA_DEC3),
+        ("UAE companies, before 1 March 2024", "By a deadline in 2024 set by the month the licence was issued, whatever the year; all of these have passed. With more than one licence, the earliest counts (Art. 3.1 and 3.2).", FTA_DEC3),
+        ("Foreign companies managed in the UAE", "Within 3 months of the end of the company's financial year (Art. 3.3).", FTA_DEC3),
+        ("Individuals", "Once business turnover in a calendar year exceeds AED 1 million, by 31 March of the following year. Salary, personal investment income and real estate investment income do not count (Art. 5).", FTA_DEC3),
+        ("Non-resident companies", "With a permanent establishment in the UAE: 6 months from when it began, or 9 months if it existed before 1 March 2024. With a nexus: 3 months (Art. 4).", FTA_DEC3),
+        ("Penalty and waiver", "AED 10,000 for late registration, waived if the first tax return is filed within 7 months of the end of the first tax period. A penalty already paid is credited back.", FTA_CT_REG),
+        ("Fee and timing", "Registration is free. The application takes about 25 minutes, and the FTA aims to decide within 20 business days of receiving a complete application.", FTA_CT_REG),
+        ("Branches", "UAE branches of a UAE company are part of it and do not register or file separately.", FTA_CT_REG),
+    ]
+    docs = [
+        ("Company documents", "Certificate of incorporation, memorandum of association or partnership agreement, and the commercial registration or another document from the licensing authority."),
+        ("Trade licence", "A valid trade licence, with branch licences if there are any."),
+        ("Owners and signatories", "Emirates ID and passport of each owner with more than 25%, and of the authorised signatories, with proof of the signatory's authority."),
+    ]
+    steps = [
+        ("Sign in to EmaraTax", "Create and activate an EmaraTax account on the FTA website, or use the one you have for VAT."),
+        ("Open the taxable person", "Create a new taxable person profile, or open the existing one with View."),
+        ("Register for Corporate Tax", "In the Action menu under Corporate Tax, click Register, complete the application and upload the documents as PDFs (up to 15 MB each)."),
+        ("Get your registration number", "Once approved, the FTA issues the Corporate Tax registration number. Then note your first tax period and return deadline."),
+    ]
+    faq = [
+        ("When must a new company register for Corporate Tax?", "Within 3 months of incorporation, for UAE companies incorporated on or after 1 March 2024, including free zone companies (FTA Decision No. 3 of 2024)."),
+        ("My company was set up before March 2024 and has not registered. What now?", "The 2024 deadline has passed, so register now. The AED 10,000 penalty is waived if the first tax return is filed within 7 months of the end of the first tax period."),
+        ("Is there a fee to register for Corporate Tax?", "No. Registration through EmaraTax is free."),
+        ("Do I need to register if my profit is below AED 375,000?", "Yes. Profit up to AED 375,000 is taxed at 0%, but companies still register and file a return."),
+        ("Does a freelancer need to register for Corporate Tax?", "Only once business turnover in a calendar year exceeds AED 1 million, and then by 31 March of the following year."),
+        ("Do branches need a separate Corporate Tax registration?", "No. UAE branches of a UAE company are covered by the company's registration and return."),
+    ]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(),
+        {"@type": "WebApplication", "@id": f"{canonical}#app", "name": "UAE Corporate Tax registration deadline finder", "url": canonical,
+         "description": CT_REG["card"], "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in a web browser)",
+         "isAccessibleForFree": True, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "AED"}, "provider": {"@id": ORG_ID}},
+        {"@type": "HowTo", "@id": f"{canonical}#howto", "name": "How to register for Corporate Tax in the UAE",
+         "step": [{"@type": "HowToStep", "position": i, "name": n, "text": t} for i, (n, t) in enumerate(steps, 1)]},
+        breadcrumbs_ld([("Home", f"{SITE}/"), ("Corporate Tax registration", canonical)]),
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
+    ]}
+    doc_cards = "\n".join(f'          <li class="incl"><h3>{e(t)}</h3><p>{e(d)}</p></li>' for t, d in docs)
+    step_items = "\n".join(f"          <li><h3>{e(t)}</h3><p>{e(d)}</p></li>" for t, d in steps)
+    ctas = """          <a class="btn btn-gold" href="#check" data-magnetic>Find your deadline <span aria-hidden="true">&darr;</span></a>
+          <a class="btn btn-ghost-light" href="/services/corporate-tax-uae/" data-magnetic>Corporate Tax services</a>"""
+    inner = f"""
+    <section class="section" id="check" aria-labelledby="check-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Deadline finder</p>
+          <h2 id="check-title" data-reveal="mask">When must you register?</h2>
+          <p class="lead" data-reveal>Not sure you need to register at all? Start with the <a class="u-link" href="{CT_CHECK["path"]}">Corporate Tax filing check</a>. Your answers stay in your browser; nothing is sent or stored.</p>
+        </div>
+        <div class="sv-grid">
+          <form class="ct-card sv-form" id="cr-form" novalidate>
+            <label class="sv-field"><span>Who is registering?</span>
+              <select name="who">
+                <option value="uae">UAE company, incl. free zone</option>
+                <option value="foreign">Foreign company managed in the UAE</option>
+                <option value="person">Individual or freelancer</option>
+                <option value="pe">Foreign company with a UAE branch</option>
+              </select>
+            </label>
+            <label class="sv-field" data-for="uae"><span>Date of incorporation (or of the earliest licence, if before March 2024)</span><input name="inc" type="date" /></label>
+            <label class="sv-field" data-for="foreign" hidden><span>End of the company's financial year</span><input name="fye" type="date" /></label>
+            <label class="sv-field" data-for="person" hidden><span>Calendar year in which business turnover first exceeded AED 1 million</span><input name="year" inputmode="numeric" placeholder="e.g. 2026" /></label>
+            <label class="sv-field" data-for="pe" hidden><span>Date the permanent establishment began</span><input name="pe" type="date" /></label>
+          </form>
+          <div class="ct-card sv-out" id="cr-result" aria-live="polite">
+            <noscript><p>The deadline finder needs JavaScript. The deadlines it applies are set out below.</p></noscript>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="rules-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The rules</p>
+          <h2 id="rules-title" data-reveal="mask">Deadlines, penalty and waiver.</h2>
+          <p class="lead" data-reveal>FTA Decision No. 3 of 2024 (in force from 1 March 2024) and the FTA's Corporate Tax registration service. Checked {e(CT_REG_CHECKED)}.</p>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{fact_rows(rules)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="docs-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Documents</p>
+          <h2 id="docs-title" data-reveal="mask">What to have ready.</h2>
+          <p class="lead" data-reveal>The FTA's list for a company. Government entities and qualifying public benefit entities also attach their decree or Cabinet decision.</p>
+        </div>
+        <ul class="incl-grid" data-reveal-stagger>
+{doc_cards}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="steps-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>On EmaraTax</p>
+          <h2 id="steps-title" data-reveal="mask">Four steps to register.</h2>
+          <p class="lead" data-reveal>Registering for VAT as well? See <a class="u-link" href="{VAT_REG["path"]}">VAT registration in the UAE</a>.</p>
+        </div>
+        <ol class="guide-steps" data-reveal-stagger>
+{step_items}
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+{faq_html(faq)}
+        </div>
+      </div>
+    </section>
+    <script type="module" src="/assets/js/ct-registration.js"></script>
+"""
+    body = resource_shell(
+        "Corporate Tax Registration UAE: Deadline & Steps | Accuminds",
+        "Find your UAE Corporate Tax registration deadline under FTA Decision No. 3 of 2024, with the documents, EmaraTax steps and the AED 10,000 penalty waiver.",
+        canonical, ld, "Free tool · Corporate Tax", "Corporate Tax registration in the UAE",
+        "Find your registration deadline in a few clicks, then see the documents the FTA asks for, the steps on EmaraTax and how the late registration penalty waiver works.",
+        ctas, inner, "Corporate Tax registration")
+    out = ROOT / CT_REG["path"].strip("/") / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
 GRATUITY_EMBED = "/embed/gratuity-calculator/"
 # What other sites paste. The plain link under the iframe is the credit (and the backlink);
 # the script line resizes the iframe from the height the embed page posts.
@@ -1715,7 +1862,7 @@ def pint_hub_page():
 def sitemap():
     urls = ([f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES] + [f"{SITE}{CHECKER['path']}"]
             + [guide_url()] + [guide_url(g["slug"]) for g in GUIDES]
-            + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}", f"{SITE}{TRN_CHECK['path']}", f"{SITE}{VAT_REG['path']}"]
+            + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}", f"{SITE}{TRN_CHECK['path']}", f"{SITE}{VAT_REG['path']}", f"{SITE}{CT_REG['path']}"]
             + [f"{SITE}{GRATUITY['path']}"]
             + [pint_url()] + [pint_url(t["slug"]) for t in PINT_TOPICS])
     rows = "\n".join(f"  <url>\n    <loc>{u}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </url>" for u in urls)
@@ -1744,6 +1891,7 @@ def llms_txt():
               f"- [{MIS_TEMPLATE['name']}]({SITE}{MIS_TEMPLATE['path']}): {MIS_TEMPLATE['card']}",
               f"- [{SV_CHECK['name']}]({SITE}{SV_CHECK['path']}): {SV_CHECK['card']}",
               f"- [{VAT_REG['name']}]({SITE}{VAT_REG['path']}): {VAT_REG['card']} Runs in the browser; nothing is sent.",
+              f"- [{CT_REG['name']}]({SITE}{CT_REG['path']}): {CT_REG['card']} Runs in the browser; nothing is sent.",
               f"- [{TRN_CHECK['name']}]({SITE}{TRN_CHECK['path']}): {TRN_CHECK['card']} The format check runs in the browser; nothing is sent.",
               f"- [{GRATUITY['name']}]({SITE}{GRATUITY['path']}): {GRATUITY['card']} Runs in the browser; nothing is sent."]
     lines += ["", "## Guides", ""] + [f"- [{g['h1']}]({guide_url(g['slug'])}): {g['card']}" for g in GUIDES]
@@ -1767,7 +1915,7 @@ def refresh_home_footer():
 
 if __name__ == "__main__":
     written = [hub_page()] + [service_page(s) for s in SERVICES] + [guides_hub()] + [guide_page(g) for g in GUIDES]
-    written += [mis_template_page(), ct_check_page(), supplier_check_page(), trn_page(), vat_registration_page()]
+    written += [mis_template_page(), ct_check_page(), supplier_check_page(), trn_page(), vat_registration_page(), ct_registration_page()]
     written += [gratuity_page(), gratuity_embed_page()]
     written += [pint_hub_page()] + [pint_topic_page(t) for t in PINT_TOPICS]
     sitemap()

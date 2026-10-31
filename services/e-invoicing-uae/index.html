@@ -159,7 +159,7 @@
           "name": "When does e-invoicing become mandatory in the UAE?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "On 1 January 2027 for businesses with revenue of AED 50 million or more, and on 1 July 2027 for businesses below that. Each group must appoint an Accredited Service Provider first; the deadlines are 30 October 2026 and 31 March 2027 respectively."
+            "text": "On 1 January 2027 for businesses with revenue of AED 50 million or more, on 1 July 2027 for businesses below that, and on 1 October 2027 for government entities. Each must appoint an Accredited Service Provider first: by 30 October 2026 for the first group (now passed), and by 31 March 2027 for the others."
           }
         },
         {
@@ -204,6 +204,14 @@
         },
         {
           "@type": "Question",
+          "name": "What are the penalties for not implementing e-invoicing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under Cabinet Decision No. 173 of 2026: AED 5,000 for the first violation of the implementation obligations, then AED 5,000 for each month or part of a month it continues, up to AED 50,000 in any 12 consecutive months. Penalties do not apply to e-invoices issued voluntarily before your mandatory date."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "What should we do first?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -234,7 +242,7 @@
   <script defer src="/assets/vendor/gsap-3.15.0.min.js"></script>
   <script defer src="/assets/vendor/ScrollTrigger-3.15.0.min.js"></script>
   <script defer src="/assets/vendor/lenis-1.3.27.min.js"></script>
-  <script type="importmap">{"imports":{"/assets/js/ct-check.js":"/assets/js/ct-check.js?v=a2eb5b02c1","/assets/js/ct-registration.js":"/assets/js/ct-registration.js?v=07df820a7a","/assets/js/gratuity.js":"/assets/js/gratuity.js?v=210c13558f","/assets/js/leave.js":"/assets/js/leave.js?v=fb07061540","/assets/js/main.js":"/assets/js/main.js?v=83b70e6839","/assets/js/motion/core.js":"/assets/js/motion/core.js?v=bfcac893cd","/assets/js/motion/icons.js":"/assets/js/motion/icons.js?v=4b7bd7f52f","/assets/js/motion/process.js":"/assets/js/motion/process.js?v=b353711422","/assets/js/motion/showcase.js":"/assets/js/motion/showcase.js?v=87906f93c6","/assets/js/motion/stats.js":"/assets/js/motion/stats.js?v=01af0fdf7d","/assets/js/motion/story.js":"/assets/js/motion/story.js?v=08d5534ed4","/assets/js/story.bundle.js":"/assets/js/story.bundle.js?v=dff84a4dbf","/assets/js/story/scene.js":"/assets/js/story/scene.js?v=1e9c8839b5","/assets/js/story/wires.js":"/assets/js/story/wires.js?v=81f3c4ef47","/assets/js/supplier-check.js":"/assets/js/supplier-check.js?v=514028397e","/assets/js/trn-check.js":"/assets/js/trn-check.js?v=f84d9b8fc9","/assets/js/ui/contact.js":"/assets/js/ui/contact.js?v=8d518e2e10","/assets/js/ui/magnetic.js":"/assets/js/ui/magnetic.js?v=6b3f98be0c","/assets/js/ui/nav.js":"/assets/js/ui/nav.js?v=02c658bc0b","/assets/js/vat-registration.js":"/assets/js/vat-registration.js?v=d3b18f068d"}}</script>
+  <script type="importmap">{"imports":{"/assets/js/ct-check.js":"/assets/js/ct-check.js?v=a2eb5b02c1","/assets/js/ct-registration.js":"/assets/js/ct-registration.js?v=07df820a7a","/assets/js/gratuity.js":"/assets/js/gratuity.js?v=210c13558f","/assets/js/leave.js":"/assets/js/leave.js?v=fb07061540","/assets/js/main.js":"/assets/js/main.js?v=83b70e6839","/assets/js/motion/core.js":"/assets/js/motion/core.js?v=bfcac893cd","/assets/js/motion/icons.js":"/assets/js/motion/icons.js?v=4b7bd7f52f","/assets/js/motion/process.js":"/assets/js/motion/process.js?v=b353711422","/assets/js/motion/showcase.js":"/assets/js/motion/showcase.js?v=87906f93c6","/assets/js/motion/stats.js":"/assets/js/motion/stats.js?v=01af0fdf7d","/assets/js/motion/story.js":"/assets/js/motion/story.js?v=08d5534ed4","/assets/js/story.bundle.js":"/assets/js/story.bundle.js?v=dff84a4dbf","/assets/js/story/scene.js":"/assets/js/story/scene.js?v=1e9c8839b5","/assets/js/story/wires.js":"/assets/js/story/wires.js?v=81f3c4ef47","/assets/js/supplier-check.js":"/assets/js/supplier-check.js?v=514028397e","/assets/js/trn-check.js":"/assets/js/trn-check.js?v=7e0e45e383","/assets/js/ui/contact.js":"/assets/js/ui/contact.js?v=8d518e2e10","/assets/js/ui/magnetic.js":"/assets/js/ui/magnetic.js?v=6b3f98be0c","/assets/js/ui/nav.js":"/assets/js/ui/nav.js?v=02c658bc0b","/assets/js/vat-registration.js":"/assets/js/vat-registration.js?v=d3b18f068d"}}</script>
   <script type="module" src="/assets/js/main.js?v=83b70e6839"></script>
 </head>
 <body>
@@ -330,12 +338,15 @@
           <p class="lead" data-reveal>From official UAE sources, last reviewed October 2026. Rules change, so we confirm what applies to your business before acting.</p>
         </div>
         <dl class="facts-list" data-reveal-stagger>
-          <div class="fact-row"><dt>Legal basis</dt><dd>Ministerial Decisions No. 243 and 244 of 2025, amended by Ministerial Decisions No. 66 and No. 197 of 2026. <a class="fact-src u-link" href="https://mof.gov.ae/en/news/ministry-of-finance-announces-targeted-amendments-to-einvoicing-system-decisions/" target="_blank" rel="noopener">Ministry of Finance: e-invoicing amendments (2026)<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
-          <div class="fact-row"><dt>Revenue of AED 50 million or more</dt><dd>Deadline to appoint an Accredited Service Provider: 30 October 2026 (if it has passed, appoint one now). Implement by 1 January 2027. <a class="fact-src u-link" href="https://mof.gov.ae/en/news/ministry-of-finance-announces-targeted-amendments-to-einvoicing-system-decisions/" target="_blank" rel="noopener">Ministry of Finance: e-invoicing amendments (2026)<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
-          <div class="fact-row"><dt>Revenue below AED 50 million</dt><dd>Appoint an Accredited Service Provider by 31 March 2027 and implement by 1 July 2027. <a class="fact-src u-link" href="https://mof.gov.ae/en/about-us/initiatives/einvoicing/" target="_blank" rel="noopener">Ministry of Finance: UAE e-invoicing<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
+          <div class="fact-row"><dt>Legal basis</dt><dd>Ministerial Decisions No. 243 and 244 of 2025, amended by Ministerial Decisions No. 66 and No. 197 of 2026. Providers are accredited under Ministerial Decision No. 168 of 2026, and penalties are set by Cabinet Decision No. 173 of 2026. <a class="fact-src u-link" href="https://mof.gov.ae/wp-content/uploads/2026/10/UAE-Electronic-Invoicing-Guidelines_En.pdf" target="_blank" rel="noopener">Ministry of Finance: UAE Electronic Invoicing Guidelines v2.0 (26 October 2026)<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
+          <div class="fact-row"><dt>Revenue of AED 50 million or more</dt><dd>The deadline to appoint an Accredited Service Provider was 30 October 2026; if you have not appointed one, do it now. Implement by 1 January 2027. <a class="fact-src u-link" href="https://mof.gov.ae/wp-content/uploads/2026/10/UAE-Electronic-Invoicing-Guidelines_En.pdf" target="_blank" rel="noopener">Ministry of Finance: UAE Electronic Invoicing Guidelines v2.0 (26 October 2026)<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
+          <div class="fact-row"><dt>Revenue below AED 50 million</dt><dd>Appoint an Accredited Service Provider by 31 March 2027 and implement by 1 July 2027. <a class="fact-src u-link" href="https://mof.gov.ae/wp-content/uploads/2026/10/UAE-Electronic-Invoicing-Guidelines_En.pdf" target="_blank" rel="noopener">Ministry of Finance: UAE Electronic Invoicing Guidelines v2.0 (26 October 2026)<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
+          <div class="fact-row"><dt>Government entities</dt><dd>Appoint an Accredited Service Provider by 31 March 2027 and implement by 1 October 2027. <a class="fact-src u-link" href="https://mof.gov.ae/wp-content/uploads/2026/10/UAE-Electronic-Invoicing-Guidelines_En.pdf" target="_blank" rel="noopener">Ministry of Finance: UAE Electronic Invoicing Guidelines v2.0 (26 October 2026)<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
           <div class="fact-row"><dt>Voluntary adoption</dt><dd>Businesses may implement e-invoicing voluntarily from 1 July 2026. Business-to-consumer invoices are excluded for now. <a class="fact-src u-link" href="https://tax.gov.ae/en/content/uae.einvoicing.aspx" target="_blank" rel="noopener">FTA: UAE e-invoicing<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
           <div class="fact-row"><dt>Tax group transactions</dt><dd>Transactions between members of the same Tax Group are excluded from e-invoicing for 24 months from 1 January 2027 (Ministerial Decision No. 197 of 2026). <a class="fact-src u-link" href="https://mof.gov.ae/en/news/ministry-of-finance-amends-electronic-invoicing-regulations-to-ease-the-burden-on-businesses/" target="_blank" rel="noopener">Ministry of Finance: e-invoicing amendments (19 October 2026)<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
           <div class="fact-row"><dt>Record keeping</dt><dd>Keep e-invoices, e-credit notes and their data for the period set by the Tax Procedures Law and provide them to the FTA on request. Since 1 October 2026 they no longer have to be stored inside the UAE. <a class="fact-src u-link" href="https://mof.gov.ae/en/news/ministry-of-finance-amends-electronic-invoicing-regulations-to-ease-the-burden-on-businesses/" target="_blank" rel="noopener">Ministry of Finance: e-invoicing amendments (19 October 2026)<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
+          <div class="fact-row"><dt>Penalties</dt><dd>Cabinet Decision No. 173 of 2026 replaced Cabinet Decision No. 106 of 2025. Not meeting the implementation obligations costs AED 5,000, then AED 5,000 for each month or part of a month it continues, up to AED 50,000 in any 12 consecutive months. There is no longer a penalty for not notifying a system failure, and only one penalty applies where the same business is both issuer and recipient. <a class="fact-src u-link" href="https://mof.gov.ae/en/news/mof-announces-updated-administrative-penalties-related-to-the-uae-einvoicing-system-to-enhance-clarity-and-support-business-compliance/" target="_blank" rel="noopener">Ministry of Finance: updated e-invoicing penalties (30 October 2026)<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
+          <div class="fact-row"><dt>No penalties while voluntary</dt><dd>E-invoicing penalties do not apply to e-invoices issued voluntarily before your mandatory date. <a class="fact-src u-link" href="https://mof.gov.ae/wp-content/uploads/2026/10/UAE-Electronic-Invoicing-Guidelines_En.pdf" target="_blank" rel="noopener">Ministry of Finance: UAE Electronic Invoicing Guidelines v2.0 (26 October 2026)<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
         </dl>
       </div>
     </section>
@@ -348,7 +359,7 @@
         <div class="faq-list" data-reveal-stagger>
           <details class="faq-item">
             <summary><h3>When does e-invoicing become mandatory in the UAE?</h3><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-            <p>On 1 January 2027 for businesses with revenue of AED 50 million or more, and on 1 July 2027 for businesses below that. Each group must appoint an Accredited Service Provider first; the deadlines are 30 October 2026 and 31 March 2027 respectively.</p>
+            <p>On 1 January 2027 for businesses with revenue of AED 50 million or more, on 1 July 2027 for businesses below that, and on 1 October 2027 for government entities. Each must appoint an Accredited Service Provider first: by 30 October 2026 for the first group (now passed), and by 31 March 2027 for the others.</p>
           </details>
           <details class="faq-item">
             <summary><h3>What is an Accredited Service Provider (ASP)?</h3><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
@@ -369,6 +380,10 @@
           <details class="faq-item">
             <summary><h3>Do e-invoices have to be stored inside the UAE?</h3><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
             <p>No, not since Ministerial Decision No. 197 of 2026, effective 1 October 2026. You must still keep e-invoices, e-credit notes and their data for the period set by the Tax Procedures Law and provide them to the FTA on request.</p>
+          </details>
+          <details class="faq-item">
+            <summary><h3>What are the penalties for not implementing e-invoicing?</h3><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+            <p>Under Cabinet Decision No. 173 of 2026: AED 5,000 for the first violation of the implementation obligations, then AED 5,000 for each month or part of a month it continues, up to AED 50,000 in any 12 consecutive months. Penalties do not apply to e-invoices issued voluntarily before your mandatory date.</p>
           </details>
           <details class="faq-item">
             <summary><h3>What should we do first?</h3><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>

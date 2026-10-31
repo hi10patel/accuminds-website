@@ -29,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
-from pages_content import FTA_VAT_REG, FTA_VAT_TOPIC, REVIEWED, SERVICES  # noqa: E402
+from pages_content import FTA_VAT_REG, FTA_VAT_TOPIC, MOF_EINV_GUIDELINES, REVIEWED, SERVICES  # noqa: E402
 from guides_content import CHECKED, CHECKLIST, DEADLINES, GUIDES, MOF_ASP, PINT_AE, PINT_AE_RULES  # noqa: E402
 from asset_versions import stamp_all  # noqa: E402
 from pint_rules_content import BY_ID as PINT_BY_ID, HUB as PINT_HUB, SPEC_AS_OF, TOPICS as PINT_TOPICS  # noqa: E402
@@ -1039,12 +1039,13 @@ def trn_page():
         ("Full tax invoice", "Shows the supplier's name, address and TRN, and the recipient's name, address and TRN if the recipient is VAT registered (Article 59(1)).", VAT_EXEC_REG),
         ("Simplified tax invoice", "Shows the supplier's TRN only. Allowed when the recipient is not VAT registered, or is registered and the supply is AED 10,000 or less, and reverse charge does not apply (Article 59(2) and (5)).", VAT_EXEC_REG),
         ("Where to verify", "The TRN/TIN verification on the FTA website: a 15-digit TRN or a 10-digit TIN, plus a security code. No login is needed.", FTA_HOME),
+        ("TRN and TIN", "Your 10-digit TIN is the first 10 digits of your TRN. In a tax group, each member's TIN comes from its own TRN, not the group's.", MOF_EINV_GUIDELINES),
     ]
     faq = [
         ("How do I verify a TRN number in the UAE?", "On the FTA website (tax.gov.ae), open TRN/TIN verification at the top of the page, choose TRN, enter the 15 digits and the security code, and submit. Check that the result matches the business named on the invoice."),
         ("How many digits is a UAE TRN?", "15. On UAE e-invoices a VAT TRN must start with 1 and end with 03 (PINT AE rule IBR-132-AE)."),
         ("Can I check a TRN without logging in to EmaraTax?", "Yes. The TRN/TIN verification on the FTA website is open to anyone and needs only the number and the security code."),
-        ("What is the difference between a TRN and a TIN?", "A TRN has 15 digits; a TIN has 10. The FTA's verification accepts either: choose TRN or TIN before you enter the number."),
+        ("What is the difference between a TRN and a TIN?", "A TRN has 15 digits; the TIN is its first 10 digits (Ministry of Finance e-invoicing guidelines). The FTA's verification accepts either: choose TRN or TIN before you enter the number."),
         ("Must my customer's TRN be on my tax invoice?", "Yes, if the customer is VAT registered and you issue a full tax invoice (Article 59(1)). A simplified tax invoice shows only your own TRN."),
         ("What if the TRN is not found or the name does not match?", "Ask the supplier for its VAT registration certificate and a corrected invoice before you claim the input VAT. A tax invoice must show the supplier's TRN (Article 59(1))."),
         ("Does this tool check the FTA register?", "No. It checks the format only, in your browser, and nothing is sent. Only the FTA's own verification confirms that a TRN is registered."),
@@ -1108,7 +1109,7 @@ def trn_page():
         <div class="section-head">
           <p class="eyebrow" data-reveal>The rules</p>
           <h2 id="rules-title" data-reveal="mask">When a TRN must be on an invoice.</h2>
-          <p class="lead" data-reveal>Cabinet Resolution No. 52 of 2017 (the VAT Executive Regulation, as amended) and the PINT AE specification. Checked {e(TRN_CHECKED)}.</p>
+          <p class="lead" data-reveal>Cabinet Resolution No. 52 of 2017 (the VAT Executive Regulation, as amended), the PINT AE specification and the Ministry of Finance e-invoicing guidelines. Checked {e(TRN_CHECKED)}.</p>
         </div>
         <dl class="facts-list" data-reveal-stagger>
 {fact_rows(rules)}

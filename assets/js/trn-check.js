@@ -1,5 +1,6 @@
 // UAE TRN format check (/trn-verification-uae/).
 // Format per PINT AE rule IBR-132-AE: 15 digits, starting with 1 and ending with 03.
+// The TIN is the TRN's first 10 digits (MoF UAE Electronic Invoicing Guidelines v2.0, Highlights).
 // Runs in the browser; nothing is sent anywhere. It checks the format only: whether a TRN
 // is registered can only be confirmed with the FTA's own TRN/TIN verification.
 
@@ -53,6 +54,7 @@ function render() {
   }
   if (r.kind === 'tin') {
     head('This looks like a 10-digit TIN, not a TRN.',
+      'A TIN is the first 10 digits of a TRN.',
       ['The FTA’s verification accepts a TIN too: choose TIN instead of TRN on the ', ftaLink(), '.'],
       'If you need the supplier’s VAT number for a tax invoice, ask for the 15-digit TRN.');
     return;
@@ -69,6 +71,7 @@ function render() {
   );
   const mark = (pass) => (pass ? '✓ Yes' : '✗ No');
   const rows = [['15 digits', '✓ Yes'], ['Starts with 1', mark(r.starts)], ['Ends with 03', mark(r.ends)]];
+  if (r.kind === 'ok') rows.push(['TIN (first 10 digits)', r.n.slice(0, 10)]);
   out.append(el('dl', { class: 'gr-rows' }, ...rows.map(([t, v]) => el('div', {}, el('dt', {}, t), el('dd', {}, v)))));
 
   if (r.kind === 'ok') {

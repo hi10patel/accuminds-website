@@ -26,6 +26,10 @@ MOF_EINV_GUIDE = ("Ministry of Finance: UAE e-invoicing", "https://mof.gov.ae/en
 MOF_EINV_OCT = ("Ministry of Finance: e-invoicing amendments (19 October 2026)",
                 "https://mof.gov.ae/en/news/ministry-of-finance-amends-electronic-invoicing-regulations-to-ease-the-burden-on-businesses/")
 FTA_EINV = ("FTA: UAE e-invoicing", "https://tax.gov.ae/en/content/uae.einvoicing.aspx")
+MOF_EINV_GUIDELINES = ("Ministry of Finance: UAE Electronic Invoicing Guidelines v2.0 (26 October 2026)",
+                       "https://mof.gov.ae/wp-content/uploads/2026/10/UAE-Electronic-Invoicing-Guidelines_En.pdf")
+MOF_EINV_PENALTIES = ("Ministry of Finance: updated e-invoicing penalties (30 October 2026)",
+                      "https://mof.gov.ae/en/news/mof-announces-updated-administrative-penalties-related-to-the-uae-einvoicing-system-to-enhance-clarity-and-support-business-compliance/")
 
 SERVICES = [
     # ------------------------------------------------------------------ Core accounting
@@ -185,16 +189,19 @@ SERVICES = [
             "Finance teams that want to adopt early, voluntarily",
         ],
         "facts": [
-            ("Legal basis", "Ministerial Decisions No. 243 and 244 of 2025, amended by Ministerial Decisions No. 66 and No. 197 of 2026.", MOF_EINV),
-            ("Revenue of AED 50 million or more", "Deadline to appoint an Accredited Service Provider: 30 October 2026 (if it has passed, appoint one now). Implement by 1 January 2027.", MOF_EINV),
-            ("Revenue below AED 50 million", "Appoint an Accredited Service Provider by 31 March 2027 and implement by 1 July 2027.", MOF_EINV_GUIDE),
+            ("Legal basis", "Ministerial Decisions No. 243 and 244 of 2025, amended by Ministerial Decisions No. 66 and No. 197 of 2026. Providers are accredited under Ministerial Decision No. 168 of 2026, and penalties are set by Cabinet Decision No. 173 of 2026.", MOF_EINV_GUIDELINES),
+            ("Revenue of AED 50 million or more", "The deadline to appoint an Accredited Service Provider was 30 October 2026; if you have not appointed one, do it now. Implement by 1 January 2027.", MOF_EINV_GUIDELINES),
+            ("Revenue below AED 50 million", "Appoint an Accredited Service Provider by 31 March 2027 and implement by 1 July 2027.", MOF_EINV_GUIDELINES),
+            ("Government entities", "Appoint an Accredited Service Provider by 31 March 2027 and implement by 1 October 2027.", MOF_EINV_GUIDELINES),
             ("Voluntary adoption", "Businesses may implement e-invoicing voluntarily from 1 July 2026. Business-to-consumer invoices are excluded for now.", FTA_EINV),
             ("Tax group transactions", "Transactions between members of the same Tax Group are excluded from e-invoicing for 24 months from 1 January 2027 (Ministerial Decision No. 197 of 2026).", MOF_EINV_OCT),
             ("Record keeping", "Keep e-invoices, e-credit notes and their data for the period set by the Tax Procedures Law and provide them to the FTA on request. Since 1 October 2026 they no longer have to be stored inside the UAE.", MOF_EINV_OCT),
+            ("Penalties", "Cabinet Decision No. 173 of 2026 replaced Cabinet Decision No. 106 of 2025. Not meeting the implementation obligations costs AED 5,000, then AED 5,000 for each month or part of a month it continues, up to AED 50,000 in any 12 consecutive months. There is no longer a penalty for not notifying a system failure, and only one penalty applies where the same business is both issuer and recipient.", MOF_EINV_PENALTIES),
+            ("No penalties while voluntary", "E-invoicing penalties do not apply to e-invoices issued voluntarily before your mandatory date.", MOF_EINV_GUIDELINES),
         ],
         "faq": [
             ("When does e-invoicing become mandatory in the UAE?",
-             "On 1 January 2027 for businesses with revenue of AED 50 million or more, and on 1 July 2027 for businesses below that. Each group must appoint an Accredited Service Provider first; the deadlines are 30 October 2026 and 31 March 2027 respectively."),
+             "On 1 January 2027 for businesses with revenue of AED 50 million or more, on 1 July 2027 for businesses below that, and on 1 October 2027 for government entities. Each must appoint an Accredited Service Provider first: by 30 October 2026 for the first group (now passed), and by 31 March 2027 for the others."),
             ("What is an Accredited Service Provider (ASP)?",
              "A provider approved by the authorities to exchange and report e-invoices on your behalf. You appoint one and connect it to the system that raises your invoices."),
             ("Is a PDF invoice sent by email an e-invoice?",
@@ -205,6 +212,8 @@ SERVICES = [
              "Not at first. Ministerial Decision No. 197 of 2026 excludes transactions between members of the same Tax Group from e-invoicing for 24 months from 1 January 2027."),
             ("Do e-invoices have to be stored inside the UAE?",
              "No, not since Ministerial Decision No. 197 of 2026, effective 1 October 2026. You must still keep e-invoices, e-credit notes and their data for the period set by the Tax Procedures Law and provide them to the FTA on request."),
+            ("What are the penalties for not implementing e-invoicing?",
+             "Under Cabinet Decision No. 173 of 2026: AED 5,000 for the first violation of the implementation obligations, then AED 5,000 for each month or part of a month it continues, up to AED 50,000 in any 12 consecutive months. Penalties do not apply to e-invoices issued voluntarily before your mandatory date."),
             ("What should we do first?",
              "Confirm your revenue band and deadlines, check what your accounting system can export, and shortlist providers. That assessment is our first step with every client."),
         ],

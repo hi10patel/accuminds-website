@@ -71,6 +71,9 @@ FTA_PENALTIES = ("FTA: Cabinet Decision No. 40 of 2017 as amended (unofficial tr
 GRATUITY = {"path": "/gratuity-calculator/", "name": "UAE Gratuity Calculator",
             "card": "End-of-service gratuity under the federal Labour Law: 21 and 30 days' basic wage, part years, part-time work and the cap."}
 GRATUITY_CHECKED = "28 October 2026"
+LEAVE = {"path": "/leave-salary-calculator/", "name": "UAE Leave Salary Calculator",
+         "card": "Annual leave days and pay under the federal Labour Law: unused leave paid out at basic salary when you leave, and full pay while on leave."}
+LEAVE_CHECKED = "31 October 2026"
 LABOUR_LAW = ("UAE Legislation: Federal Decree-Law No. 33 of 2021", "https://uaelegislation.gov.ae/en/legislations/1541")
 EXEC_REG = ("UAE Legislation: Cabinet Resolution No. 1 of 2022", "https://uaelegislation.gov.ae/en/legislations/1547")
 PINT_RULES = {"path": "/pint-ae-rules/", "name": "PINT AE Rules Explained",
@@ -203,6 +206,7 @@ def footer_columns(current=None, base="/services/"):
             li(TRN_CHECK["path"], "TRN Verification"),
             li(MIS_TEMPLATE["path"], "MIS Report Template"),
             li(GRATUITY["path"], "Gratuity Calculator"),
+            li(LEAVE["path"], "Leave Salary Calculator"),
         ]),
         ("Guides", [
             li("/guides/", "E-Invoicing Software Guides"),
@@ -1429,6 +1433,119 @@ def ct_registration_page():
     return out
 
 
+def leave_page():
+    canonical = f"{SITE}{LEAVE['path']}"
+    rules = [
+        ("How much leave", "At least 30 days a year with full pay after one year of service, and 2 days for each month when service is more than six months but less than one year (Article 29(1)).", LABOUR_LAW),
+        ("Leaving part-way through a year", "Leave is due for the part of the last year worked, if service ends before the balance is used (Article 29(1)(c)).", LABOUR_LAW),
+        ("Pay while on leave", "Full pay: the wage, which is the basic wage plus cash allowances and benefits in kind under the contract (Article 29(1) and (6), and Article 1).", LABOUR_LAW),
+        ("Paid out when you leave", "The cash equivalent of the unused balance due by law, calculated on basic salary (Article 19(2)).", EXEC_REG),
+        ("Carrying leave forward", "Up to half the annual leave can move to the next year, or be paid in cash at the wage earned when it fell due, by agreement with the employer (Article 19(1)).", EXEC_REG),
+        ("Timing", "The employer sets leave dates around work needs and gives at least one month's notice, and cannot stop leave being taken for more than two years unless the worker chooses to carry it forward or be paid for it (Article 29(4) and (8)).", LABOUR_LAW),
+        ("Part-time work", "Leave in proportion to contracted hours, with a minimum of five working days a year (Article 18).", EXEC_REG),
+        ("Probation", "Leave may be taken from the balance during probation if the employer agrees; a worker who leaves during probation is paid for the rest of the balance (Article 29(3)).", LABOUR_LAW),
+    ]
+    faq = [
+        ("Is UAE leave salary based on basic or total salary?", "It depends when it is paid. During leave you receive full pay, the wage with allowances. Unused leave paid out when your service ends is calculated on basic salary (Executive Regulation, Article 19(2))."),
+        ("How many days of annual leave do I get in the UAE?", "At least 30 days a year after one year of service. Between six months and one year of service, 2 days for each month."),
+        ("Do I get paid for unused leave if I resign?", "Yes. When your service ends, the unused balance due by law is paid in cash on basic salary (Executive Regulation, Article 19(2))."),
+        ("How is a day of leave worked out in AED?", "The law does not set the daily rate. This calculator uses monthly salary divided by 30, the common practice, and also shows salary multiplied by 12 and divided by 365."),
+        ("Can I carry annual leave forward?", "Up to half of it, into the following year, with the employer's agreement. The employer cannot stop you from taking leave for more than two years."),
+        ("Can my employer choose when I take leave?", "Yes, around work needs, but it must tell you the dates at least one month in advance."),
+        ("Does this apply in DIFC, ADGM or to domestic workers?", "No. It follows the federal Labour Law. DIFC and ADGM have their own employment laws, and domestic workers have a separate law."),
+    ]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(),
+        {"@type": "WebApplication", "@id": f"{canonical}#app", "name": "UAE leave salary calculator", "url": canonical,
+         "description": LEAVE["card"], "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in a web browser)",
+         "isAccessibleForFree": True, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "AED"}, "provider": {"@id": ORG_ID}},
+        breadcrumbs_ld([("Home", f"{SITE}/"), ("Leave salary calculator", canonical)]),
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
+    ]}
+    ctas = f"""          <a class="btn btn-gold" href="#calculate" data-magnetic>Calculate leave salary <span aria-hidden="true">&darr;</span></a>
+          <a class="btn btn-ghost-light" href="{GRATUITY["path"]}" data-magnetic>Gratuity calculator</a>"""
+    inner = f"""
+    <section class="section" id="calculate" aria-labelledby="calc-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The calculator</p>
+          <h2 id="calc-title" data-reveal="mask">Your annual leave salary.</h2>
+          <p class="lead" data-reveal>Your answers stay in your browser; nothing is sent or stored. Leaving your job? Work out your <a class="u-link" href="{GRATUITY["path"]}">gratuity</a> too.</p>
+        </div>
+        <div class="sv-grid">
+          <form class="ct-card sv-form" id="lv-form" novalidate>
+            <fieldset class="sv-field"><legend>Your situation</legend>
+              <label class="sv-pill"><input type="radio" name="mode" value="exit" checked /> Leaving the job</label>
+              <label class="sv-pill"><input type="radio" name="mode" value="take" /> Taking leave</label>
+            </fieldset>
+            <label class="sv-field"><span>Monthly basic salary (AED, without allowances)</span><input name="basic" inputmode="decimal" placeholder="e.g. 8,000" /></label>
+            <label class="sv-field" data-for="take" hidden><span>Monthly total salary, with allowances (AED)</span><input name="total" inputmode="decimal" placeholder="e.g. 12,000" /></label>
+            <label class="sv-field" data-for="take" hidden><span>Days of leave you are taking</span><input name="days" inputmode="decimal" placeholder="e.g. 30" /></label>
+            <label class="sv-field" data-for="exit"><span>Start date</span><input name="start" type="date" /></label>
+            <label class="sv-field" data-for="exit"><span>Last working day</span><input name="end" type="date" /></label>
+            <label class="sv-field" data-for="exit"><span>Annual leave days already taken in total</span><input name="taken" inputmode="decimal" placeholder="0" /></label>
+            <label class="sv-field" data-for="exit"><span>Or your unused balance in days, if you know it</span><input name="balance" inputmode="decimal" placeholder="e.g. 18" /></label>
+          </form>
+          <div class="ct-card sv-out" id="lv-result" aria-live="polite">
+            <noscript><p>The calculator needs JavaScript. The rules it follows are set out below.</p></noscript>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="rules-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The law</p>
+          <h2 id="rules-title" data-reveal="mask">How annual leave works.</h2>
+          <p class="lead" data-reveal>Federal Decree-Law No. 33 of 2021 on labour relations and its Executive Regulation, Cabinet Resolution No. 1 of 2022. Checked {e(LEAVE_CHECKED)} on the UAE Legislation portal.</p>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{fact_rows(rules)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="example-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Worked example</p>
+          <h2 id="example-title" data-reveal="mask">Leaving with 18 days unused.</h2>
+        </div>
+        <ol class="guide-steps" data-reveal-stagger>
+          <li><h3>Daily basic wage</h3><p>AED 8,000 basic &divide; 30 = AED 266.67.</p></li>
+          <li><h3>Unused leave</h3><p>18 days &times; AED 266.67 = AED 4,800.</p></li>
+          <li><h3>Paid with final dues</h3><p>On basic salary only, even if your total salary with allowances is higher.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+{faq_html(faq)}
+        </div>
+      </div>
+    </section>
+    <script type="module" src="/assets/js/leave.js"></script>
+"""
+    body = resource_shell(
+        "UAE Leave Salary Calculator: Annual Leave Pay | Accuminds",
+        "Free UAE leave salary calculator under the federal Labour Law: annual leave days earned, unused leave paid at basic salary when you leave, and pay while on leave.",
+        canonical, ld, "Free tool · Labour Law", "UAE leave salary calculator",
+        "Work out the annual leave you have earned and what it is worth: unused leave is paid on basic salary when you leave, and you get full pay while on leave.",
+        ctas, inner, "payroll and leave")
+    out = ROOT / LEAVE["path"].strip("/") / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
 GRATUITY_EMBED = "/embed/gratuity-calculator/"
 # What other sites paste. The plain link under the iframe is the credit (and the backlink);
 # the script line resizes the iframe from the height the embed page posts.
@@ -1557,7 +1674,7 @@ def gratuity_page():
         <div class="section-head">
           <p class="eyebrow" data-reveal>The calculator</p>
           <h2 id="calc-title" data-reveal="mask">Your <span class="nowrap">end-of-service</span> gratuity.</h2>
-          <p class="lead" data-reveal>Your answers stay in your browser; nothing is sent or stored.</p>
+          <p class="lead" data-reveal>Your answers stay in your browser; nothing is sent or stored. Leaving with unused annual leave? Add it up with the <a class="u-link" href="{LEAVE['path']}">leave salary calculator</a>.</p>
         </div>
 {gratuity_calculator("The rules it follows are set out below.")}
       </div>
@@ -1863,7 +1980,7 @@ def sitemap():
     urls = ([f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES] + [f"{SITE}{CHECKER['path']}"]
             + [guide_url()] + [guide_url(g["slug"]) for g in GUIDES]
             + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}", f"{SITE}{TRN_CHECK['path']}", f"{SITE}{VAT_REG['path']}", f"{SITE}{CT_REG['path']}"]
-            + [f"{SITE}{GRATUITY['path']}"]
+            + [f"{SITE}{GRATUITY['path']}", f"{SITE}{LEAVE['path']}"]
             + [pint_url()] + [pint_url(t["slug"]) for t in PINT_TOPICS])
     rows = "\n".join(f"  <url>\n    <loc>{u}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </url>" for u in urls)
     (ROOT / "sitemap.xml").write_text(
@@ -1893,7 +2010,8 @@ def llms_txt():
               f"- [{VAT_REG['name']}]({SITE}{VAT_REG['path']}): {VAT_REG['card']} Runs in the browser; nothing is sent.",
               f"- [{CT_REG['name']}]({SITE}{CT_REG['path']}): {CT_REG['card']} Runs in the browser; nothing is sent.",
               f"- [{TRN_CHECK['name']}]({SITE}{TRN_CHECK['path']}): {TRN_CHECK['card']} The format check runs in the browser; nothing is sent.",
-              f"- [{GRATUITY['name']}]({SITE}{GRATUITY['path']}): {GRATUITY['card']} Runs in the browser; nothing is sent."]
+              f"- [{GRATUITY['name']}]({SITE}{GRATUITY['path']}): {GRATUITY['card']} Runs in the browser; nothing is sent.",
+              f"- [{LEAVE['name']}]({SITE}{LEAVE['path']}): {LEAVE['card']} Runs in the browser; nothing is sent."]
     lines += ["", "## Guides", ""] + [f"- [{g['h1']}]({guide_url(g['slug'])}): {g['card']}" for g in GUIDES]
     lines += ["", "## PINT AE rules (UAE e-invoicing)", "", f"- [{PINT_HUB['h1']}]({pint_url()}): {PINT_RULES['card']}"]
     lines += [f"- [{t['h1']}]({pint_url(t['slug'])}): {t['card']}" for t in PINT_TOPICS]
@@ -1916,7 +2034,7 @@ def refresh_home_footer():
 if __name__ == "__main__":
     written = [hub_page()] + [service_page(s) for s in SERVICES] + [guides_hub()] + [guide_page(g) for g in GUIDES]
     written += [mis_template_page(), ct_check_page(), supplier_check_page(), trn_page(), vat_registration_page(), ct_registration_page()]
-    written += [gratuity_page(), gratuity_embed_page()]
+    written += [gratuity_page(), gratuity_embed_page(), leave_page()]
     written += [pint_hub_page()] + [pint_topic_page(t) for t in PINT_TOPICS]
     sitemap()
     llms_txt()

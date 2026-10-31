@@ -10,7 +10,7 @@ from pages_content import MOF_EINV, MOF_EINV_GUIDE, MOF_EINV_OCT
 CHECKED = "22 October 2026"
 
 MOF_ASP = ("Ministry of Finance: eInvoicing Accredited Service Providers",
-           "https://mof.gov.ae/en/about-us/initiatives/einvoicing/pre-approved-einvoicing-service-providers/")
+           "https://mof.gov.ae/en/about-us/initiatives/einvoicing/einvoicing-accredited-service-providers-asps/")
 PINT_AE = ("Peppol: PINT AE billing specification", "https://docs.peppol.eu/poac/ae/pint-ae/")
 PINT_AE_RULES = ("Peppol: PINT AE specific rules",
                  "https://docs.peppol.eu/poac/ae/pint-ae/trn-invoice/rule/PINT-jurisdiction-aligned-rules/")
@@ -24,7 +24,7 @@ ODOO_EDI = ("Odoo documentation: electronic invoicing (Peppol)",
 
 # Shared by every guide: the dates and the PINT AE data checks.
 DEADLINES = [
-    ("Revenue of AED 50 million or more", "Deadline to appoint an Accredited Service Provider: 30 October 2026 (if it has passed, appoint one now). E-invoicing applies from 1 January 2027.", MOF_EINV),
+    ("Revenue of AED 50 million or more", "The deadline to appoint an Accredited Service Provider was 30 October 2026; if you have not appointed one, do it now. E-invoicing applies from 1 January 2027.", MOF_EINV),
     ("Revenue below AED 50 million", "Appoint an Accredited Service Provider by 31 March 2027; e-invoicing applies from 1 July 2027.", MOF_EINV_GUIDE),
     ("Tax group transactions", "Transactions between members of the same Tax Group are excluded from e-invoicing for 24 months from 1 January 2027 (Ministerial Decision No. 197 of 2026).", MOF_EINV_OCT),
 ]
@@ -76,7 +76,7 @@ GUIDES = [
             ("Is QuickBooks an Accredited Service Provider in the UAE?", "No. Intuit and QuickBooks are not on the Ministry of Finance list of eInvoicing Accredited Service Providers as checked on " + CHECKED + "."),
             ("Is there a QuickBooks Peppol or PINT AE integration for the UAE?", "Not from QuickBooks itself: its UAE website does not describe Peppol or PINT AE e-invoicing (checked " + CHECKED + "). The integration comes from your Accredited Service Provider, which connects to QuickBooks or takes an export of your invoices and sends them in the PINT AE format over Peppol. Ask each provider how it connects to QuickBooks before you sign."),
             ("What is my Peppol ID?", "Once your ASP onboards you, your Peppol participant ID is 0235 followed by your 10-digit TIN."),
-            ("When must my business appoint an ASP?", "The deadline is 30 October 2026 if your revenue is AED 50 million or more, and 31 March 2027 if it is below that. If your deadline has passed, appoint one as soon as possible."),
+            ("When must my business appoint an ASP?", "31 March 2027 if your revenue is below AED 50 million. For revenue of AED 50 million or more the deadline was 30 October 2026: if you missed it, appoint one now, because e-invoicing applies from 1 January 2027."),
             ("Do e-invoices have to be stored inside the UAE?", "No, not since Ministerial Decision No. 197 of 2026, effective 1 October 2026. You must still keep them, with their data, for the period set by the Tax Procedures Law and provide them to the FTA on request."),
         ],
     },
@@ -114,7 +114,7 @@ GUIDES = [
             ("Is Zoho an Accredited Service Provider in the UAE?", "Yes. Zoho Software Trading LLC is on the Ministry of Finance list of eInvoicing Accredited Service Providers, accreditation number 121988, as checked on " + CHECKED + "."),
             ("Do I need a separate e-invoicing provider if I use Zoho Books?", "No. Zoho can act as your Accredited Service Provider, appointed in EmaraTax. You may still choose another accredited provider if you prefer."),
             ("How much does e-invoicing cost in Zoho Books?", "Zoho states that the first 100 e-invoicing transactions are free on Professional and higher paid plans, with packs from AED 41 per 100 transactions after that. Check Zoho's pricing page for current terms."),
-            ("When must my business appoint an ASP?", "The deadline is 30 October 2026 if your revenue is AED 50 million or more, and 31 March 2027 if it is below that. If your deadline has passed, appoint one as soon as possible."),
+            ("When must my business appoint an ASP?", "31 March 2027 if your revenue is below AED 50 million. For revenue of AED 50 million or more the deadline was 30 October 2026: if you missed it, appoint one now, because e-invoicing applies from 1 January 2027."),
             ("Do e-invoices have to be stored inside the UAE?", "No, not since Ministerial Decision No. 197 of 2026, effective 1 October 2026. You must still keep them, with their data, for the period set by the Tax Procedures Law and provide them to the FTA on request."),
         ],
     },
@@ -152,7 +152,7 @@ GUIDES = [
             ("Is Tally an Accredited Service Provider in the UAE?", "Yes. Tally Software Solutions FZCO is on the Ministry of Finance list of eInvoicing Accredited Service Providers, accreditation number 162503, as checked on " + CHECKED + "."),
             ("Do I need a separate e-invoicing provider if I use TallyPrime?", "Not necessarily. You can appoint Tally Software Solutions FZCO as your Accredited Service Provider in EmaraTax, or choose another accredited provider."),
             ("Which TallyPrime release do I need?", "Tally's Middle East website does not state a minimum release for UAE e-invoicing. Update to the latest release and confirm with Tally or your Tally partner."),
-            ("When must my business appoint an ASP?", "The deadline is 30 October 2026 if your revenue is AED 50 million or more, and 31 March 2027 if it is below that. If your deadline has passed, appoint one as soon as possible."),
+            ("When must my business appoint an ASP?", "31 March 2027 if your revenue is below AED 50 million. For revenue of AED 50 million or more the deadline was 30 October 2026: if you missed it, appoint one now, because e-invoicing applies from 1 January 2027."),
             ("Do e-invoices have to be stored inside the UAE?", "No, not since Ministerial Decision No. 197 of 2026, effective 1 October 2026. You must still keep them, with their data, for the period set by the Tax Procedures Law and provide them to the FTA on request."),
         ],
     },
@@ -190,7 +190,7 @@ GUIDES = [
             ("Is Odoo an Accredited Service Provider in the UAE?", "No. Odoo is not on the Ministry of Finance list of eInvoicing Accredited Service Providers as checked on " + CHECKED + "."),
             ("Can I keep Odoo for UAE e-invoicing?", "Yes. Odoo can stay your accounting system; e-invoices are exchanged through an Accredited Service Provider, usually connected to Odoo with a connector module."),
             ("Does Odoo's own Peppol access point work in the UAE?", "Odoo's documentation lists European countries for its Peppol access point and does not include the UAE, so plan on an accredited UAE provider."),
-            ("When must my business appoint an ASP?", "The deadline is 30 October 2026 if your revenue is AED 50 million or more, and 31 March 2027 if it is below that. If your deadline has passed, appoint one as soon as possible."),
+            ("When must my business appoint an ASP?", "31 March 2027 if your revenue is below AED 50 million. For revenue of AED 50 million or more the deadline was 30 October 2026: if you missed it, appoint one now, because e-invoicing applies from 1 January 2027."),
             ("Do e-invoices have to be stored inside the UAE?", "No, not since Ministerial Decision No. 197 of 2026, effective 1 October 2026. You must still keep them, with their data, for the period set by the Tax Procedures Law and provide them to the FTA on request."),
         ],
     },

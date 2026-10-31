@@ -59,6 +59,7 @@ TOPICS = [
         "faq": [
             ("What does a UAE Peppol Participant ID look like?", "The scheme 0235 followed by the identifier, written 0235:<TIN>. For a seller the identifier is the 10-digit TIN starting with 1 (IBR-148-AE)."),
             ("Who sets up my Peppol Participant ID?", "It is registered during onboarding with your Accredited Service Provider. Keep it in your accounting system's company profile in the format 0235:<TIN>."),
+            ("Where do I find my TIN?", "It is the first 10 digits of your 15-digit TRN, according to the Ministry of Finance e-invoicing guidelines (version 2.0). In a tax group, use your own TRN, not the representative's."),
         ],
     },
     {

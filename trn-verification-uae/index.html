@@ -157,7 +157,7 @@
           "name": "What is the difference between a TRN and a TIN?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A TRN has 15 digits; a TIN has 10. The FTA's verification accepts either: choose TRN or TIN before you enter the number."
+            "text": "A TRN has 15 digits; the TIN is its first 10 digits (Ministry of Finance e-invoicing guidelines). The FTA's verification accepts either: choose TRN or TIN before you enter the number."
           }
         },
         {
@@ -208,7 +208,7 @@
   <script defer src="/assets/vendor/gsap-3.15.0.min.js"></script>
   <script defer src="/assets/vendor/ScrollTrigger-3.15.0.min.js"></script>
   <script defer src="/assets/vendor/lenis-1.3.27.min.js"></script>
-  <script type="importmap">{"imports":{"/assets/js/ct-check.js":"/assets/js/ct-check.js?v=a2eb5b02c1","/assets/js/ct-registration.js":"/assets/js/ct-registration.js?v=07df820a7a","/assets/js/gratuity.js":"/assets/js/gratuity.js?v=210c13558f","/assets/js/leave.js":"/assets/js/leave.js?v=fb07061540","/assets/js/main.js":"/assets/js/main.js?v=83b70e6839","/assets/js/motion/core.js":"/assets/js/motion/core.js?v=bfcac893cd","/assets/js/motion/icons.js":"/assets/js/motion/icons.js?v=4b7bd7f52f","/assets/js/motion/process.js":"/assets/js/motion/process.js?v=b353711422","/assets/js/motion/showcase.js":"/assets/js/motion/showcase.js?v=87906f93c6","/assets/js/motion/stats.js":"/assets/js/motion/stats.js?v=01af0fdf7d","/assets/js/motion/story.js":"/assets/js/motion/story.js?v=08d5534ed4","/assets/js/story.bundle.js":"/assets/js/story.bundle.js?v=dff84a4dbf","/assets/js/story/scene.js":"/assets/js/story/scene.js?v=1e9c8839b5","/assets/js/story/wires.js":"/assets/js/story/wires.js?v=81f3c4ef47","/assets/js/supplier-check.js":"/assets/js/supplier-check.js?v=514028397e","/assets/js/trn-check.js":"/assets/js/trn-check.js?v=f84d9b8fc9","/assets/js/ui/contact.js":"/assets/js/ui/contact.js?v=8d518e2e10","/assets/js/ui/magnetic.js":"/assets/js/ui/magnetic.js?v=6b3f98be0c","/assets/js/ui/nav.js":"/assets/js/ui/nav.js?v=02c658bc0b","/assets/js/vat-registration.js":"/assets/js/vat-registration.js?v=d3b18f068d"}}</script>
+  <script type="importmap">{"imports":{"/assets/js/ct-check.js":"/assets/js/ct-check.js?v=a2eb5b02c1","/assets/js/ct-registration.js":"/assets/js/ct-registration.js?v=07df820a7a","/assets/js/gratuity.js":"/assets/js/gratuity.js?v=210c13558f","/assets/js/leave.js":"/assets/js/leave.js?v=fb07061540","/assets/js/main.js":"/assets/js/main.js?v=83b70e6839","/assets/js/motion/core.js":"/assets/js/motion/core.js?v=bfcac893cd","/assets/js/motion/icons.js":"/assets/js/motion/icons.js?v=4b7bd7f52f","/assets/js/motion/process.js":"/assets/js/motion/process.js?v=b353711422","/assets/js/motion/showcase.js":"/assets/js/motion/showcase.js?v=87906f93c6","/assets/js/motion/stats.js":"/assets/js/motion/stats.js?v=01af0fdf7d","/assets/js/motion/story.js":"/assets/js/motion/story.js?v=08d5534ed4","/assets/js/story.bundle.js":"/assets/js/story.bundle.js?v=dff84a4dbf","/assets/js/story/scene.js":"/assets/js/story/scene.js?v=1e9c8839b5","/assets/js/story/wires.js":"/assets/js/story/wires.js?v=81f3c4ef47","/assets/js/supplier-check.js":"/assets/js/supplier-check.js?v=514028397e","/assets/js/trn-check.js":"/assets/js/trn-check.js?v=7e0e45e383","/assets/js/ui/contact.js":"/assets/js/ui/contact.js?v=8d518e2e10","/assets/js/ui/magnetic.js":"/assets/js/ui/magnetic.js?v=6b3f98be0c","/assets/js/ui/nav.js":"/assets/js/ui/nav.js?v=02c658bc0b","/assets/js/vat-registration.js":"/assets/js/vat-registration.js?v=d3b18f068d"}}</script>
   <script type="module" src="/assets/js/main.js?v=83b70e6839"></script>
 </head>
 <body>
@@ -301,7 +301,7 @@
         <div class="section-head">
           <p class="eyebrow" data-reveal>The rules</p>
           <h2 id="rules-title" data-reveal="mask">When a TRN must be on an invoice.</h2>
-          <p class="lead" data-reveal>Cabinet Resolution No. 52 of 2017 (the VAT Executive Regulation, as amended) and the PINT AE specification. Checked 31 October 2026.</p>
+          <p class="lead" data-reveal>Cabinet Resolution No. 52 of 2017 (the VAT Executive Regulation, as amended), the PINT AE specification and the Ministry of Finance e-invoicing guidelines. Checked 31 October 2026.</p>
         </div>
         <dl class="facts-list" data-reveal-stagger>
           <div class="fact-row"><dt>What a TRN is</dt><dd>A unique number the FTA assigns to each person registered for tax (Article 1). <a class="fact-src u-link" href="https://uaelegislation.gov.ae/en/legislations/1226" target="_blank" rel="noopener">UAE Legislation: Cabinet Resolution No. 52 of 2017<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
@@ -309,6 +309,7 @@
           <div class="fact-row"><dt>Full tax invoice</dt><dd>Shows the supplier&#x27;s name, address and TRN, and the recipient&#x27;s name, address and TRN if the recipient is VAT registered (Article 59(1)). <a class="fact-src u-link" href="https://uaelegislation.gov.ae/en/legislations/1226" target="_blank" rel="noopener">UAE Legislation: Cabinet Resolution No. 52 of 2017<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
           <div class="fact-row"><dt>Simplified tax invoice</dt><dd>Shows the supplier&#x27;s TRN only. Allowed when the recipient is not VAT registered, or is registered and the supply is AED 10,000 or less, and reverse charge does not apply (Article 59(2) and (5)). <a class="fact-src u-link" href="https://uaelegislation.gov.ae/en/legislations/1226" target="_blank" rel="noopener">UAE Legislation: Cabinet Resolution No. 52 of 2017<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
           <div class="fact-row"><dt>Where to verify</dt><dd>The TRN/TIN verification on the FTA website: a 15-digit TRN or a 10-digit TIN, plus a security code. No login is needed. <a class="fact-src u-link" href="https://tax.gov.ae/en/default.aspx" target="_blank" rel="noopener">FTA website: TRN/TIN verification<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
+          <div class="fact-row"><dt>TRN and TIN</dt><dd>Your 10-digit TIN is the first 10 digits of your TRN. In a tax group, each member&#x27;s TIN comes from its own TRN, not the group&#x27;s. <a class="fact-src u-link" href="https://mof.gov.ae/wp-content/uploads/2026/10/UAE-Electronic-Invoicing-Guidelines_En.pdf" target="_blank" rel="noopener">Ministry of Finance: UAE Electronic Invoicing Guidelines v2.0 (26 October 2026)<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
         </dl>
       </div>
     </section>
@@ -344,7 +345,7 @@
           </details>
           <details class="faq-item">
             <summary><h3>What is the difference between a TRN and a TIN?</h3><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-            <p>A TRN has 15 digits; a TIN has 10. The FTA&#x27;s verification accepts either: choose TRN or TIN before you enter the number.</p>
+            <p>A TRN has 15 digits; the TIN is its first 10 digits (Ministry of Finance e-invoicing guidelines). The FTA&#x27;s verification accepts either: choose TRN or TIN before you enter the number.</p>
           </details>
           <details class="faq-item">
             <summary><h3>Must my customer&#x27;s TRN be on my tax invoice?</h3><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
@@ -361,7 +362,7 @@
         </div>
       </div>
     </section>
-    <script type="module" src="/assets/js/trn-check.js?v=f84d9b8fc9"></script>
+    <script type="module" src="/assets/js/trn-check.js?v=7e0e45e383"></script>
 
     <section class="section section--dark cta-band">
       <div class="container cta-inner">

@@ -1039,10 +1039,13 @@ main { counter-reset: chapter; }
 .sv-form { display: grid; gap: 16px; max-width: none; }
 .sv-field { display: grid; gap: 7px; margin: 0; padding: 0; border: 0; min-width: 0; }
 .sv-field > span, .sv-field legend { font-size: 0.875rem; font-weight: var(--fw-extrabold); color: var(--heading); padding: 0; margin-bottom: 4px; }
-.sv-field input[type=text], .sv-field input[type=date], .sv-field input:not([type]) {
+.sv-field input[type=text], .sv-field input[type=date], .sv-field input:not([type]), .sv-field select {
   width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.04); color: var(--heading); font: inherit;
 }
+.sv-field select { color-scheme: dark; }
+.sv-field select option { background: var(--navy-900); color: #fff; }
+.sv-field[hidden] { display: none; }
 .sv-field input::placeholder { color: var(--ink-600); }
 .sv-pill { display: inline-flex; align-items: center; gap: 8px; margin-right: 18px; font-size: 0.9375rem; color: var(--heading); cursor: pointer; }
 .sv-check { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9375rem; line-height: 1.45; color: var(--heading); cursor: pointer; }

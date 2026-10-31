@@ -29,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
-from pages_content import REVIEWED, SERVICES  # noqa: E402
+from pages_content import FTA_VAT_REG, FTA_VAT_TOPIC, REVIEWED, SERVICES  # noqa: E402
 from guides_content import CHECKED, CHECKLIST, DEADLINES, GUIDES, MOF_ASP, PINT_AE, PINT_AE_RULES  # noqa: E402
 from asset_versions import stamp_all  # noqa: E402
 from pint_rules_content import BY_ID as PINT_BY_ID, HUB as PINT_HUB, SPEC_AS_OF, TOPICS as PINT_TOPICS  # noqa: E402
@@ -56,6 +56,11 @@ TRN_CHECK = {"path": "/trn-verification-uae/", "name": "TRN Verification and For
 TRN_CHECKED = "31 October 2026"
 FTA_HOME = ("FTA website: TRN/TIN verification", "https://tax.gov.ae/en/default.aspx")
 VAT_EXEC_REG = ("UAE Legislation: Cabinet Resolution No. 52 of 2017", "https://uaelegislation.gov.ae/en/legislations/1226")
+VAT_REG = {"path": "/vat-registration-uae/", "name": "VAT Registration Check",
+           "card": "Do you have to register for UAE VAT, or can you choose to? Check the AED 375,000 and AED 187,500 thresholds, then see the documents and EmaraTax steps."}
+VAT_REG_CHECKED = "31 October 2026"
+FTA_PENALTIES = ("FTA: Cabinet Decision No. 40 of 2017 as amended (unofficial translation)",
+                 "https://tax.gov.ae/Datafolder/Files/Legislation/2025/Cabinet%20Decision%20No.%2040%20of%202017%20and%20its%20amendments%20-%20publishing%2011%202025.pdf")
 # Free tool published from the uae-einvoice-checker repo (npm run sync:checker).
 GRATUITY = {"path": "/gratuity-calculator/", "name": "UAE Gratuity Calculator",
             "card": "End-of-service gratuity under the federal Labour Law: 21 and 30 days' basic wage, part years, part-time work and the cap."}
@@ -187,6 +192,7 @@ def footer_columns(current=None, base="/services/"):
             li(CHECKER["path"], "E-Invoice Readiness Checker"),
             li(CT_CHECK["path"], "Corporate Tax Filing Check"),
             li(SV_CHECK["path"], "Supplier Verification Check (VAT)"),
+            li(VAT_REG["path"], "VAT Registration Check"),
             li(TRN_CHECK["path"], "TRN Verification"),
             li(MIS_TEMPLATE["path"], "MIS Report Template"),
             li(GRATUITY["path"], "Gratuity Calculator"),
@@ -1134,6 +1140,148 @@ def trn_page():
     return out
 
 
+def vat_registration_page():
+    canonical = f"{SITE}{VAT_REG['path']}"
+    rules = [
+        ("Must register", "A UAE business whose taxable supplies and imports exceeded AED 375,000 over the previous 12 months, or are expected to exceed it in the next 30 days.", FTA_VAT_TOPIC),
+        ("May register", "Below that, a business may register voluntarily once its taxable supplies and imports, or its taxable expenses, exceed AED 187,500 over the previous 12 months or are expected to in the next 30 days.", FTA_VAT_TOPIC),
+        ("Non-resident businesses", "No threshold: registration is mandatory for taxable supplies in the UAE unless someone else in the UAE is responsible for the VAT on them.", FTA_VAT_REG),
+        ("Deadline", "Apply within 30 days of becoming required to register. The rules apply to anyone doing business in the UAE, even without a trade licence.", FTA_VAT_REG),
+        ("Late registration penalty", "AED 10,000 for not applying within the time the law allows.", FTA_PENALTIES),
+        ("Fee and timing", "Registration is free. The application takes about 45 minutes, and the FTA aims to decide within 20 business days of receiving a complete application.", FTA_VAT_REG),
+        ("Branches and sole establishments", "One TRN covers all branches of a company. All sole establishments of the same owner share one TRN, and their turnover is added together for the threshold.", FTA_VAT_REG),
+    ]
+    docs = [
+        ("Company documents", "Certificate of incorporation, memorandum of association or partnership agreement, and the trade licence with any branch licences."),
+        ("Owners and signatories", "Emirates ID and passport copies of the owners and authorised signatories, and a power of attorney if the manager is not named in the memorandum."),
+        ("Turnover declaration", "A signed and stamped letter stating taxable supplies and monthly sales since the business started. The FTA publishes a template."),
+        ("Evidence", "Invoices, purchase orders, contracts or leases that support the turnover. Registering on expenses needs at least five VAT invoices; expected revenue needs signed purchase orders or contracts."),
+        ("Optional and if applicable", "A bank letter in the company's name, and customs details if you import or export."),
+    ]
+    steps = [
+        ("Create an EmaraTax account", "Sign up on the FTA website and activate the account."),
+        ("Add a taxable person", "From the dashboard, create a new taxable person profile for the business and open it."),
+        ("Register for VAT", "Click Register under Value Added Tax, complete the form and upload the documents as PDFs (up to 15 MB each)."),
+        ("Get your TRN", "Once approved, the VAT registration certificate with your TRN appears in your EmaraTax dashboard."),
+    ]
+    faq = [
+        ("What is the VAT registration threshold in the UAE?", "AED 375,000 of taxable supplies and imports for mandatory registration, and AED 187,500 of taxable supplies and imports or taxable expenses for voluntary registration."),
+        ("How long does VAT registration take?", "About 45 minutes to submit online. The FTA aims to decide within 20 business days of receiving a complete application."),
+        ("Is there a fee to register for VAT?", "No. VAT registration through EmaraTax is free."),
+        ("What is the penalty for late VAT registration?", "AED 10,000 if you do not apply within 30 days of becoming required to register."),
+        ("Can I register for VAT on expenses alone?", "Yes, voluntarily, if taxable expenses exceed AED 187,500. The FTA asks for at least five VAT invoices as evidence."),
+        ("Does each branch need its own TRN?", "No. All branches register under the company's single TRN and file one VAT return."),
+        ("Do free zone companies need to register for VAT?", "The same thresholds apply. For a business in a designated zone trading goods, it depends on its activities and supplies, and the FTA may ask for a business flow showing how goods move."),
+        ("What happens after I register?", "You receive a TRN, charge VAT on taxable supplies, issue tax invoices and file VAT returns for each tax period."),
+    ]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(),
+        {"@type": "WebApplication", "@id": f"{canonical}#app", "name": "UAE VAT registration check", "url": canonical,
+         "description": VAT_REG["card"], "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in a web browser)",
+         "isAccessibleForFree": True, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "AED"}, "provider": {"@id": ORG_ID}},
+        {"@type": "HowTo", "@id": f"{canonical}#howto", "name": "How to register for VAT in the UAE",
+         "step": [{"@type": "HowToStep", "position": i, "name": n, "text": t} for i, (n, t) in enumerate(steps, 1)]},
+        breadcrumbs_ld([("Home", f"{SITE}/"), ("VAT registration", canonical)]),
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
+    ]}
+    doc_cards = "\n".join(f'          <li class="incl"><h3>{e(t)}</h3><p>{e(d)}</p></li>' for t, d in docs)
+    step_items = "\n".join(f"          <li><h3>{e(t)}</h3><p>{e(d)}</p></li>" for t, d in steps)
+    ctas = """          <a class="btn btn-gold" href="#check" data-magnetic>Check if you must register <span aria-hidden="true">&darr;</span></a>
+          <a class="btn btn-ghost-light" href="/services/vat-services-uae/" data-magnetic>VAT registration service</a>"""
+    inner = f"""
+    <section class="section" id="check" aria-labelledby="check-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The check</p>
+          <h2 id="check-title" data-reveal="mask">Do you have to register?</h2>
+          <p class="lead" data-reveal>Amounts in AED, excluding VAT. Your answers stay in your browser; nothing is sent or stored.</p>
+        </div>
+        <div class="sv-grid">
+          <form class="ct-card sv-form" id="vr-form" novalidate>
+            <fieldset class="sv-field"><legend>Where is the business established?</legend>
+              <label class="sv-pill"><input type="radio" name="where" value="uae" checked /> In the UAE</label>
+              <label class="sv-pill"><input type="radio" name="where" value="foreign" /> Outside the UAE</label>
+            </fieldset>
+            <div id="vr-amounts">
+              <label class="sv-field"><span>Taxable supplies and imports, last 12 months</span><input name="past" inputmode="decimal" placeholder="e.g. 320,000" /></label>
+              <label class="sv-field"><span>Expected taxable supplies and imports, next 30 days</span><input name="next" inputmode="decimal" placeholder="e.g. 40,000" /></label>
+              <label class="sv-field"><span>Taxable expenses, last 12 months (optional)</span><input name="exp" inputmode="decimal" placeholder="e.g. 150,000" /></label>
+              <label class="sv-field"><span>Expected taxable expenses, next 30 days (optional)</span><input name="expnext" inputmode="decimal" placeholder="e.g. 10,000" /></label>
+              <p class="ct-note">Taxable supplies are sales charged at 5% or 0%; exempt sales do not count.</p>
+            </div>
+          </form>
+          <div class="ct-card sv-out" id="vr-result" aria-live="polite">
+            <noscript><p>This check needs JavaScript. The thresholds it applies are set out below.</p></noscript>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="rules-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The rules</p>
+          <h2 id="rules-title" data-reveal="mask">Thresholds, deadline and penalty.</h2>
+          <p class="lead" data-reveal>From the FTA's VAT registration pages and its published table of administrative penalties. Checked {e(VAT_REG_CHECKED)}.</p>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{fact_rows(rules)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="docs-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Documents</p>
+          <h2 id="docs-title" data-reveal="mask">What to have ready.</h2>
+          <p class="lead" data-reveal>The FTA's list for a company; it varies by legal form. Upload each as a PDF.</p>
+        </div>
+        <ul class="incl-grid" data-reveal-stagger>
+{doc_cards}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="steps-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>On EmaraTax</p>
+          <h2 id="steps-title" data-reveal="mask">Four steps to a TRN.</h2>
+          <p class="lead" data-reveal>Once you have it, customers can confirm it with a <a class="u-link" href="{TRN_CHECK["path"]}">TRN verification</a>.</p>
+        </div>
+        <ol class="guide-steps" data-reveal-stagger>
+{step_items}
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+{faq_html(faq)}
+        </div>
+      </div>
+    </section>
+    <script type="module" src="/assets/js/vat-registration.js"></script>
+"""
+    body = resource_shell(
+        "VAT Registration in UAE: Threshold, Documents & Steps | Accuminds",
+        "Do you have to register for UAE VAT? Free check against the AED 375,000 and AED 187,500 thresholds, plus the documents, EmaraTax steps, deadline and penalty.",
+        canonical, ld, "Free tool · VAT", "VAT registration in the UAE",
+        "Check whether you must register for VAT, or can choose to, then see the documents the FTA asks for and the four steps on EmaraTax.",
+        ctas, inner, "VAT registration")
+    out = ROOT / VAT_REG["path"].strip("/") / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
 GRATUITY_EMBED = "/embed/gratuity-calculator/"
 # What other sites paste. The plain link under the iframe is the credit (and the backlink);
 # the script line resizes the iframe from the height the embed page posts.
@@ -1567,7 +1715,7 @@ def pint_hub_page():
 def sitemap():
     urls = ([f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES] + [f"{SITE}{CHECKER['path']}"]
             + [guide_url()] + [guide_url(g["slug"]) for g in GUIDES]
-            + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}", f"{SITE}{TRN_CHECK['path']}"]
+            + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}", f"{SITE}{TRN_CHECK['path']}", f"{SITE}{VAT_REG['path']}"]
             + [f"{SITE}{GRATUITY['path']}"]
             + [pint_url()] + [pint_url(t["slug"]) for t in PINT_TOPICS])
     rows = "\n".join(f"  <url>\n    <loc>{u}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </url>" for u in urls)
@@ -1595,6 +1743,7 @@ def llms_txt():
               f"- [{CT_CHECK['name']}]({SITE}{CT_CHECK['path']}): {CT_CHECK['card']}",
               f"- [{MIS_TEMPLATE['name']}]({SITE}{MIS_TEMPLATE['path']}): {MIS_TEMPLATE['card']}",
               f"- [{SV_CHECK['name']}]({SITE}{SV_CHECK['path']}): {SV_CHECK['card']}",
+              f"- [{VAT_REG['name']}]({SITE}{VAT_REG['path']}): {VAT_REG['card']} Runs in the browser; nothing is sent.",
               f"- [{TRN_CHECK['name']}]({SITE}{TRN_CHECK['path']}): {TRN_CHECK['card']} The format check runs in the browser; nothing is sent.",
               f"- [{GRATUITY['name']}]({SITE}{GRATUITY['path']}): {GRATUITY['card']} Runs in the browser; nothing is sent."]
     lines += ["", "## Guides", ""] + [f"- [{g['h1']}]({guide_url(g['slug'])}): {g['card']}" for g in GUIDES]
@@ -1618,7 +1767,7 @@ def refresh_home_footer():
 
 if __name__ == "__main__":
     written = [hub_page()] + [service_page(s) for s in SERVICES] + [guides_hub()] + [guide_page(g) for g in GUIDES]
-    written += [mis_template_page(), ct_check_page(), supplier_check_page(), trn_page()]
+    written += [mis_template_page(), ct_check_page(), supplier_check_page(), trn_page(), vat_registration_page()]
     written += [gratuity_page(), gratuity_embed_page()]
     written += [pint_hub_page()] + [pint_topic_page(t) for t in PINT_TOPICS]
     sitemap()

@@ -197,16 +197,20 @@ def footer_columns(current=None, base="/services/"):
 
     cols = [
         ("Services", [li(f'{base}{s["slug"]}/', s["name"], s["slug"] == current) for s in SERVICES]),
+        # Most-searched first: UAE monthly Google searches for each tool's main topic
+        # (DataForSEO, October 2026): gratuity 49,500; TRN verification 8,100; e-invoicing 2,900;
+        # Corporate Tax registration 1,900 + 720; VAT registration 1,900; leave salary 1,000;
+        # Corporate Tax filing 880; MIS report 480; supplier verification 10.
         ("Free tools", [
-            li(CHECKER["path"], "E-Invoice Readiness Checker"),
-            li(CT_CHECK["path"], "Corporate Tax Filing Check"),
-            li(SV_CHECK["path"], "Supplier Verification Check (VAT)"),
-            li(VAT_REG["path"], "VAT Registration Check"),
-            li(CT_REG["path"], "Corporate Tax Registration Deadline"),
-            li(TRN_CHECK["path"], "TRN Verification"),
-            li(MIS_TEMPLATE["path"], "MIS Report Template"),
             li(GRATUITY["path"], "Gratuity Calculator"),
+            li(TRN_CHECK["path"], "TRN Verification"),
+            li(CHECKER["path"], "E-Invoice Readiness Checker"),
+            li(CT_REG["path"], "Corporate Tax Registration Deadline"),
+            li(VAT_REG["path"], "VAT Registration Check"),
             li(LEAVE["path"], "Leave Salary Calculator"),
+            li(CT_CHECK["path"], "Corporate Tax Filing Check"),
+            li(MIS_TEMPLATE["path"], "MIS Report Template"),
+            li(SV_CHECK["path"], "Supplier Verification Check (VAT)"),
         ]),
         ("Guides", [
             li("/guides/", "E-Invoicing Software Guides"),

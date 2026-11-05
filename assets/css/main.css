@@ -976,8 +976,12 @@ main { counter-reset: chapter; }
 .gr-rows div { display: grid; grid-template-columns: minmax(130px, 0.38fr) 1fr; gap: 4px 16px; padding-top: 8px; border-top: 1px solid var(--line); }
 .gr-rows dt { font-size: 0.875rem; font-weight: var(--fw-extrabold); color: var(--gold-300); }
 .gr-rows dd { margin: 0; font-size: 0.9375rem; line-height: 1.5; color: var(--heading); }
+/* Final settlement: each line's working under its label, the amount on the right. */
+.gr-rows--sum div { grid-template-columns: 1fr auto; align-items: start; }
+.gr-rows--sum dt small { display: block; margin-top: 2px; font-size: 0.8125rem; font-weight: 400; line-height: 1.45; color: var(--ink-700); }
+.gr-rows--sum dd { font-weight: var(--fw-extrabold); text-align: right; white-space: nowrap; }
 .gr-notes { margin: 0 0 16px; padding-left: 18px; display: grid; gap: 8px; font-size: 0.875rem; line-height: 1.55; color: var(--ink-700); }
-@media (max-width: 760px) { .gr-rows div { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .gr-rows div { grid-template-columns: 1fr; } .gr-rows--sum div { grid-template-columns: 1fr auto; } }
 
 /* PINT AE rule pages (pint-ae-rules/*) */
 .nowrap { white-space: nowrap; }

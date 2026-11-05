@@ -10,6 +10,7 @@ Writes:
   corporate-tax-check/index.html      Corporate Tax filing check (logic: assets/js/ct-check.js)
   supplier-verification-check/        FTA Decision 13 supplier checks (logic: assets/js/supplier-check.js)
   gratuity-calculator/                UAE end-of-service gratuity (logic: assets/js/gratuity.js)
+  final-settlement-calculator/        UAE final dues when a job ends (logic: assets/js/final-settlement.js)
   guides/<slug>/index.html            one page per guide
   pint-ae-rules/                      PINT AE rules hub and topic pages (tools/pint_rules_content.py)
   sitemap.xml, llms.txt               regenerated from the same content
@@ -74,6 +75,9 @@ GRATUITY_CHECKED = "28 October 2026"
 LEAVE = {"path": "/leave-salary-calculator/", "name": "UAE Leave Salary Calculator",
          "card": "Annual leave days and pay under the federal Labour Law: unused leave paid out at basic salary when you leave, and full pay while on leave."}
 LEAVE_CHECKED = "31 October 2026"
+SETTLEMENT = {"path": "/final-settlement-calculator/", "name": "UAE Final Settlement Calculator",
+              "card": "Final dues when a job ends under the federal Labour Law: unpaid salary, gratuity, unused leave, notice pay and deductions, in one total."}
+SETTLEMENT_CHECKED = "5 November 2026"
 LABOUR_LAW = ("UAE Legislation: Federal Decree-Law No. 33 of 2021", "https://uaelegislation.gov.ae/en/legislations/1541")
 EXEC_REG = ("UAE Legislation: Cabinet Resolution No. 1 of 2022", "https://uaelegislation.gov.ae/en/legislations/1547")
 PINT_RULES = {"path": "/pint-ae-rules/", "name": "PINT AE Rules Explained",
@@ -199,7 +203,8 @@ def footer_columns(current=None, base="/services/"):
         ("Services", [li(f'{base}{s["slug"]}/', s["name"], s["slug"] == current) for s in SERVICES]),
         # Most-searched first: UAE monthly Google searches for each tool's main topic
         # (DataForSEO, October 2026): gratuity 49,500; TRN verification 8,100; e-invoicing 2,900;
-        # Corporate Tax registration 1,900 + 720; VAT registration 1,900; leave salary 1,000;
+        # Corporate Tax registration 1,900 + 720; VAT registration 1,900; final settlement 1,000 + 390;
+# leave salary 1,000;
         # Corporate Tax filing 880; MIS report 480; supplier verification 10.
         ("Free tools", [
             li(GRATUITY["path"], "Gratuity Calculator"),
@@ -207,6 +212,7 @@ def footer_columns(current=None, base="/services/"):
             li(CHECKER["path"], "E-Invoice Readiness Checker"),
             li(CT_REG["path"], "Corporate Tax Registration Deadline"),
             li(VAT_REG["path"], "VAT Registration Check"),
+            li(SETTLEMENT["path"], "Final Settlement Calculator"),
             li(LEAVE["path"], "Leave Salary Calculator"),
             li(CT_CHECK["path"], "Corporate Tax Filing Check"),
             li(MIS_TEMPLATE["path"], "MIS Report Template"),
@@ -1476,7 +1482,7 @@ def leave_page():
         <div class="section-head">
           <p class="eyebrow" data-reveal>The calculator</p>
           <h2 id="calc-title" data-reveal="mask">Your annual leave salary.</h2>
-          <p class="lead" data-reveal>Your answers stay in your browser; nothing is sent or stored. Leaving your job? Work out your <a class="u-link" href="{GRATUITY["path"]}">gratuity</a> too.</p>
+          <p class="lead" data-reveal>Your answers stay in your browser; nothing is sent or stored. Leaving your job? Add up your gratuity, leave and notice pay with the <a class="u-link" href="{SETTLEMENT["path"]}">final settlement calculator</a>.</p>
         </div>
         <div class="sv-grid">
           <form class="ct-card sv-form" id="lv-form" novalidate>
@@ -1546,6 +1552,133 @@ def leave_page():
         "Work out the annual leave you have earned and what it is worth: unused leave is paid on basic salary when you leave, and you get full pay while on leave.",
         ctas, inner, "payroll and leave")
     out = ROOT / LEAVE["path"].strip("/") / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
+def settlement_page():
+    canonical = f"{SITE}{SETTLEMENT['path']}"
+    rules = [
+        ("What must be paid", "The wages due and every other entitlement under the Labour Law, the employment contract or the employer's rules (Article 53).", LABOUR_LAW),
+        ("Deadline", "Within 14 days of the date the contract ends (Article 53).", LABOUR_LAW),
+        ("Gratuity", "For foreign full-time workers with one year or more of continuous service: 21 days' basic wage for each of the first five years and 30 days' for each year after, capped at two years' wage (Article 51).", LABOUR_LAW),
+        ("Unused annual leave", "Paid in cash on basic salary when service ends (Article 19(2)).", EXEC_REG),
+        ("Notice period", "As agreed in the contract, at least 30 days and at most 90. The worker is paid the full wage for it (Article 43(1) and (2)).", LABOUR_LAW),
+        ("Notice not served", "The party that does not give or serve the notice pays the other a notice allowance: the worker's wage for the whole notice period, or the part not served, even if no harm results (Article 43(3)). It uses the last wage received (Article 43(4)).", LABOUR_LAW),
+        ("Notice waived by agreement", "The parties can agree to waive or shorten the notice, but the worker keeps all rights for the notice period in the contract (Article 43(2)).", LABOUR_LAW),
+        ("Deductions", "Only amounts such as loans, overpayments, pension contributions, approved penalties, court-ordered debts and damage the worker caused (Article 29).", EXEC_REG),
+        ("UAE nationals", "End-of-service pay follows the pensions and social security law instead of the gratuity formula (Article 51(1)).", LABOUR_LAW),
+    ]
+    faq = [
+        ("What is included in a final settlement in the UAE?", "Unpaid salary up to your last day, end-of-service gratuity if you are a foreign worker with at least one year of service, cash for unused annual leave, notice pay if your employer ended the contract without the full notice, and anything else your contract gives you, less permitted deductions such as loans."),
+        ("How many days does my employer have to pay my final settlement?", "14 days from the date your contract ends (Article 53 of Federal Decree-Law No. 33 of 2021)."),
+        ("Is the final settlement calculated on basic or total salary?", "Both. Gratuity and unused leave are calculated on basic salary. Unpaid salary and notice pay use your full wage, which includes allowances."),
+        ("What happens if I resign without serving my notice period?", "You owe your employer a notice allowance equal to your wage for the notice period, or for the part you did not serve (Article 43(3)). The calculator shows it against your dues."),
+        ("Does resigning reduce my gratuity?", "No. Under the current Labour Law, gratuity does not depend on who ended the contract."),
+        ("Can my employer deduct a loan from my final settlement?", "Yes, for amounts the Executive Regulation allows, such as loans, overpayments and court-ordered debts (Cabinet Resolution No. 1 of 2022, Article 29)."),
+        ("Does this apply in DIFC, ADGM or to domestic workers?", "No. It follows the federal Labour Law. DIFC and ADGM have their own employment laws, and domestic workers have a separate law."),
+    ]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(),
+        {"@type": "WebApplication", "@id": f"{canonical}#app", "name": "UAE final settlement calculator", "url": canonical,
+         "description": SETTLEMENT["card"], "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in a web browser)",
+         "isAccessibleForFree": True, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "AED"}, "provider": {"@id": ORG_ID}},
+        breadcrumbs_ld([("Home", f"{SITE}/"), ("Final settlement calculator", canonical)]),
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
+    ]}
+    ctas = f"""          <a class="btn btn-gold" href="#calculate" data-magnetic>Calculate final settlement <span aria-hidden="true">&darr;</span></a>
+          <a class="btn btn-ghost-light" href="{GRATUITY["path"]}" data-magnetic>Gratuity calculator</a>"""
+    inner = f"""
+    <section class="section" id="calculate" aria-labelledby="calc-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The calculator</p>
+          <h2 id="calc-title" data-reveal="mask">Your final settlement.</h2>
+          <p class="lead" data-reveal>Your answers stay in your browser; nothing is sent or stored. For part-time work, use the <a class="u-link" href="{GRATUITY["path"]}">gratuity calculator</a> for the gratuity part.</p>
+        </div>
+        <div class="sv-grid">
+          <form class="ct-card sv-form" id="fs-form" novalidate>
+            <fieldset class="sv-field"><legend>You are</legend>
+              <label class="sv-pill"><input type="radio" name="who" value="foreign" checked /> A foreign worker</label>
+              <label class="sv-pill"><input type="radio" name="who" value="national" /> A UAE national</label>
+            </fieldset>
+            <label class="sv-field"><span>Monthly basic salary (AED, without allowances)</span><input name="basic" inputmode="decimal" placeholder="e.g. 8,000" /></label>
+            <label class="sv-field"><span>Monthly total salary, with allowances (AED)</span><input name="total" inputmode="decimal" placeholder="e.g. 12,000" /></label>
+            <label class="sv-field"><span>Start date</span><input name="start" type="date" /></label>
+            <label class="sv-field"><span>Last working day</span><input name="end" type="date" /></label>
+            <label class="sv-field"><span>Days of salary not yet paid</span><input name="salarydays" inputmode="decimal" placeholder="e.g. 15" /></label>
+            <label class="sv-field"><span>Unpaid absence days, if any</span><input name="unpaid" inputmode="decimal" placeholder="0" /></label>
+            <label class="sv-field"><span>Annual leave days already taken in total</span><input name="taken" inputmode="decimal" placeholder="0" /></label>
+            <label class="sv-field"><span>Or your unused leave balance in days, if you know it</span><input name="balance" inputmode="decimal" placeholder="e.g. 10" /></label>
+            <fieldset class="sv-field"><legend>Notice period</legend>
+              <label class="sv-pill"><input type="radio" name="notice" value="worked" checked /> Worked in full</label>
+              <label class="sv-pill"><input type="radio" name="notice" value="employer" /> Employer ended it early</label>
+              <label class="sv-pill"><input type="radio" name="notice" value="worker" /> I left without serving it</label>
+            </fieldset>
+            <label class="sv-field" data-for="employer worker" hidden><span>Notice period in your contract (days)</span><input name="noticedays" inputmode="decimal" placeholder="e.g. 30" /></label>
+            <label class="sv-field" data-for="employer worker" hidden><span>Days of notice already worked</span><input name="served" inputmode="decimal" placeholder="0" /></label>
+            <label class="sv-field"><span>Other amounts due to you (AED), such as overtime or an air ticket in your contract</span><input name="other" inputmode="decimal" placeholder="0" /></label>
+            <label class="sv-field"><span>Amounts you owe (AED), such as a loan or salary advance</span><input name="deduct" inputmode="decimal" placeholder="0" /></label>
+          </form>
+          <div class="ct-card sv-out" id="fs-result" aria-live="polite">
+            <noscript><p>The calculator needs JavaScript. The rules it follows are set out below.</p></noscript>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="rules-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The law</p>
+          <h2 id="rules-title" data-reveal="mask">What a final settlement includes.</h2>
+          <p class="lead" data-reveal>Federal Decree-Law No. 33 of 2021 on labour relations and its Executive Regulation, Cabinet Resolution No. 1 of 2022. Checked {e(SETTLEMENT_CHECKED)} on the UAE Legislation portal.</p>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{fact_rows(rules)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="example-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Worked example</p>
+          <h2 id="example-title" data-reveal="mask">Five years, let go without notice.</h2>
+          <p class="lead" data-reveal>Basic salary AED 8,000, total salary AED 12,000, 15 days of salary unpaid, 10 days of leave unused, and a 30-day notice period the employer did not give.</p>
+        </div>
+        <ol class="guide-steps" data-reveal-stagger>
+          <li><h3>Unpaid salary</h3><p>15 days &times; AED 400 (total &divide; 30) = AED 6,000.</p></li>
+          <li><h3>Gratuity</h3><p>5 years &times; 21 days &times; AED 266.67 (basic &divide; 30) = AED 28,000.</p></li>
+          <li><h3>Unused leave</h3><p>10 days &times; AED 266.67 = AED 2,666.67.</p></li>
+          <li><h3>Notice pay</h3><p>30 days &times; AED 400 = AED 12,000.</p></li>
+          <li><h3>Final settlement</h3><p>AED 48,666.67, due within 14 days of the contract ending.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+{faq_html(faq)}
+        </div>
+      </div>
+    </section>
+    <script type="module" src="/assets/js/final-settlement.js"></script>
+"""
+    body = resource_shell(
+        "UAE Final Settlement Calculator: Gratuity, Leave & Notice | Accuminds",
+        "Free UAE final settlement calculator under the federal Labour Law: unpaid salary, gratuity, unused leave, notice pay and deductions, due within 14 days.",
+        canonical, ld, "Free tool · Labour Law", "UAE final settlement calculator",
+        "Add up everything due when a job ends: unpaid salary, gratuity, unused annual leave and notice pay, less any loans, under the federal Labour Law.",
+        ctas, inner, "payroll and final settlements")
+    out = ROOT / SETTLEMENT["path"].strip("/") / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(body, encoding="utf-8")
     return out
@@ -1679,7 +1812,7 @@ def gratuity_page():
         <div class="section-head">
           <p class="eyebrow" data-reveal>The calculator</p>
           <h2 id="calc-title" data-reveal="mask">Your <span class="nowrap">end-of-service</span> gratuity.</h2>
-          <p class="lead" data-reveal>Your answers stay in your browser; nothing is sent or stored. Leaving with unused annual leave? Add it up with the <a class="u-link" href="{LEAVE['path']}">leave salary calculator</a>.</p>
+          <p class="lead" data-reveal>Your answers stay in your browser; nothing is sent or stored. Leaving your job? Add your gratuity to unpaid salary, unused leave and notice pay with the <a class="u-link" href="{SETTLEMENT['path']}">final settlement calculator</a>.</p>
         </div>
 {gratuity_calculator("The rules it follows are set out below.")}
       </div>
@@ -1985,7 +2118,7 @@ def sitemap():
     urls = ([f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES] + [f"{SITE}{CHECKER['path']}"]
             + [guide_url()] + [guide_url(g["slug"]) for g in GUIDES]
             + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}", f"{SITE}{TRN_CHECK['path']}", f"{SITE}{VAT_REG['path']}", f"{SITE}{CT_REG['path']}"]
-            + [f"{SITE}{GRATUITY['path']}", f"{SITE}{LEAVE['path']}"]
+            + [f"{SITE}{GRATUITY['path']}", f"{SITE}{LEAVE['path']}", f"{SITE}{SETTLEMENT['path']}"]
             + [pint_url()] + [pint_url(t["slug"]) for t in PINT_TOPICS])
     rows = "\n".join(f"  <url>\n    <loc>{u}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </url>" for u in urls)
     (ROOT / "sitemap.xml").write_text(
@@ -2016,7 +2149,8 @@ def llms_txt():
               f"- [{CT_REG['name']}]({SITE}{CT_REG['path']}): {CT_REG['card']} Runs in the browser; nothing is sent.",
               f"- [{TRN_CHECK['name']}]({SITE}{TRN_CHECK['path']}): {TRN_CHECK['card']} The format check runs in the browser; nothing is sent.",
               f"- [{GRATUITY['name']}]({SITE}{GRATUITY['path']}): {GRATUITY['card']} Runs in the browser; nothing is sent.",
-              f"- [{LEAVE['name']}]({SITE}{LEAVE['path']}): {LEAVE['card']} Runs in the browser; nothing is sent."]
+              f"- [{LEAVE['name']}]({SITE}{LEAVE['path']}): {LEAVE['card']} Runs in the browser; nothing is sent.",
+              f"- [{SETTLEMENT['name']}]({SITE}{SETTLEMENT['path']}): {SETTLEMENT['card']} Runs in the browser; nothing is sent."]
     lines += ["", "## Guides", ""] + [f"- [{g['h1']}]({guide_url(g['slug'])}): {g['card']}" for g in GUIDES]
     lines += ["", "## PINT AE rules (UAE e-invoicing)", "", f"- [{PINT_HUB['h1']}]({pint_url()}): {PINT_RULES['card']}"]
     lines += [f"- [{t['h1']}]({pint_url(t['slug'])}): {t['card']}" for t in PINT_TOPICS]
@@ -2039,7 +2173,7 @@ def refresh_home_footer():
 if __name__ == "__main__":
     written = [hub_page()] + [service_page(s) for s in SERVICES] + [guides_hub()] + [guide_page(g) for g in GUIDES]
     written += [mis_template_page(), ct_check_page(), supplier_check_page(), trn_page(), vat_registration_page(), ct_registration_page()]
-    written += [gratuity_page(), gratuity_embed_page(), leave_page()]
+    written += [gratuity_page(), gratuity_embed_page(), leave_page(), settlement_page()]
     written += [pint_hub_page()] + [pint_topic_page(t) for t in PINT_TOPICS]
     sitemap()
     llms_txt()

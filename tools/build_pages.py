@@ -78,20 +78,39 @@ LEAVE_CHECKED = "31 October 2026"
 SETTLEMENT = {"path": "/final-settlement-calculator/", "name": "UAE Final Settlement Calculator",
               "card": "Final dues when a job ends under the federal Labour Law: unpaid salary, gratuity, unused leave, notice pay and deductions, in one total."}
 SETTLEMENT_CHECKED = "5 November 2026"
-# The short answers at the top of the gratuity and final settlement pages.
-GRATUITY_ANSWER = ('In the UAE, a foreign employee in the private sector who has completed at least one year of continuous '
-                   "service gets an end-of-service gratuity of 21 days' basic salary for each of the first five years and 30"
-                   " days' basic salary for each year after that, with part years paid in proportion. It is based on the "
-                   "last basic salary, without allowances, is capped at two years' wage, and is not reduced if you resign. "
-                   'The employer must pay it within 14 days of the contract ending (Federal Decree-Law No. 33 of 2021, '
-                   'Articles 51 and 53). Example: a basic salary of AED 10,000 and 7 years of service gives AED 55,000.')
-SETTLEMENT_ANSWER = ('A UAE final settlement is everything the employer owes when a job ends: unpaid salary up to the last '
-                     "working day, the end-of-service gratuity (21 days' basic salary for each of the first five years and 30 "
-                     "days' after that, once one year of service is completed), cash for unused annual leave on basic salary, "
-                     'notice pay if the employer did not give the notice in the contract, and any other amounts the contract '
-                     'provides, less permitted deductions such as loans. The employer must pay it within 14 days of the '
-                     'contract ending (Federal Decree-Law No. 33 of 2021, Articles 43, 51 and 53; Cabinet Resolution No. 1 of '
-                     '2022, Articles 19 and 29).')
+# The short answers at the top of the gratuity and final settlement pages: one sentence that answers
+# the question, the key points as a list, a worked example and the source.
+GRATUITY_ANSWER = {
+    "lead": "In the UAE, a foreign employee in the private sector gets an end-of-service gratuity after at least "
+            "one year of continuous service, based on their last basic salary.",
+    "points": [
+        "21 days' basic salary for each of the first five years",
+        "30 days' basic salary for each year after that",
+        "Part years paid in proportion",
+        "Basic salary only, without allowances",
+        "Capped at two years' wage",
+        "Not reduced if you resign",
+        "Paid within 14 days of the contract ending",
+    ],
+    "example": "Basic salary of AED 10,000 and 7 years of service: AED 55,000.",
+    "source": "Federal Decree-Law No. 33 of 2021, Articles 51 and 53.",
+}
+SETTLEMENT_ANSWER = {
+    "lead": "A UAE final settlement is everything the employer owes when a job ends. It must be paid within "
+            "14 days of the contract ending, and includes:",
+    "points": [
+        "Unpaid salary up to the last working day",
+        "End-of-service gratuity, once one year of service is completed",
+        "Cash for unused annual leave, on basic salary",
+        "Notice pay, if the employer did not give the notice in the contract",
+        "Any other amounts the contract provides",
+        "Minus permitted deductions, such as loans",
+    ],
+    "example": "Five years on AED 8,000 basic and AED 12,000 total salary, with 15 days' salary and 10 days' leave "
+               "still due, let go without the 30 days' notice: AED 48,666.67.",
+    "source": "Federal Decree-Law No. 33 of 2021, Articles 43, 51 and 53; Cabinet Resolution No. 1 of 2022, "
+              "Articles 19 and 29.",
+}
 LABOUR_LAW = ("UAE Legislation: Federal Decree-Law No. 33 of 2021", "https://uaelegislation.gov.ae/en/legislations/1541")
 EXEC_REG = ("UAE Legislation: Cabinet Resolution No. 1 of 2022", "https://uaelegislation.gov.ae/en/legislations/1547")
 PINT_RULES = {"path": "/pint-ae-rules/", "name": "PINT AE Rules Explained",
@@ -765,14 +784,20 @@ def resource_shell(title, description, canonical, ld, eyebrow, h1, lead, ctas, i
 """
 
 
-def answer_box(text):
+def answer_box(a):
     """A plain-language answer near the top of a page: what search engines and AI answers quote."""
+    points = "\n".join(f"            <li>{e(p)}</li>" for p in a["points"])
     return f"""
     <section class="section" aria-labelledby="answer-title">
       <div class="container">
         <div class="answer-box" data-reveal>
           <h2 id="answer-title">The short answer</h2>
-          <p>{e(text)}</p>
+          <p class="answer-lead">{e(a["lead"])}</p>
+          <ul class="answer-points">
+{points}
+          </ul>
+          <p class="answer-example"><strong>Example:</strong> {e(a["example"])}</p>
+          <p class="answer-source">Source: {e(a["source"])}</p>
         </div>
       </div>
     </section>

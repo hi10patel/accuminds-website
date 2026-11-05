@@ -30,6 +30,7 @@ Contact: info@accumindsconsulting.ae · +971 50 98 67247 (phone and WhatsApp) ·
 - [TRN Verification and Format Check](https://www.accumindsconsulting.ae/trn-verification-uae/): Check that a UAE TRN has the right format, then confirm it on the FTA website: the steps, and when a TRN must be on a tax invoice. The format check runs in the browser; nothing is sent.
 - [UAE Gratuity Calculator](https://www.accumindsconsulting.ae/gratuity-calculator/): End-of-service gratuity under the federal Labour Law: 21 and 30 days' basic wage, part years, part-time work and the cap. Runs in the browser; nothing is sent.
 - [UAE Leave Salary Calculator](https://www.accumindsconsulting.ae/leave-salary-calculator/): Annual leave days and pay under the federal Labour Law: unused leave paid out at basic salary when you leave, and full pay while on leave. Runs in the browser; nothing is sent.
+- [UAE Final Settlement Calculator](https://www.accumindsconsulting.ae/final-settlement-calculator/): Final dues when a job ends under the federal Labour Law: unpaid salary, gratuity, unused leave, notice pay and deductions, in one total. Runs in the browser; nothing is sent.
 
 ## Guides
 

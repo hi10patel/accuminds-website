@@ -34,6 +34,18 @@ export function gratuity({ basic, years, daily = basic / 30, share = 1 }) {
   return { daily, first, after, uncapped, cap, capped: uncapped > cap, full, total: full * share };
 }
 
+// Whole years by anniversary, then the remaining days pro rata (Article 51(3)); both dates count as worked
+// and unpaid absence days do not count (Article 51(4)).
+export function serviceYears(start, end, unpaid = 0) {
+  const endEx = new Date(end.getTime() + DAY);
+  const anniversary = (n) => new Date(Date.UTC(start.getUTCFullYear() + n, start.getUTCMonth(), start.getUTCDate()));
+  let whole = 0;
+  while (anniversary(whole + 1) <= endEx) whole += 1;
+  const days = Math.round((endEx - start) / DAY) - unpaid;
+  const years = whole + (Math.round((endEx - anniversary(whole)) / DAY) - unpaid) / 365;
+  return { days, years };
+}
+
 function render() {
   const d = new FormData(form);
   const who = d.get('who') || 'foreign';
@@ -76,13 +88,7 @@ function render() {
     return;
   }
 
-  // Whole years by anniversary, then the remaining days pro rata (Article 51(3)); both dates count as worked.
-  const endEx = new Date(end.getTime() + DAY);
-  const anniversary = (n) => new Date(Date.UTC(start.getUTCFullYear() + n, start.getUTCMonth(), start.getUTCDate()));
-  let whole = 0;
-  while (anniversary(whole + 1) <= endEx) whole += 1;
-  const days = Math.round((endEx - start) / DAY) - unpaid;
-  const years = whole + (Math.round((endEx - anniversary(whole)) / DAY) - unpaid) / 365;
+  const { days, years } = serviceYears(start, end, unpaid);
   if (years < 1) {
     head('No gratuity yet: less than one year of continuous service.',
       `Service counted: ${Math.max(days, 0).toLocaleString('en-US')} days. Gratuity starts once one year of continuous service is completed (Article 51(2)); unpaid absence days do not count (Article 51(4)).`);

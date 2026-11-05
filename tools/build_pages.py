@@ -78,6 +78,20 @@ LEAVE_CHECKED = "31 October 2026"
 SETTLEMENT = {"path": "/final-settlement-calculator/", "name": "UAE Final Settlement Calculator",
               "card": "Final dues when a job ends under the federal Labour Law: unpaid salary, gratuity, unused leave, notice pay and deductions, in one total."}
 SETTLEMENT_CHECKED = "5 November 2026"
+# The short answers at the top of the gratuity and final settlement pages.
+GRATUITY_ANSWER = ('In the UAE, a foreign employee in the private sector who has completed at least one year of continuous '
+                   "service gets an end-of-service gratuity of 21 days' basic salary for each of the first five years and 30"
+                   " days' basic salary for each year after that, with part years paid in proportion. It is based on the "
+                   "last basic salary, without allowances, is capped at two years' wage, and is not reduced if you resign. "
+                   'The employer must pay it within 14 days of the contract ending (Federal Decree-Law No. 33 of 2021, '
+                   'Articles 51 and 53). Example: a basic salary of AED 10,000 and 7 years of service gives AED 55,000.')
+SETTLEMENT_ANSWER = ('A UAE final settlement is everything the employer owes when a job ends: unpaid salary up to the last '
+                     "working day, the end-of-service gratuity (21 days' basic salary for each of the first five years and 30 "
+                     "days' after that, once one year of service is completed), cash for unused annual leave on basic salary, "
+                     'notice pay if the employer did not give the notice in the contract, and any other amounts the contract '
+                     'provides, less permitted deductions such as loans. The employer must pay it within 14 days of the '
+                     'contract ending (Federal Decree-Law No. 33 of 2021, Articles 43, 51 and 53; Cabinet Resolution No. 1 of '
+                     '2022, Articles 19 and 29).')
 LABOUR_LAW = ("UAE Legislation: Federal Decree-Law No. 33 of 2021", "https://uaelegislation.gov.ae/en/legislations/1541")
 EXEC_REG = ("UAE Legislation: Cabinet Resolution No. 1 of 2022", "https://uaelegislation.gov.ae/en/legislations/1547")
 PINT_RULES = {"path": "/pint-ae-rules/", "name": "PINT AE Rules Explained",
@@ -748,6 +762,20 @@ def resource_shell(title, description, canonical, ld, eyebrow, h1, lead, ctas, i
 {footer()}
 </body>
 </html>
+"""
+
+
+def answer_box(text):
+    """A plain-language answer near the top of a page: what search engines and AI answers quote."""
+    return f"""
+    <section class="section" aria-labelledby="answer-title">
+      <div class="container">
+        <div class="answer-box" data-reveal>
+          <h2 id="answer-title">The short answer</h2>
+          <p>{e(text)}</p>
+        </div>
+      </div>
+    </section>
 """
 
 
@@ -1590,7 +1618,7 @@ def settlement_page():
     ]}
     ctas = f"""          <a class="btn btn-gold" href="#calculate" data-magnetic>Calculate final settlement <span aria-hidden="true">&darr;</span></a>
           <a class="btn btn-ghost-light" href="{GRATUITY["path"]}" data-magnetic>Gratuity calculator</a>"""
-    inner = f"""
+    inner = f"""{answer_box(SETTLEMENT_ANSWER)}
     <section class="section" id="calculate" aria-labelledby="calc-title">
       <div class="container">
         <div class="section-head">
@@ -1806,7 +1834,7 @@ def gratuity_page():
     ]}
     ctas = """          <a class="btn btn-gold" href="#calculate" data-magnetic>Calculate gratuity <span aria-hidden="true">&darr;</span></a>
           <a class="btn btn-ghost-light" href="/services/bookkeeping-accounting-dubai/" data-magnetic>Payroll and accounting help</a>"""
-    inner = f"""
+    inner = f"""{answer_box(GRATUITY_ANSWER)}
     <section class="section" id="calculate" aria-labelledby="calc-title">
       <div class="container">
         <div class="section-head">

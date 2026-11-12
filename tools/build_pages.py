@@ -209,8 +209,8 @@ HEADER = """  <header class="site-header" id="site-header">
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li><a class="u-link" href="/services/">Services</a></li>
+          <li><a class="u-link" href="/free-tools/">Free tools</a></li>
           <li><a class="u-link" href="/guides/">Guides</a></li>
-          <li><a class="u-link" href="/#process">How we work</a></li>
           <li><a class="u-link" href="/#about">About</a></li>
           <li><a class="u-link" href="/#contact">Contact</a></li>
         </ul>
@@ -250,6 +250,7 @@ def footer_columns(current=None, base="/services/"):
             li(CT_CHECK["path"], "Corporate Tax Filing Check"),
             li(MIS_TEMPLATE["path"], "MIS Report Template"),
             li(SV_CHECK["path"], "Supplier Verification Check (VAT)"),
+            li("/free-tools/", "All free tools"),
         ]),
         ("Guides", [
             li("/guides/", "E-Invoicing Software Guides"),
@@ -269,7 +270,13 @@ def footer_columns(current=None, base="/services/"):
 
 
 def footer(current=None):
-    return f"""  <footer class="site-footer">
+    # The floating WhatsApp shortcut (small screens; contact.js shows it after the hero) rides along with the footer.
+    return f"""  <a class="wa-float" href="{e(wa_link("my accounting and compliance needs"))}"
+     target="_blank" rel="noopener" aria-label="Chat with Accuminds on WhatsApp (opens WhatsApp)">
+    <svg class="icon" aria-hidden="true"><use href="#i-whatsapp" /></svg>
+  </a>
+
+  <footer class="site-footer">
     <div class="container footer-inner">
       <a class="footer-brand" href="/">
         <img src="/assets/img/mark-3d.webp" width="77" height="28" alt="" loading="lazy" decoding="async" />
@@ -694,6 +701,96 @@ def guide_page(g):
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(body, encoding="utf-8")
     return out
+
+
+TOOLS_HUB = {"path": "/free-tools/", "name": "Free UAE Tax and Payroll Tools"}
+
+
+def tool_groups():
+    """The free tools, grouped by what the visitor is working on (most-searched group first),
+    each with the kind of tool it is."""
+    return [
+        ("Payroll and end of service", [("Calculator", GRATUITY), ("Calculator", SETTLEMENT), ("Calculator", LEAVE)]),
+        ("VAT", [("Check", VAT_REG), ("Check", TRN_CHECK), ("Checklist", SV_CHECK)]),
+        ("Corporate Tax", [("Check", CT_REG), ("Check", CT_CHECK)]),
+        ("Reporting and e-invoicing", [("Excel template", MIS_TEMPLATE), ("Checker", CHECKER)]),
+    ]
+
+
+def tools_hub():
+    canonical = f"{SITE}{TOOLS_HUB['path']}"
+    trail = [("Home", f"{SITE}/"), ("Free tools", canonical)]
+    groups = tool_groups()
+    tools = [t for _, items in groups for _, t in items]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(), breadcrumbs_ld(trail),
+        {"@type": "ItemList", "name": "Free UAE tax and payroll tools", "itemListElement": [
+            {"@type": "ListItem", "position": i + 1, "url": f"{SITE}{t['path']}", "name": t["name"]} for i, t in enumerate(tools)]},
+    ]}
+    sections = "\n".join(
+        f"""        <div class="tool-group">
+          <h2 data-reveal>{e(title)}</h2>
+          <div class="related-grid related-grid--all" data-reveal-stagger>
+"""
+        + "\n".join(
+            f"""            <a class="related-card" href="{t["path"]}"><span class="related-pillar">{e(pillar)}</span><span class="related-name">{e(t["name"])}</span><span class="related-desc">{e(t["card"])}</span><span class="related-go" aria-hidden="true">→</span></a>"""
+            for pillar, t in items)
+        + """
+          </div>
+        </div>"""
+        for title, items in groups)
+    body = f"""{head("Free UAE Tax & Payroll Tools: VAT, Corporate Tax, Gratuity | Accuminds",
+                 "Free UAE calculators and checks: gratuity, final settlement and leave salary, VAT registration, TRN format, Corporate Tax registration deadline and filing, and an MIS report template.",
+                 canonical, ld)}
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+{SPRITE}
+{HEADER}
+
+  <main id="main">
+    <section class="page-hero on-dark" aria-labelledby="page-title">
+      <div class="container">
+        {breadcrumbs_html(trail)}
+        <p class="eyebrow" data-reveal>Free tools</p>
+        <h1 id="page-title" data-reveal="mask">Free UAE tax and payroll tools.</h1>
+        <p class="lead" data-reveal>Calculators and checks for VAT, Corporate Tax and end-of-service pay, each with the rule it follows and its source. They run in your browser; nothing you enter is sent or stored.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="All free tools">
+      <div class="container">
+{sections}
+      </div>
+    </section>
+
+{cta_band("your books")}
+  </main>
+
+{footer()}
+</body>
+</html>
+"""
+    out = ROOT / TOOLS_HUB["path"].strip("/") / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
+def employer_strip(what, topic):
+    """Under a calculator employees also use: the route for the employer."""
+    return f"""        <aside class="biz-strip" aria-label="For employers" data-reveal>
+          <div class="biz-strip__text">
+            <p class="biz-strip__title">Are you the employer?</p>
+            <p>We can check your {e(what)} figures and record the provision for them correctly in your books.</p>
+          </div>
+          <div class="biz-strip__ctas">
+            <a class="btn btn-whatsapp btn-sm" href="{e(wa_link(topic))}" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#i-whatsapp" /></svg> Chat on WhatsApp<span class="sr-only"> (opens WhatsApp)</span>
+            </a>
+            <a class="btn btn-ghost-light btn-sm" href="/services/bookkeeping-accounting-dubai/">Bookkeeping &amp; accounting</a>
+          </div>
+        </aside>
+"""
 
 
 def guides_hub():
@@ -1555,7 +1652,7 @@ def leave_page():
             <noscript><p>The calculator needs JavaScript. The rules it follows are set out below.</p></noscript>
           </div>
         </div>
-      </div>
+{employer_strip("leave pay", "leave pay for my employees")}      </div>
     </section>
 
     <section class="section section--white" aria-labelledby="rules-title">
@@ -1679,7 +1776,7 @@ def settlement_page():
             <noscript><p>The calculator needs JavaScript. The rules it follows are set out below.</p></noscript>
           </div>
         </div>
-      </div>
+{employer_strip("final settlement", "final settlements for my employees")}      </div>
     </section>
 
     <section class="section section--white" aria-labelledby="rules-title">
@@ -2168,7 +2265,7 @@ def pint_hub_page():
 
 
 def sitemap():
-    urls = ([f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES] + [f"{SITE}{CHECKER['path']}"]
+    urls = ([f"{SITE}/", url()] + [url(s["slug"]) for s in SERVICES] + [f"{SITE}{TOOLS_HUB['path']}", f"{SITE}{CHECKER['path']}"]
             + [guide_url()] + [guide_url(g["slug"]) for g in GUIDES]
             + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}", f"{SITE}{TRN_CHECK['path']}", f"{SITE}{VAT_REG['path']}", f"{SITE}{CT_REG['path']}"]
             + [f"{SITE}{GRATUITY['path']}", f"{SITE}{LEAVE['path']}", f"{SITE}{SETTLEMENT['path']}"]
@@ -2207,7 +2304,7 @@ def llms_txt():
     lines += ["", "## Guides", ""] + [f"- [{g['h1']}]({guide_url(g['slug'])}): {g['card']}" for g in GUIDES]
     lines += ["", "## PINT AE rules (UAE e-invoicing)", "", f"- [{PINT_HUB['h1']}]({pint_url()}): {PINT_RULES['card']}"]
     lines += [f"- [{t['h1']}]({pint_url(t['slug'])}): {t['card']}" for t in PINT_TOPICS]
-    lines += ["", "## Pages", "", f"- [Home]({SITE}/): overview, how we work, contact form", f"- [All services]({url()})", ""]
+    lines += ["", "## Pages", "", f"- [Home]({SITE}/): overview, how we work, contact form", f"- [All services]({url()})", f"- [All free tools]({SITE}{TOOLS_HUB['path']})", ""]
     (ROOT / "llms.txt").write_text("\n".join(lines), encoding="utf-8")
 
 
@@ -2224,7 +2321,7 @@ def refresh_home_footer():
 
 
 if __name__ == "__main__":
-    written = [hub_page()] + [service_page(s) for s in SERVICES] + [guides_hub()] + [guide_page(g) for g in GUIDES]
+    written = [hub_page()] + [service_page(s) for s in SERVICES] + [tools_hub(), guides_hub()] + [guide_page(g) for g in GUIDES]
     written += [mis_template_page(), ct_check_page(), supplier_check_page(), trn_page(), vat_registration_page(), ct_registration_page()]
     written += [gratuity_page(), gratuity_embed_page(), leave_page(), settlement_page()]
     written += [pint_hub_page()] + [pint_topic_page(t) for t in PINT_TOPICS]

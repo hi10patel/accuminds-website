@@ -253,7 +253,7 @@ html:not(.show-todo) [data-todo-slot] { display: none !important; }
 /* ---- Static layout (default) ---- */
 .story { display: grid; justify-items: center; gap: 28px; padding: calc(var(--header-h) + 48px) var(--gutter) 88px; text-align: center; }
 .story-static-mark { width: min(100%, 760px); height: auto; }
-.word, .story-poster, .story-canvas, .cap, .story-hint, .story-progress { display: none; }
+.word, .story-poster, .story-canvas, .cap, .story-intro, .story-hint, .story-progress { display: none; }
 .story-final { max-width: 820px; }
 .story-title { margin: 0 0 20px; font-size: var(--fs-hero); line-height: 1.05; color: #fff; }
 .story-title .accent { color: var(--gold-300); }
@@ -297,6 +297,17 @@ html:not(.show-todo) [data-todo-slot] { display: none !important; }
   font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem); line-height: 1.5; color: rgba(255, 255, 255, 0.88);
 }
 .cap b { color: var(--gold-300); font-weight: var(--fw-extrabold); }
+/* First frame: what the firm does and both contact routes, before any scrolling. */
+.story-live .story-intro {
+  display: block; position: absolute; z-index: 4; left: max(var(--gutter), 5vw); bottom: clamp(24px, 4.5vh, 56px);
+  max-width: 30rem; text-align: left;
+}
+.story-intro__what {
+  margin: 0 0 8px; font-size: clamp(1.1875rem, 1rem + 0.7vw, 1.5rem); font-weight: var(--fw-extrabold);
+  line-height: 1.25; letter-spacing: -0.01em; color: #fff;
+}
+.story-intro__pain { margin: 0 0 18px; font-size: clamp(0.9375rem, 0.9rem + 0.25vw, 1.0625rem); line-height: 1.5; color: rgba(255, 255, 255, 0.8); }
+.story-intro__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
 .cap--2 { opacity: 0; }
 .story-hint {
   position: absolute; z-index: 4; right: max(var(--gutter), 5vw); bottom: clamp(88px, 14vh, 140px);
@@ -343,11 +354,19 @@ html:not(.story-live) .motion-toggle { display: none; }
   .story-live .story-track { height: 260vh; }
   .word { font-size: 17vw; top: 44%; }
   .cap { right: var(--gutter); bottom: 110px; }
+  .story-live .story-intro { right: var(--gutter); bottom: 28px; max-width: none; }
+  .story-intro__ctas .btn { flex: 1 1 100%; }
   .story-hint { display: none !important; }
   .story-live .hero-trust { display: none; }
   .story-live .story-final .lead { font-size: 0.9375rem; }
   .story-live .hero-ctas .btn { flex: 1 1 100%; }
   .motion-toggle { top: calc(var(--header-h) + 12px); bottom: auto; }
+}
+/* Short screens: keep the statement and the buttons, drop the scene-setting line,
+   so the block stays clear of the ball (its lower edge sits about 70% down the stage). */
+@media (max-height: 720px), (max-width: 767px) and (max-height: 760px) {
+  .story-intro__pain { display: none; }
+  .story-intro__what { margin-bottom: 16px; }
 }
 @media (max-width: 600px) {
   .story { padding-block: calc(var(--header-h) + 32px) 72px; }
@@ -949,6 +968,20 @@ main { counter-reset: chapter; }
   border: 1px solid rgba(201, 151, 43, 0.45); border-left-width: 4px;
   background: linear-gradient(180deg, rgba(201, 151, 43, 0.08), rgba(201, 151, 43, 0.02));
 }
+/* "Are you the employer?" strip under a calculator: the route for businesses on pages employees also use. */
+.biz-strip {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px;
+  margin-top: 20px; padding: 22px 26px; border: 1px solid var(--line); border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+}
+.biz-strip__text { flex: 1 1 320px; }
+.biz-strip__title { margin: 0 0 4px; font-size: 1.125rem; font-weight: var(--fw-extrabold); color: var(--heading); }
+.biz-strip__text p:last-child { margin: 0; max-width: 60ch; font-size: 0.9375rem; line-height: 1.55; color: var(--ink-700); }
+.biz-strip__ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 600px) { .biz-strip__ctas, .biz-strip__ctas .btn { flex: 1 1 100%; } }
+/* Free tools hub: one group of cards per topic. */
+.tool-group + .tool-group { margin-top: 56px; }
+.tool-group h2 { margin-bottom: 20px; font-size: var(--fs-h3); letter-spacing: -0.01em; }
 .answer-box h2 { margin-bottom: 12px; font-size: clamp(1.375rem, 1.1rem + 1vw, 1.875rem); letter-spacing: -0.02em; }
 .answer-box p { max-width: 75ch; font-size: 1.0625rem; line-height: 1.7; color: var(--heading); }
 /* Short answers on the tool pages: a lead sentence, the points as a list, then the example and source. */

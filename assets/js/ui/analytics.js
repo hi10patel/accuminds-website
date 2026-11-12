@@ -22,7 +22,7 @@
 // Check what would be sent without sending it: localStorage.gcdebug = 't'.
 
 // The site code chosen at sign-up: https://CODE.goatcounter.com. Empty = counting off.
-const CODE = '';
+const CODE = 'accuminds';
 const ENDPOINT = CODE ? `https://${CODE}.goatcounter.com/count` : '';
 
 const store = {

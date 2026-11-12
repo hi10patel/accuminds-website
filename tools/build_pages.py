@@ -81,6 +81,31 @@ VAT_REG_CHECKED = "31 October 2026"
 CT_REG = {"path": "/corporate-tax-registration-uae/", "name": "Corporate Tax Registration Deadline",
           "card": "Find your UAE Corporate Tax registration deadline under FTA Decision No. 3 of 2024, then see the documents, EmaraTax steps and the late registration penalty waiver."}
 CT_REG_CHECKED = "31 October 2026"
+CT_RETURN = {"path": "/corporate-tax-return-uae/", "name": "Corporate Tax Return Deadline and Filing Guide",
+             "card": "Find your UAE Corporate Tax return and payment deadline from your financial year end, then see who must file, what the return needs and the penalties for filing or paying late."}
+CT_RETURN_CHECKED = "12 November 2026"
+CT_LAW = ("UAE Legislation: Federal Decree-Law No. 47 of 2022", "https://uaelegislation.gov.ae/en/legislations/1582")
+CT_PENALTIES = ("FTA: Cabinet Decision No. 75 of 2023 as amended (unofficial translation)",
+                "https://tax.gov.ae/Datafolder/Files/Legislation/Cabinet%20Decision%20No.%2075%20of%202023%20and%20amendments%20-%20For%20Publishing.pdf")
+MOF_MD84 = ("Ministry of Finance: Ministerial Decision No. 84 of 2025",
+            "https://mof.gov.ae/wp-content/uploads/2025/04/Ministerial-Decision-No.-84-of-2025-on-Audited-Financial-Statements.pdf")
+FTA_CT_RETURN_NOTICE = ("FTA: return and payment deadline notice, 26 September 2026", "https://tax.gov.ae/en/media.centre/news/pr.2809.aspx")
+MOF_CT = ("Ministry of Finance: Corporate Tax", "https://mof.gov.ae/en/public-finance/tax/corporate-tax/")
+MOF_SBR_2029 = ("Ministry of Finance: Small Business Relief extended to 2029",
+                "https://mof.gov.ae/en/news/ministry-of-finance-announces-extension-of-small-business-relief-for-corporate-tax-purposes-until-31-december-2029/")
+CT_RETURN_ANSWER = {
+    "lead": "A UAE Corporate Tax return is due no later than nine months after the end of the tax period, and any tax is due by the same date.",
+    "points": [
+        "Year ended 31 December 2025: due 30 September 2026",
+        "Year ending 31 December 2026: due 30 September 2027",
+        "Filed on EmaraTax, even with no tax to pay",
+        "Late return: AED 500 a month, AED 1,000 from month 13",
+        "Late payment: 14% a year, charged monthly",
+        "Keep records for seven years",
+    ],
+    "example": "A company with a 31 March 2026 year end files its return and pays by 31 December 2026.",
+    "source": "Federal Decree-Law No. 47 of 2022, Articles 48, 53 and 56; Cabinet Decision No. 75 of 2023 as amended.",
+}
 FTA_CT_REG = ("FTA: Corporate Tax registration service", "https://tax.gov.ae/en/services/corporate.tax.registration.aspx")
 FTA_DEC3 = ("FTA Decision No. 3 of 2024 (unofficial translation)",
             "https://tax.gov.ae/Datafolder/Files/Legislation/FTA%20Decision%20No.%203%20of%202024%20on%20Registration%20Timeline%20for%20Corporate%20Tax%20-%20For%20publishing.pdf")
@@ -263,6 +288,7 @@ def footer_columns(current=None, base="/services/"):
             li(VAT_CALC["path"], "VAT Calculator"),
             li(CHECKER["path"], "E-Invoice Readiness Checker"),
             li(CT_REG["path"], "Corporate Tax Registration Deadline"),
+            li(CT_RETURN["path"], "Corporate Tax Return Deadline"),
             li(VAT_REG["path"], "VAT Registration Check"),
             li(SETTLEMENT["path"], "Final Settlement Calculator"),
             li(LEAVE["path"], "Leave Salary Calculator"),
@@ -731,7 +757,7 @@ def tool_groups():
     return [
         ("Payroll and end of service", [("Calculator", GRATUITY), ("Calculator", SETTLEMENT), ("Calculator", LEAVE)]),
         ("VAT", [("Calculator", VAT_CALC), ("Check", VAT_REG), ("Check", TRN_CHECK), ("Checklist", SV_CHECK)]),
-        ("Corporate Tax", [("Check", CT_REG), ("Check", CT_CHECK)]),
+        ("Corporate Tax", [("Check", CT_REG), ("Guide", CT_RETURN), ("Check", CT_CHECK)]),
         ("Reporting and e-invoicing", [("Excel template", MIS_TEMPLATE), ("Checker", CHECKER)]),
     ]
 
@@ -946,6 +972,152 @@ def vat_calculator_page():
         "Add 5% VAT to a price or take it out of one that includes it, then estimate the VAT to pay for a tax period.",
         ctas, inner, "VAT")
     out = ROOT / VAT_CALC["path"].strip("/") / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
+def ct_return_page():
+    canonical = f"{SITE}{CT_RETURN['path']}"
+    rules = [
+        ("Who files", "Every taxable person files a return for each tax period, including those eligible for Small Business Relief.", FTA_CT_RETURN_NOTICE),
+        ("Return deadline", "No later than nine months from the end of the tax period, or another date the FTA directs (Article 53).", CT_LAW),
+        ("Payment deadline", "The Corporate Tax payable is settled within nine months from the end of the tax period (Article 48).", CT_LAW),
+        ("Tax period", "The financial year: the calendar year, or the 12-month period the business prepares financial statements for (Article 57). A change needs an application to the FTA (Article 58).", CT_LAW),
+        ("Where to file", "On EmaraTax, the FTA's online platform, directly or through a tax agent approved for Corporate Tax.", FTA_CT_RETURN_NOTICE),
+        ("What the return contains", "At least: the tax period, the name, address and tax registration number, the accounting basis used, the taxable income, tax losses and tax credits claimed, and the Corporate Tax payable (Article 53).", CT_LAW),
+        ("Rates", "0% on taxable income up to AED 375,000 and 9% above that.", MOF_CT),
+        ("Small Business Relief", "Resident businesses with revenue of AED 3 million or less can elect it in the return, for tax periods ending on or before 31 December 2029. A return is still filed.", MOF_SBR_2029),
+        ("Tax losses", "A loss can be set against the taxable income of later periods, up to 75% of that income in any one period (Article 37).", CT_LAW),
+        ("Financial statements", "Taxable income starts from standalone financial statements prepared under accounting standards accepted in the UAE (Article 20).", CT_LAW),
+        ("Audited financial statements", "Required for a taxable person with revenue above AED 50 million in the tax period, and for every Qualifying Free Zone Person. A tax group prepares audited special purpose financial statements. Applies to tax periods starting on or after 1 January 2025.", MOF_MD84),
+        ("Late return", "AED 500 for each month or part of a month for the first twelve months, then AED 1,000 for each month or part of a month. It is imposed the day after the deadline and on the same date each month.", CT_PENALTIES),
+        ("Late payment", "A monthly penalty of 14% a year on the unpaid tax, for each month or part of a month, from the day after the due date.", CT_PENALTIES),
+        ("Incorrect return", "AED 500, unless the return is corrected before the filing deadline.", CT_PENALTIES),
+        ("Records", "Kept for seven years after the end of the tax period they relate to (Article 56).", CT_LAW),
+        ("Missing records", "AED 10,000 for not keeping the required records, or AED 20,000 if repeated within 24 months.", CT_PENALTIES),
+        ("Registered late?", "The AED 10,000 late registration penalty is waived if the first return is filed within seven months of the end of the first tax period.", FTA_CT_REG),
+    ]
+    year_ends = [
+        ("31 December 2025", "30 September 2026"),
+        ("31 March 2026", "31 December 2026"),
+        ("30 June 2026", "31 March 2027"),
+        ("30 September 2026", "30 June 2027"),
+        ("31 December 2026", "30 September 2027"),
+    ]
+    steps = [
+        ("Close the books", "Finish the bookkeeping for the tax period and prepare standalone financial statements. They are the starting point for taxable income."),
+        ("Work out taxable income", "Start from the accounting income in the financial statements and make the adjustments the law requires. Set earlier tax losses against it, up to 75% of the income."),
+        ("Decide on Small Business Relief", "If revenue is AED 3 million or less, check whether you can and should elect the relief. The election is made in the return."),
+        ("File on EmaraTax", "Complete the Corporate Tax return on EmaraTax, directly or through an approved tax agent, no later than nine months after the period ends."),
+        ("Pay by the same date", "Settle any Corporate Tax payable by the return deadline."),
+        ("Keep the records", "Keep the financial statements and supporting records for seven years after the end of the tax period."),
+    ]
+    faq = [
+        ("When is the UAE Corporate Tax return due?", "No later than nine months after the end of the tax period (Article 53 of Federal Decree-Law No. 47 of 2022). Any tax is due by the same date."),
+        ("What is the deadline for a financial year ended 31 December 2025?", "30 September 2026, for both the return and the payment, as the FTA confirmed in its notice of 26 September 2026."),
+        ("What is the deadline for a financial year ending 31 December 2026?", "30 September 2027: nine months after the end of the tax period."),
+        ("Do I have to file if I made no profit or owe no tax?", "Yes. Every taxable person files a return for each tax period, even when no tax is due."),
+        ("Does Small Business Relief mean I do not file?", "No. The relief is elected in the return, and the FTA requires those eligible for it to file within the same nine months."),
+        ("What is the penalty for filing a Corporate Tax return late?", "AED 500 for each month or part of a month for the first twelve months, then AED 1,000 for each month or part of a month (Cabinet Decision No. 75 of 2023 as amended)."),
+        ("What is the penalty for paying Corporate Tax late?", "A monthly penalty of 14% a year on the unpaid tax, for each month or part of a month, from the day after the due date."),
+        ("Do I need audited financial statements?", "Yes if your revenue in the tax period is above AED 50 million, or if you are a Qualifying Free Zone Person (Ministerial Decision No. 84 of 2025)."),
+        ("How long must I keep Corporate Tax records?", "Seven years after the end of the tax period they relate to (Article 56)."),
+    ]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(),
+        {"@type": "WebApplication", "@id": f"{canonical}#app", "name": "UAE Corporate Tax return deadline finder", "url": canonical,
+         "description": CT_RETURN["card"], "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in a web browser)",
+         "isAccessibleForFree": True, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "AED"}, "provider": {"@id": ORG_ID}},
+        {"@type": "HowTo", "@id": f"{canonical}#howto", "name": "How to prepare and file a UAE Corporate Tax return",
+         "step": [{"@type": "HowToStep", "position": i, "name": n, "text": t} for i, (n, t) in enumerate(steps, 1)]},
+        breadcrumbs_ld([("Home", f"{SITE}/"), ("Corporate Tax return", canonical)]),
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
+    ]}
+    step_items = "\n".join(f"          <li><h3>{e(t)}</h3><p>{e(d)}</p></li>" for t, d in steps)
+    year_rows = "\n".join(f'          <div class="fact-row"><dt>Year ends {e(a)}</dt><dd>Return and payment due {e(b)}</dd></div>' for a, b in year_ends)
+    ctas = """          <a class="btn btn-gold" href="#deadline" data-magnetic>Find your deadline <span aria-hidden="true">&darr;</span></a>
+          <a class="btn btn-ghost-light" href="/services/corporate-tax-uae/" data-magnetic>Corporate Tax services</a>"""
+    inner = f"""
+    <section class="section" id="deadline" aria-labelledby="deadline-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The deadline finder</p>
+          <h2 id="deadline-title" data-reveal="mask">When is your return due?</h2>
+          <p class="lead" data-reveal>Enter the last day of your financial year. Your answers stay in your browser; nothing is sent or stored.</p>
+        </div>
+        <div class="sv-grid">
+          <form class="ct-card sv-form" id="cf-form" novalidate>
+            <label class="sv-field"><span>Last day of the financial year (tax period)</span><input name="end" type="date" /></label>
+            <label class="sv-field"><span>Corporate Tax still unpaid, if the deadline has passed (AED, optional)</span><input name="unpaid" inputmode="decimal" placeholder="e.g. 25,000" /></label>
+            <p class="ct-note">For example, a year ending 31 December 2026 has a return due on 30 September 2027.</p>
+          </form>
+          <div class="ct-card sv-out" id="cf-result" aria-live="polite">
+            <noscript><p>The finder needs JavaScript. The return is due nine months after the end of the tax period: see the table below.</p></noscript>
+          </div>
+        </div>
+{biz_strip("Want your Corporate Tax return prepared and filed?", "We prepare the return from reconciled books, check reliefs such as Small Business Relief, and file within the deadline.", "my Corporate Tax return", "/services/corporate-tax-uae/", "Corporate Tax services")}      </div>
+    </section>
+{answer_box(CT_RETURN_ANSWER)}
+    <section class="section section--white" aria-labelledby="years-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Common year ends</p>
+          <h2 id="years-title" data-reveal="mask">Deadlines by financial year end.</h2>
+          <p class="lead" data-reveal>Nine months after the tax period ends, for both the return and the payment.</p>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{year_rows}
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="rules-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The rules</p>
+          <h2 id="rules-title" data-reveal="mask">Filing a Corporate Tax return.</h2>
+          <p class="lead" data-reveal>Federal Decree-Law No. 47 of 2022, Cabinet Decision No. 75 of 2023 on penalties, and Ministry of Finance and FTA publications. Checked {e(CT_RETURN_CHECKED)}.</p>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{fact_rows(rules)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="steps-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Step by step</p>
+          <h2 id="steps-title" data-reveal="mask">From closed books to a filed return.</h2>
+        </div>
+        <ol class="guide-steps" data-reveal-stagger>
+{step_items}
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+{faq_html(faq)}
+        </div>
+      </div>
+    </section>
+    <script type="module" src="/assets/js/ct-return.js"></script>
+"""
+    body = resource_shell(
+        "UAE Corporate Tax Return: Deadline, Filing & Penalties | Accuminds",
+        "When your UAE Corporate Tax return is due, who must file, what it needs and the penalties for filing or paying late. Free deadline finder, with sources.",
+        canonical, ld, "Free tool · Corporate Tax", "UAE Corporate Tax return: deadline and filing guide",
+        "Find the date your return and payment are due, then see who must file, what the return needs and what filing late costs.",
+        ctas, inner, "your Corporate Tax return")
+    out = ROOT / CT_RETURN["path"].strip("/") / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(body, encoding="utf-8")
     return out
@@ -2490,7 +2662,7 @@ def sitemap():
             + [guide_url()] + [guide_url(g["slug"]) for g in GUIDES]
             + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}", f"{SITE}{TRN_CHECK['path']}", f"{SITE}{VAT_REG['path']}", f"{SITE}{CT_REG['path']}"]
             + [f"{SITE}{GRATUITY['path']}", f"{SITE}{LEAVE['path']}", f"{SITE}{SETTLEMENT['path']}"]
-            + [f"{SITE}{VAT_CALC['path']}", f"{SITE}{PRIVACY['path']}"]
+            + [f"{SITE}{VAT_CALC['path']}", f"{SITE}{CT_RETURN['path']}", f"{SITE}{PRIVACY['path']}"]
             + [pint_url()] + [pint_url(t["slug"]) for t in PINT_TOPICS])
     rows = "\n".join(f"  <url>\n    <loc>{u}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </url>" for u in urls)
     (ROOT / "sitemap.xml").write_text(
@@ -2521,6 +2693,7 @@ def llms_txt():
               f"- [{CT_REG['name']}]({SITE}{CT_REG['path']}): {CT_REG['card']} Runs in the browser; nothing is sent.",
               f"- [{TRN_CHECK['name']}]({SITE}{TRN_CHECK['path']}): {TRN_CHECK['card']} The format check runs in the browser; nothing is sent.",
               f"- [{VAT_CALC['name']}]({SITE}{VAT_CALC['path']}): {VAT_CALC['card']} Runs in the browser; nothing is sent.",
+              f"- [{CT_RETURN['name']}]({SITE}{CT_RETURN['path']}): {CT_RETURN['card']} Runs in the browser; nothing is sent.",
               f"- [{GRATUITY['name']}]({SITE}{GRATUITY['path']}): {GRATUITY['card']} Runs in the browser; nothing is sent.",
               f"- [{LEAVE['name']}]({SITE}{LEAVE['path']}): {LEAVE['card']} Runs in the browser; nothing is sent.",
               f"- [{SETTLEMENT['name']}]({SITE}{SETTLEMENT['path']}): {SETTLEMENT['card']} Runs in the browser; nothing is sent."]
@@ -2546,7 +2719,7 @@ def refresh_home_footer():
 if __name__ == "__main__":
     written = [hub_page()] + [service_page(s) for s in SERVICES] + [tools_hub(), guides_hub()] + [guide_page(g) for g in GUIDES]
     written += [mis_template_page(), ct_check_page(), supplier_check_page(), trn_page(), vat_registration_page(), ct_registration_page()]
-    written += [gratuity_page(), gratuity_embed_page(), leave_page(), settlement_page(), vat_calculator_page(), privacy_page()]
+    written += [gratuity_page(), gratuity_embed_page(), leave_page(), settlement_page(), vat_calculator_page(), ct_return_page(), privacy_page()]
     written += [pint_hub_page()] + [pint_topic_page(t) for t in PINT_TOPICS]
     sitemap()
     llms_txt()

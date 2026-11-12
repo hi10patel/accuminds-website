@@ -74,6 +74,7 @@ function initForm(form, motion) {
     if (!useFormspree) {
       window.location.href = mailtoFrom(data);
       showSent('mail');
+      announce('form-email');
       return;
     }
 
@@ -87,6 +88,7 @@ function initForm(form, motion) {
       if (!res.ok) throw new Error(`Formspree ${res.status}`);
       form.reset();
       showSent('sent');
+      announce('form-sent');
     } catch {
       error.hidden = false;
     } finally {
@@ -99,6 +101,11 @@ function initForm(form, motion) {
     body.hidden = false;
     form.elements.name.focus();
   });
+}
+
+// Tell analytics.js an enquiry went out. Only the kind is passed on, never the message.
+function announce(kind) {
+  document.dispatchEvent(new CustomEvent('am:lead', { detail: { kind } }));
 }
 
 function mailtoFrom(data) {

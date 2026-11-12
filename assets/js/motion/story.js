@@ -81,7 +81,8 @@ export function initStory(motion) {
     .to('.word--tangled', { opacity: 0, letterSpacing: '0.12em', filter: 'blur(10px)', duration: 0.22, ease: 'power1.in' }, 0.18)
     .fromTo('.word--clarity', { opacity: 0, letterSpacing: '0.18em', filter: 'blur(12px)' },
       { opacity: 1, letterSpacing: '-0.04em', filter: 'blur(0px)', duration: 0.3, ease: 'power2.out' }, 0.62)
-    .fromTo('.cap--1', { opacity: 1, y: 0 }, { opacity: 0, y: -20, duration: 0.12 }, 0.14)
+    // autoAlpha, so the intro's buttons can't be clicked or tabbed to once it has faded
+    .fromTo('.story-intro', { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -20, duration: 0.12 }, 0.14)
     .fromTo('.cap--2', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.1 }, 0.3)
     .to('.cap--2', { opacity: 0, y: -20, duration: 0.1 }, 0.55)
     .to('.story-hint', { opacity: 0, duration: 0.05 }, 0.02)
@@ -93,7 +94,7 @@ export function initStory(motion) {
   // ---- Load-in: letters rise, ball poster settles
   gsap.from('.word--tangled .ch', { yPercent: 110, duration: 1, stagger: 0.04, ease: 'power3.out', delay: 0.1 });
   gsap.from(poster, { scale: 0.92, opacity: 0, duration: 1.2, ease: 'power3.out' });
-  gsap.from('.cap--1, .story-hint', { opacity: 0, y: 16, duration: 0.9, delay: 0.6, ease: 'power2.out' });
+  gsap.from('.story-intro, .story-hint', { opacity: 0, y: 16, duration: 0.9, delay: 0.6, ease: 'power2.out' });
 
   // ---- 3D on demand
   if (!webgl2() || navigator.connection?.saveData) return;

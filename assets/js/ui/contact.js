@@ -3,8 +3,8 @@
 //         otherwise opens the visitor's email app with the message filled in.
 //   "Discuss this" links ([data-service]) pre-select the service and tailor
 //   the WhatsApp greeting.
-//   Floating WhatsApp button: small screens, shown after the hero, hidden
-//   while the contact section itself is on screen.
+//   Floating WhatsApp button: small screens, every page, shown after the hero
+//   and hidden while the contact section or closing call-to-action is on screen.
 
 const EMAIL = 'info@accumindsconsulting.ae';
 const DEFAULT_TOPIC = 'my accounting and compliance needs';
@@ -121,9 +121,9 @@ function drawTick(sent, motion) {
 
 function initFloatingButton() {
   const fab = document.querySelector('.wa-float');
-  const hero = document.querySelector('.hero');
-  const contact = document.getElementById('contact');
-  if (!fab || !hero || !contact) return;
+  const hero = document.querySelector('.story-track, .page-hero, .hero');
+  const contact = document.getElementById('contact') || document.querySelector('.cta-band');
+  if (!fab || !hero) return;
 
   let pastHero = false;
   let atContact = false;
@@ -138,9 +138,11 @@ function initFloatingButton() {
     pastHero = !entry.isIntersecting && entry.boundingClientRect.top < 0;
     update();
   }).observe(hero);
-  new IntersectionObserver(([entry]) => {
-    atContact = entry.isIntersecting;
-    update();
-  }, { rootMargin: '0px 0px -30% 0px' }).observe(contact);
+  if (contact) {
+    new IntersectionObserver(([entry]) => {
+      atContact = entry.isIntersecting;
+      update();
+    }, { rootMargin: '0px 0px -30% 0px' }).observe(contact);
+  }
   update();
 }

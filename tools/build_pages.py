@@ -57,6 +57,24 @@ TRN_CHECK = {"path": "/trn-verification-uae/", "name": "TRN Verification and For
 TRN_CHECKED = "31 October 2026"
 FTA_HOME = ("FTA website: TRN/TIN verification", "https://tax.gov.ae/en/default.aspx")
 VAT_EXEC_REG = ("UAE Legislation: Cabinet Resolution No. 52 of 2017", "https://uaelegislation.gov.ae/en/legislations/1226")
+VAT_CALC = {"path": "/vat-calculator-uae/", "name": "UAE VAT Calculator",
+            "card": "Add 5% VAT to a price or take it out of a price that includes it, then estimate the VAT to pay for a tax period: output VAT less recoverable input VAT."}
+VAT_CALC_CHECKED = "12 November 2026"
+VAT_LAW = ("UAE Legislation: Federal Decree-Law No. 8 of 2017", "https://uaelegislation.gov.ae/en/legislations/1227")
+VAT_CALC_ANSWER = {
+    "lead": "UAE VAT is 5%. To add VAT, multiply the price by 1.05. To take VAT out of a price that already includes it, divide by 1.05.",
+    "points": [
+        "Add VAT: AED 1,000 × 1.05 = AED 1,050",
+        "Remove VAT: AED 1,050 ÷ 1.05 = AED 1,000",
+        "VAT inside a price: the price × 5 ÷ 105",
+        "Some supplies are 0% or exempt",
+        "Displayed prices must include VAT",
+        "VAT can be rounded to the nearest fils",
+    ],
+    "example": "A price of AED 2,625 including VAT is AED 2,500 plus AED 125 of VAT.",
+    "source": "Federal Decree-Law No. 8 of 2017, Articles 3, 34 and 38; Cabinet Resolution No. 52 of 2017, Article 61.",
+}
+PRIVACY = {"path": "/privacy/", "updated": "12 November 2026"}
 VAT_REG = {"path": "/vat-registration-uae/", "name": "VAT Registration Check",
            "card": "Do you have to register for UAE VAT, or can you choose to? Check the AED 375,000 and AED 187,500 thresholds, then see the documents and EmaraTax steps."}
 VAT_REG_CHECKED = "31 October 2026"
@@ -242,6 +260,7 @@ def footer_columns(current=None, base="/services/"):
         ("Free tools", [
             li(GRATUITY["path"], "Gratuity Calculator"),
             li(TRN_CHECK["path"], "TRN Verification"),
+            li(VAT_CALC["path"], "VAT Calculator"),
             li(CHECKER["path"], "E-Invoice Readiness Checker"),
             li(CT_REG["path"], "Corporate Tax Registration Deadline"),
             li(VAT_REG["path"], "VAT Registration Check"),
@@ -290,7 +309,7 @@ def footer(current=None):
         <a class="u-link" href="https://www.linkedin.com/company/accuminds-consulting/" rel="me noopener" target="_blank">LinkedIn</a> ·
         <a class="u-link" href="https://www.google.com/maps?cid=9046261605626005493" rel="noopener" target="_blank">Google Maps</a>
       </address>
-      <p class="footer-copy">© <span data-year>{date.today().year}</span> Accuminds Consulting FZCO. All rights reserved.</p>
+      <p class="footer-copy">© <span data-year>{date.today().year}</span> Accuminds Consulting FZCO. All rights reserved. · <a class="u-link" href="/privacy/">Privacy</a></p>
     </div>
   </footer>"""
 
@@ -711,7 +730,7 @@ def tool_groups():
     each with the kind of tool it is."""
     return [
         ("Payroll and end of service", [("Calculator", GRATUITY), ("Calculator", SETTLEMENT), ("Calculator", LEAVE)]),
-        ("VAT", [("Check", VAT_REG), ("Check", TRN_CHECK), ("Checklist", SV_CHECK)]),
+        ("VAT", [("Calculator", VAT_CALC), ("Check", VAT_REG), ("Check", TRN_CHECK), ("Checklist", SV_CHECK)]),
         ("Corporate Tax", [("Check", CT_REG), ("Check", CT_CHECK)]),
         ("Reporting and e-invoicing", [("Excel template", MIS_TEMPLATE), ("Checker", CHECKER)]),
     ]
@@ -776,21 +795,223 @@ def tools_hub():
     return out
 
 
-def employer_strip(what, topic):
-    """Under a calculator employees also use: the route for the employer."""
-    return f"""        <aside class="biz-strip" aria-label="For employers" data-reveal>
+def biz_strip(title, text, topic, href, label, aria="For businesses"):
+    """Under a calculator: the route to the service behind it."""
+    return f"""        <aside class="biz-strip" aria-label="{e(aria)}" data-reveal>
           <div class="biz-strip__text">
-            <p class="biz-strip__title">Are you the employer?</p>
-            <p>We can check your {e(what)} figures and record the provision for them correctly in your books.</p>
+            <p class="biz-strip__title">{e(title)}</p>
+            <p>{e(text)}</p>
           </div>
           <div class="biz-strip__ctas">
             <a class="btn btn-whatsapp btn-sm" href="{e(wa_link(topic))}" target="_blank" rel="noopener">
               <svg class="icon" aria-hidden="true"><use href="#i-whatsapp" /></svg> Chat on WhatsApp<span class="sr-only"> (opens WhatsApp)</span>
             </a>
-            <a class="btn btn-ghost-light btn-sm" href="/services/bookkeeping-accounting-dubai/">Bookkeeping &amp; accounting</a>
+            <a class="btn btn-ghost-light btn-sm" href="{href}">{e(label)}</a>
           </div>
         </aside>
 """
+
+
+def employer_strip(what, topic):
+    """Under a calculator employees also use: the route for the employer."""
+    return biz_strip("Are you the employer?",
+                     f"We can check your {what} figures and record the provision for them correctly in your books.",
+                     topic, "/services/bookkeeping-accounting-dubai/", "Bookkeeping & accounting", "For employers")
+
+
+def vat_calculator_page():
+    canonical = f"{SITE}{VAT_CALC['path']}"
+    rules = [
+        ("Standard rate", "5% on taxable supplies and imports (Article 3).", VAT_LAW),
+        ("Adding VAT", "VAT is charged on the value of the supply, so a price before VAT is multiplied by 1.05 (Article 3).", VAT_LAW),
+        ("Removing VAT", "When the price is paid in cash, the value of the supply is the price less the tax (Article 34). So a price that includes VAT is divided by 1.05, and the VAT inside it is 5/105 of the price.", VAT_LAW),
+        ("Displayed prices", "Declared prices for taxable supplies must include VAT. The Executive Regulation sets the cases where they need not (Article 38).", VAT_LAW),
+        ("Zero-rated (0%)", "Among others: exports, international transport, the first supply of a new residential building within three years of completion, certain education, preventive and basic healthcare, crude oil and natural gas, and investment precious metals (Article 45).", VAT_LAW),
+        ("Exempt", "Financial services set out in the Executive Regulation, residential buildings other than the zero-rated first supply, bare land and local passenger transport (Article 46).", VAT_LAW),
+        ("Rounding", "If the tax on a supply works out to a fraction of a fils, it may be rounded to the nearest fils (Article 61).", VAT_EXEC_REG),
+        ("VAT to pay for a period", "The output tax for the tax period less the recoverable input tax for the same period (Article 53). Input tax is recoverable on goods and services used to make taxable supplies (Article 54).", VAT_LAW),
+        ("Tax period", "The standard tax period is three calendar months, unless the FTA assigns a different one (Article 62).", VAT_EXEC_REG),
+        ("Simplified tax invoice", "Allowed when the customer is not VAT-registered, or is registered and the amount charged is AED 10,000 or less (Article 59).", VAT_EXEC_REG),
+    ]
+    faq = [
+        ("What is the VAT rate in the UAE?", "The standard rate is 5%. Some supplies, such as exports, are zero-rated (0%), and a few, such as bare land and local passenger transport, are exempt."),
+        ("How do I add 5% VAT to a price?", "Multiply the price by 1.05. AED 1,000 before VAT becomes AED 1,050: AED 1,000 plus AED 50 of VAT."),
+        ("How do I remove VAT from a price that includes it?", "Divide the price by 1.05 to get the amount before VAT. AED 1,050 including VAT is AED 1,000 plus AED 50 of VAT."),
+        ("Is the VAT 5% of the total price?", "No. VAT is 5% of the price before VAT. Inside a price that already includes VAT, the tax is 5/105 of the price, which is about 4.76%."),
+        ("Do prices in the UAE have to include VAT?", "Yes for taxable supplies: declared prices must include the tax (Article 38 of Federal Decree-Law No. 8 of 2017). The Executive Regulation sets the cases where they need not."),
+        ("What is the difference between zero-rated and exempt?", "A zero-rated supply is a taxable supply charged at 0%. An exempt supply carries no VAT at all. Input tax is recoverable on costs used to make taxable supplies (Article 54)."),
+        ("How do I work out the VAT to pay in a return?", "Take the output VAT on your sales for the period and subtract the input VAT you can recover on your purchases (Article 53). The standard tax period is three months."),
+        ("How is VAT rounded?", "If the tax on a supply works out to a fraction of a fils, it may be rounded to the nearest fils (Executive Regulation, Article 61)."),
+    ]
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(),
+        {"@type": "WebApplication", "@id": f"{canonical}#app", "name": "UAE VAT calculator", "url": canonical,
+         "description": VAT_CALC["card"], "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in a web browser)",
+         "isAccessibleForFree": True, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "AED"}, "provider": {"@id": ORG_ID}},
+        breadcrumbs_ld([("Home", f"{SITE}/"), ("VAT calculator", canonical)]),
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
+    ]}
+    ctas = f"""          <a class="btn btn-gold" href="#calculate" data-magnetic>Calculate VAT <span aria-hidden="true">&darr;</span></a>
+          <a class="btn btn-ghost-light" href="/services/vat-services-uae/" data-magnetic>VAT services</a>"""
+    inner = f"""
+    <section class="section" id="calculate" aria-labelledby="calc-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The calculator</p>
+          <h2 id="calc-title" data-reveal="mask">Add or remove 5% VAT.</h2>
+          <p class="lead" data-reveal>Amounts in AED. Your figures stay in your browser; nothing is sent or stored.</p>
+        </div>
+        <div class="sv-grid">
+          <form class="ct-card sv-form" id="vc-form" novalidate>
+            <label class="sv-field"><span>Amount (AED)</span><input name="amount" inputmode="decimal" placeholder="e.g. 2,500" /></label>
+            <fieldset class="sv-field"><legend>This amount is</legend>
+              <label class="sv-pill"><input type="radio" name="mode" value="add" checked /> Before VAT: add 5%</label>
+              <label class="sv-pill"><input type="radio" name="mode" value="remove" /> Including VAT: take it out</label>
+            </fieldset>
+          </form>
+          <div class="ct-card sv-out" id="vc-result" aria-live="polite">
+            <noscript><p>The calculator needs JavaScript. To add VAT, multiply by 1.05; to remove it, divide by 1.05.</p></noscript>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" id="period" aria-labelledby="period-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>For your VAT return</p>
+          <h2 id="period-title" data-reveal="mask">Estimate the VAT for a tax period.</h2>
+          <p class="lead" data-reveal>Enter sales and purchases charged at 5%, before VAT. The estimate is the output VAT less the input VAT.</p>
+        </div>
+        <div class="sv-grid">
+          <form class="ct-card sv-form" id="vp-form" novalidate>
+            <label class="sv-field"><span>Sales at 5% in the period, before VAT (AED)</span><input name="sales" inputmode="decimal" placeholder="e.g. 200,000" /></label>
+            <label class="sv-field"><span>Purchases and expenses at 5% with a tax invoice, before VAT (AED)</span><input name="purchases" inputmode="decimal" placeholder="e.g. 120,000" /></label>
+          </form>
+          <div class="ct-card sv-out" id="vp-result" aria-live="polite">
+            <noscript><p>The estimate needs JavaScript: 5% of sales less 5% of purchases.</p></noscript>
+          </div>
+        </div>
+{biz_strip("Need your VAT returns prepared and filed?", "We prepare VAT returns from your books, check the input VAT you can recover, and file before the deadline.", "VAT returns", "/services/vat-services-uae/", "VAT services")}      </div>
+    </section>
+{answer_box(VAT_CALC_ANSWER)}
+    <section class="section section--white" aria-labelledby="rules-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>The law</p>
+          <h2 id="rules-title" data-reveal="mask">How UAE VAT is worked out.</h2>
+          <p class="lead" data-reveal>Federal Decree-Law No. 8 of 2017 on Value Added Tax and its Executive Regulation, Cabinet Resolution No. 52 of 2017. Checked {e(VAT_CALC_CHECKED)} on the UAE Legislation portal.</p>
+        </div>
+        <dl class="facts-list" data-reveal-stagger>
+{fact_rows(rules)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="example-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Worked example</p>
+          <h2 id="example-title" data-reveal="mask">One invoice, then one quarter.</h2>
+          <p class="lead" data-reveal>An invoice for AED 2,500 before VAT, and a quarter with AED 200,000 of sales and AED 120,000 of purchases, all at 5%.</p>
+        </div>
+        <ol class="guide-steps" data-reveal-stagger>
+          <li><h3>Add VAT to the invoice</h3><p>AED 2,500 &times; 5% = AED 125 of VAT. The customer pays AED 2,625.</p></li>
+          <li><h3>Check it backwards</h3><p>AED 2,625 &divide; 1.05 = AED 2,500 before VAT, so the VAT inside the price is AED 125.</p></li>
+          <li><h3>Output VAT for the quarter</h3><p>AED 200,000 of sales &times; 5% = AED 10,000.</p></li>
+          <li><h3>Input VAT for the quarter</h3><p>AED 120,000 of purchases &times; 5% = AED 6,000.</p></li>
+          <li><h3>VAT to pay</h3><p>AED 10,000 &minus; AED 6,000 = AED 4,000.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section section--white" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Questions</p>
+          <h2 id="faq-title" data-reveal="mask">Common questions, answered.</h2>
+        </div>
+        <div class="faq-list" data-reveal-stagger>
+{faq_html(faq)}
+        </div>
+      </div>
+    </section>
+    <script type="module" src="/assets/js/vat-calculator.js"></script>
+"""
+    body = resource_shell(
+        "UAE VAT Calculator: Add or Remove 5% VAT | Accuminds",
+        "Free UAE VAT calculator: add 5% VAT to a price, take it out of a price that includes it, and estimate the VAT to pay for a tax period. With the rules and sources.",
+        canonical, ld, "Free tool · VAT", "UAE VAT calculator",
+        "Add 5% VAT to a price or take it out of one that includes it, then estimate the VAT to pay for a tax period.",
+        ctas, inner, "VAT")
+    out = ROOT / VAT_CALC["path"].strip("/") / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
+
+
+def privacy_page():
+    """What the site collects, in plain words. Each line must stay true to what the code does:
+    contact.js (Formspree), analytics.js (GoatCounter), the tool scripts (nothing sent) and head() (Google Fonts)."""
+    canonical = f"{SITE}{PRIVACY['path']}"
+    trail = [("Home", f"{SITE}/"), ("Privacy", canonical)]
+    rows = [
+        ("Who we are", "Accuminds Consulting FZCO, DSO – IFZA, IFZA Properties, Dubai Silicon Oasis, Dubai, UAE. For anything on this page, email info@accumindsconsulting.ae."),
+        ("Contact form", "When you send the form we receive your name, your work email, the service you chose and your note. The form is delivered by Formspree, which passes the message to our inbox and keeps a copy in our Formspree account. We use these details to reply to you and to deal with your request."),
+        ("WhatsApp, email and phone", "If you contact us this way we receive what you send, along with your number or email address. WhatsApp messages are handled by WhatsApp under its own terms."),
+        ("Calculators and checks", "They run in your browser. The figures, dates and numbers you enter are not sent to us and are not stored. The e-invoice checker reads your invoice files in your browser and does not upload them."),
+        ("Counting visits", "We count visits with GoatCounter, without cookies. It records the page, the site you came from and your screen width, and works out your browser, operating system and country from the request. It does not store your IP address, and the totals cannot be linked to a person."),
+        ("Counting clicks", "We also count clicks on our contact buttons, downloads, sent contact forms and whether a calculator was used. Only the fact is counted, never what you typed."),
+        ("Cookies", "This site sets no cookies. Your browser keeps a small setting or two on your own device, such as whether you paused the animation. They are not sent to us."),
+        ("Hosting and fonts", "The site is hosted on GitHub Pages and loads its typeface from Google Fonts. Like any web server, both receive your IP address when your browser asks for the pages and fonts."),
+        ("Sharing", "We do not sell your details or pass them to anyone else for marketing."),
+        ("How long we keep enquiries", "For as long as we need them to deal with your request and any work that follows."),
+        ("Your choices", "Ask us at any time to show you, correct or delete the details you have sent us: email info@accumindsconsulting.ae."),
+        ("Changes", "We update this page when what the site does changes. The date at the top shows the latest version."),
+    ]
+    items = "\n".join(f'          <div class="fact-row"><dt>{e(t)}</dt><dd>{e(d)}</dd></div>' for t, d in rows)
+    ld = {"@context": "https://schema.org", "@graph": [
+        org_node(), breadcrumbs_ld(trail),
+        {"@type": "WebPage", "@id": canonical, "url": canonical, "name": "Privacy at Accuminds", "publisher": {"@id": ORG_ID}},
+    ]}
+    body = f"""{head("Privacy | Accuminds",
+                 "What the Accuminds website collects and what it does not: the contact form, cookieless visit counting, and calculators that run in your browser.",
+                 canonical, ld)}
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+{SPRITE}
+{HEADER}
+
+  <main id="main">
+    <section class="page-hero on-dark" aria-labelledby="page-title">
+      <div class="container">
+        {breadcrumbs_html(trail)}
+        <p class="eyebrow" data-reveal>Privacy</p>
+        <h1 id="page-title" data-reveal="mask">What this website collects.</h1>
+        <p class="lead" data-reveal>In short: what you send us through the contact form, and anonymous visit counts. No cookies, and nothing you type into a calculator. Last updated {e(PRIVACY["updated"])}.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Privacy details">
+      <div class="container">
+        <dl class="facts-list" data-reveal-stagger>
+{items}
+        </dl>
+      </div>
+    </section>
+
+{cta_band("your books")}
+  </main>
+
+{footer()}
+</body>
+</html>
+"""
+    out = ROOT / PRIVACY["path"].strip("/") / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body, encoding="utf-8")
+    return out
 
 
 def guides_hub():
@@ -2269,6 +2490,7 @@ def sitemap():
             + [guide_url()] + [guide_url(g["slug"]) for g in GUIDES]
             + [f"{SITE}{CT_CHECK['path']}", f"{SITE}{MIS_TEMPLATE['path']}", f"{SITE}{SV_CHECK['path']}", f"{SITE}{TRN_CHECK['path']}", f"{SITE}{VAT_REG['path']}", f"{SITE}{CT_REG['path']}"]
             + [f"{SITE}{GRATUITY['path']}", f"{SITE}{LEAVE['path']}", f"{SITE}{SETTLEMENT['path']}"]
+            + [f"{SITE}{VAT_CALC['path']}", f"{SITE}{PRIVACY['path']}"]
             + [pint_url()] + [pint_url(t["slug"]) for t in PINT_TOPICS])
     rows = "\n".join(f"  <url>\n    <loc>{u}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </url>" for u in urls)
     (ROOT / "sitemap.xml").write_text(
@@ -2298,13 +2520,14 @@ def llms_txt():
               f"- [{VAT_REG['name']}]({SITE}{VAT_REG['path']}): {VAT_REG['card']} Runs in the browser; nothing is sent.",
               f"- [{CT_REG['name']}]({SITE}{CT_REG['path']}): {CT_REG['card']} Runs in the browser; nothing is sent.",
               f"- [{TRN_CHECK['name']}]({SITE}{TRN_CHECK['path']}): {TRN_CHECK['card']} The format check runs in the browser; nothing is sent.",
+              f"- [{VAT_CALC['name']}]({SITE}{VAT_CALC['path']}): {VAT_CALC['card']} Runs in the browser; nothing is sent.",
               f"- [{GRATUITY['name']}]({SITE}{GRATUITY['path']}): {GRATUITY['card']} Runs in the browser; nothing is sent.",
               f"- [{LEAVE['name']}]({SITE}{LEAVE['path']}): {LEAVE['card']} Runs in the browser; nothing is sent.",
               f"- [{SETTLEMENT['name']}]({SITE}{SETTLEMENT['path']}): {SETTLEMENT['card']} Runs in the browser; nothing is sent."]
     lines += ["", "## Guides", ""] + [f"- [{g['h1']}]({guide_url(g['slug'])}): {g['card']}" for g in GUIDES]
     lines += ["", "## PINT AE rules (UAE e-invoicing)", "", f"- [{PINT_HUB['h1']}]({pint_url()}): {PINT_RULES['card']}"]
     lines += [f"- [{t['h1']}]({pint_url(t['slug'])}): {t['card']}" for t in PINT_TOPICS]
-    lines += ["", "## Pages", "", f"- [Home]({SITE}/): overview, how we work, contact form", f"- [All services]({url()})", f"- [All free tools]({SITE}{TOOLS_HUB['path']})", ""]
+    lines += ["", "## Pages", "", f"- [Home]({SITE}/): overview, how we work, contact form", f"- [All services]({url()})", f"- [All free tools]({SITE}{TOOLS_HUB['path']})", f"- [Privacy]({SITE}{PRIVACY['path']}): what the site collects and what it does not", ""]
     (ROOT / "llms.txt").write_text("\n".join(lines), encoding="utf-8")
 
 
@@ -2323,7 +2546,7 @@ def refresh_home_footer():
 if __name__ == "__main__":
     written = [hub_page()] + [service_page(s) for s in SERVICES] + [tools_hub(), guides_hub()] + [guide_page(g) for g in GUIDES]
     written += [mis_template_page(), ct_check_page(), supplier_check_page(), trn_page(), vat_registration_page(), ct_registration_page()]
-    written += [gratuity_page(), gratuity_embed_page(), leave_page(), settlement_page()]
+    written += [gratuity_page(), gratuity_embed_page(), leave_page(), settlement_page(), vat_calculator_page(), privacy_page()]
     written += [pint_hub_page()] + [pint_topic_page(t) for t in PINT_TOPICS]
     sitemap()
     llms_txt()

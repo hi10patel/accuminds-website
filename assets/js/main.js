@@ -12,6 +12,7 @@ import { initStats } from './motion/stats.js';
 import { initNav } from './ui/nav.js';
 import { initMagnetic } from './ui/magnetic.js';
 import { initContact } from './ui/contact.js';
+import { initAnalytics } from './ui/analytics.js';
 
 const motion = createMotion();
 initStory(motion);
@@ -25,6 +26,7 @@ runWhenIdle([
   () => initStats(motion),
   () => initMagnetic(motion),
   () => initContact(motion),
+  () => initAnalytics(),
 ], motion);
 
 document.querySelectorAll('[data-year]').forEach((el) => {

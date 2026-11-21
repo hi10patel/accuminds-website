@@ -647,7 +647,7 @@ def guide_page(g):
           <h2 id="answer-title">The short answer</h2>
           <p>{e(g["answer"])}</p>
         </div>
-      </div>
+{books_strip(f"Using {g['software']}? We can keep your books and VAT in order.", g["software"] + " bookkeeping and VAT")}      </div>
     </section>
 
     <section class="section section--white" aria-labelledby="status-title">
@@ -836,6 +836,13 @@ def biz_strip(title, text, topic, href, label, aria="For businesses"):
           </div>
         </aside>
 """
+
+
+def books_strip(title, topic):
+    """Part-way down an e-invoicing page: the route to the core services for business readers."""
+    return biz_strip(title,
+                     "We keep the books, VAT returns and Corporate Tax for UAE businesses, and can check your e-invoices before you go live.",
+                     topic, "/services/bookkeeping-accounting-dubai/", "Bookkeeping & accounting")
 
 
 def employer_strip(what, topic):
@@ -2533,7 +2540,7 @@ def pint_topic_page(t):
 {chips}
           </ul>
         </div>
-      </div>
+{books_strip("Need a hand with your books and VAT?", "bookkeeping and VAT")}      </div>
     </section>
 
     <section class="section section--white" aria-labelledby="checks-title">

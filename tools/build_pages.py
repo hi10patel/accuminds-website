@@ -52,6 +52,8 @@ SV_CHECK = {"path": "/supplier-verification-check/", "name": "Supplier Verificat
             "card": "Which FTA Decision 13 of 2026 checks apply before you claim input VAT on a supplier's invoice, with a printable checklist."}
 FTA_DEC13 = ("FTA Decision No. 13 of 2026 (unofficial English translation)",
              "https://tax.gov.ae/Datafolder/Files/Legislation/2026/FTA%20Decision%20No.%2013%20of%202026%20on%20Measures%2018%2008%202026.pdf")
+FTA_VATP048 = ("FTA public clarification VATP048 (11 November 2026)",
+               "https://tax.gov.ae/Datafolder/Files/Guides/VAT/PublicClarifications/VATP048%20Verification%20of%20the%20Validity%20and%20Integrity%20of%20Supplies.pdf")
 TRN_CHECK = {"path": "/trn-verification-uae/", "name": "TRN Verification and Format Check",
              "card": "Check that a UAE TRN has the right format, then confirm it on the FTA website: the steps, and when a TRN must be on a tax invoice."}
 TRN_CHECKED = "31 October 2026"
@@ -1486,7 +1488,9 @@ def ct_check_page():
 def supplier_check_page():
     canonical = f"{SITE}{SV_CHECK['path']}"
     rules = [
-        ("Who and when", "VAT-registered businesses, for supplies received from 1 October 2026, before deducting input tax (Art. 2, 7). If a supply is connected to tax evasion and the business knew or should have known, the FTA may deny the input tax (Article 54(bis), VAT Law)."),
+        ("Who and when", "VAT-registered businesses, for supplies received from 1 October 2026, before deducting input tax (Art. 2, 7)."),
+        ("When it applies", "Only where the FTA establishes tax evasion (VATP048). If a supply is then found to be part of an evasion chain, the FTA may deny the input tax where the business should have been aware (Article 54(bis)(2), VAT Law). The FTA must prove the evasion."),
+        ("Why do the checks", "They are not required on every supply received. But a business that made the checks and kept the records is treated as unaware of the evasion, and keeps its input tax (VATP048, Example 8)."),
         ("Below AED 10,000", "A supply under AED 10,000 excluding VAT can be left out of the checks, unless total supplies from that supplier exceed AED 100,000 in the previous 12 months or are expected to in the next 12 (Art. 6)."),
         ("Supplier checks", "Companies: incorporation verified and the representative's ID. Individuals: valid ID and a meeting, in person or virtually, before the supply. All: actual place of business and risk indicators (Art. 3.1 to 3.3)."),
         ("Above AED 375,000", "A written confirmation from an authorised UAE bank that the supplier has a bank account, and a review of clients' recommendations, public reviews and media (Art. 3.4)."),
@@ -1494,10 +1498,10 @@ def supplier_check_page():
         ("Procedures", "Verify a new supplier, and again after 12 months; check every supply in scope; document the steps and keep the records; keep a written policy naming who implements, reviews and supervises (Art. 5)."),
     ]
     faq = [
-        ("Does every supplier need to be verified from 1 October 2026?", "Every supplier whose supplies are in scope. Supplies under AED 10,000 excluding VAT can be left out, unless total supplies from that supplier exceed AED 100,000 in the previous or next 12 months."),
+        ("Do I have to run these checks on every supply?", "No. The FTA's public clarification VATP048 (11 November 2026) says Decision 13 applies only where the FTA establishes tax evasion, and the checks are not required on every supply received. They are your evidence if a supplier turns out to be part of tax evasion, so we advise running them on suppliers in scope: supplies of AED 10,000 or more excluding VAT, and every supply from a supplier above AED 100,000 in the previous or next 12 months."),
         ("Is a letter from the supplier confirming its bank account enough?", "No. Above AED 375,000, the Decision asks for a written confirmation issued by an authorised bank in the UAE, without reservations or conditions. It does not have to be addressed to you."),
         ("How often must suppliers be re-verified?", "When you first deal with them, and again on recurring dealings if they have not been verified in the previous 12 months."),
-        ("What happens if I do not verify?", "If a supply turns out to be connected to tax evasion and you knew or should have known, the FTA may deny your input tax deduction under Article 54(bis) of the VAT Law."),
+        ("What happens if I do not verify?", "The Decision only comes into play if the FTA establishes that a supply you received was part of tax evasion (VATP048). Then, without the checks, you may be treated as having been aware of it, and the FTA may deny your input tax under Article 54(bis)(2) of the VAT Law. If you did the checks and kept the records, the normal input tax rules apply."),
     ]
     ld = {"@context": "https://schema.org", "@graph": [
         org_node(),
@@ -1558,7 +1562,7 @@ def supplier_check_page():
         <div class="section-head">
           <p class="eyebrow" data-reveal>The rule</p>
           <h2 id="rules-title" data-reveal="mask">FTA Decision No. 13 of 2026, in brief.</h2>
-          <p class="lead" data-reveal>Issued 22 July 2026, effective 1 October 2026. Source: <a class="u-link" href="{e(FTA_DEC13[1])}" target="_blank" rel="noopener">{e(FTA_DEC13[0])}<span class="sr-only"> (opens in a new tab)</span></a></p>
+          <p class="lead" data-reveal>Issued 22 July 2026, effective 1 October 2026, and clarified by the FTA on 11 November 2026. Sources: <a class="u-link" href="{e(FTA_DEC13[1])}" target="_blank" rel="noopener">{e(FTA_DEC13[0])}<span class="sr-only"> (opens in a new tab)</span></a>; <a class="u-link" href="{e(FTA_VATP048[1])}" target="_blank" rel="noopener">{e(FTA_VATP048[0])}<span class="sr-only"> (opens in a new tab)</span></a></p>
         </div>
         <dl class="facts-list" data-reveal-stagger>
 {rule_rows}
@@ -1581,9 +1585,9 @@ def supplier_check_page():
 """
     body = resource_shell(
         "Supplier Verification for Input VAT: Free Check | Accuminds",
-        "Free check: which supplier and transaction checks FTA Decision No. 13 of 2026 requires before you claim input VAT, with a printable checklist.",
+        "Free check: which supplier and transaction checks FTA Decision No. 13 of 2026 sets before you claim input VAT, as clarified in VATP048, with a printable checklist.",
         canonical, ld, "Free tool · VAT", "Supplier verification check",
-        "From 1 October 2026 you must verify suppliers and supplies before claiming input VAT. Enter a supplier's amounts to see exactly which checks apply, then print the checklist.",
+        "FTA Decision 13 sets the supplier checks that protect your input VAT if a supplier turns out to be part of tax evasion. Enter a supplier's amounts to see which checks apply, then print the checklist.",
         ctas, inner, "supplier checks")
     out = ROOT / "supplier-verification-check" / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -1682,7 +1686,7 @@ def trn_page():
         <div class="section-head">
           <p class="eyebrow" data-reveal>Before you claim input VAT</p>
           <h2 id="supplier-title" data-reveal="mask">A valid TRN is only the first check.</h2>
-          <p class="lead" data-reveal>From 1 October 2026, FTA Decision No. 13 of 2026 also asks you to verify the supplier and the supply before you claim input VAT. See which checks apply in the <a class="u-link" href="{SV_CHECK["path"]}">Supplier Verification Check</a>.</p>
+          <p class="lead" data-reveal>FTA Decision No. 13 of 2026 also sets checks on the supplier and the supply. They protect your input VAT if a supply turns out to be linked to tax evasion. See which checks apply in the <a class="u-link" href="{SV_CHECK["path"]}">Supplier Verification Check</a>.</p>
         </div>
       </div>
     </section>

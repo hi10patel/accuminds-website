@@ -93,19 +93,23 @@ MOF_MD84 = ("Ministry of Finance: Ministerial Decision No. 84 of 2025",
             "https://mof.gov.ae/wp-content/uploads/2025/04/Ministerial-Decision-No.-84-of-2025-on-Audited-Financial-Statements.pdf")
 FTA_CT_RETURN_NOTICE = ("FTA: return and payment deadline notice, 26 September 2026", "https://tax.gov.ae/en/media.centre/news/pr.2809.aspx")
 MOF_CT = ("Ministry of Finance: Corporate Tax", "https://mof.gov.ae/en/public-finance/tax/corporate-tax/")
+TAX_PROCEDURES = ("FTA: Federal Decree-Law No. 28 of 2022 on Tax Procedures, as amended (unofficial translation)",
+                  "https://tax.gov.ae/Datafolder/Files/Legislation/2025/Federal%20Decree-Law%20No.%2028%20of%202022%20-%20publishing%2003%2012%202025.pdf")
+FTA_NATURAL_PERSON = ("FTA: basis of taxation for natural persons",
+                      "https://tax.gov.ae/en/taxes/corporate.tax/corporate.tax.topics/basis.of.taxation.natural.person.aspx")
 MOF_SBR_2029 = ("Ministry of Finance: Small Business Relief extended to 2029",
                 "https://mof.gov.ae/en/news/ministry-of-finance-announces-extension-of-small-business-relief-for-corporate-tax-purposes-until-31-december-2029/")
 CT_RETURN_ANSWER = {
     "lead": "A UAE Corporate Tax return is due no later than nine months after the end of the tax period, and any tax is due by the same date.",
     "points": [
-        "Year ended 31 December 2025: due 30 September 2026",
+        "Year ended 31 March 2026: due 31 December 2026",
         "Year ending 31 December 2026: due 30 September 2027",
         "Filed on EmaraTax, even with no tax to pay",
         "Late return: AED 500 a month, AED 1,000 from month 13",
         "Late payment: 14% a year, charged monthly",
         "Keep records for seven years",
     ],
-    "example": "A company with a 31 March 2026 year end files its return and pays by 31 December 2026.",
+    "example": "A company with a 30 June 2026 year end files its return and pays by 31 March 2027.",
     "source": "Federal Decree-Law No. 47 of 2022, Articles 48, 53 and 56; Cabinet Decision No. 75 of 2023 as amended.",
 }
 FTA_CT_REG = ("FTA: Corporate Tax registration service", "https://tax.gov.ae/en/services/corporate.tax.registration.aspx")
@@ -990,9 +994,12 @@ def ct_return_page():
     canonical = f"{SITE}{CT_RETURN['path']}"
     rules = [
         ("Who files", "Every taxable person files a return for each tax period, including those eligible for Small Business Relief.", FTA_CT_RETURN_NOTICE),
+        ("Free zone companies", "A juridical person in a free zone is a Resident Person and a taxable person, so it files a return (Article 11).", CT_LAW),
+        ("Individuals", "A natural person doing business is subject to Corporate Tax only when total turnover from business activities exceeds AED 1 million in a calendar year. Wages, personal investment income and real estate investment income are not business activities.", FTA_NATURAL_PERSON),
+        ("Tax groups", "A tax group is treated as a single taxable person represented by the parent company, which files the return and pays on behalf of the group (Article 40).", CT_LAW),
         ("Return deadline", "No later than nine months from the end of the tax period, or another date the FTA directs (Article 53).", CT_LAW),
         ("Payment deadline", "The Corporate Tax payable is settled within nine months from the end of the tax period (Article 48).", CT_LAW),
-        ("Tax period", "The financial year: the calendar year, or the 12-month period the business prepares financial statements for (Article 57). A change needs an application to the FTA (Article 58).", CT_LAW),
+        ("Tax period", "The financial year, or part of it: the calendar year, or the 12-month period the business prepares financial statements for (Article 57). A change needs an application to the FTA (Article 58).", CT_LAW),
         ("Where to file", "On EmaraTax, the FTA's online platform, directly or through a tax agent approved for Corporate Tax.", FTA_CT_RETURN_NOTICE),
         ("What the return contains", "At least: the tax period, the name, address and tax registration number, the accounting basis used, the taxable income, tax losses and tax credits claimed, and the Corporate Tax payable (Article 53).", CT_LAW),
         ("Rates", "0% on taxable income up to AED 375,000 and 9% above that.", MOF_CT),
@@ -1003,6 +1010,7 @@ def ct_return_page():
         ("Late return", "AED 500 for each month or part of a month for the first twelve months, then AED 1,000 for each month or part of a month. It is imposed the day after the deadline and on the same date each month.", CT_PENALTIES),
         ("Late payment", "A monthly penalty of 14% a year on the unpaid tax, for each month or part of a month, from the day after the due date.", CT_PENALTIES),
         ("Incorrect return", "AED 500, unless the return is corrected before the filing deadline.", CT_PENALTIES),
+        ("Correcting a return", "If an error in a filed return understates the tax, a voluntary disclosure must be submitted; if it overstates the tax, one may be. An error that does not change the tax is corrected by voluntary disclosure where the FTA requires it, otherwise through a tax return (Article 10, Tax Procedures Law).", TAX_PROCEDURES),
         ("Records", "Kept for seven years after the end of the tax period they relate to (Article 56).", CT_LAW),
         ("Missing records", "AED 10,000 for not keeping the required records, or AED 20,000 if repeated within 24 months.", CT_PENALTIES),
         ("Registered late?", "The AED 10,000 late registration penalty is waived if the first return is filed within seven months of the end of the first tax period.", FTA_CT_REG),
@@ -1026,10 +1034,16 @@ def ct_return_page():
         ("When is the UAE Corporate Tax return due?", "No later than nine months after the end of the tax period (Article 53 of Federal Decree-Law No. 47 of 2022). Any tax is due by the same date."),
         ("What is the deadline for a financial year ended 31 December 2025?", "30 September 2026, for both the return and the payment, as the FTA confirmed in its notice of 26 September 2026."),
         ("What is the deadline for a financial year ending 31 December 2026?", "30 September 2027: nine months after the end of the tax period."),
+        ("What is the next Corporate Tax return deadline?", "It depends on your financial year end, because the return and payment are due nine months after it. For a year that ended 31 March 2026, both are due by 31 December 2026. For a year ended 30 June 2026, by 31 March 2027. For a year ending 31 December 2026, by 30 September 2027."),
+        ("When is a new company's first Corporate Tax return due?", "Nine months after the end of its first tax period. A tax period is the financial year or part of it (Article 57), so a new company's first period can be shorter than 12 months. Changing the start and end date of a tax period, or using a different period, needs an application to the FTA (Article 58)."),
         ("Do I have to file if I made no profit or owe no tax?", "Yes. Every taxable person files a return for each tax period, even when no tax is due."),
         ("Does Small Business Relief mean I do not file?", "No. The relief is elected in the return, and the FTA requires those eligible for it to file within the same nine months."),
+        ("Do free zone companies have to file a Corporate Tax return?", "Yes. A juridical person in a free zone is a Resident Person and a taxable person under Article 11 of Federal Decree-Law No. 47 of 2022, so it files a return for each tax period. That includes a Qualifying Free Zone Person paying 0% on qualifying income, which must also have audited financial statements."),
+        ("Do freelancers and sole traders have to file?", "Only if they are subject to Corporate Tax: the FTA says that is when total turnover from business activities exceeds AED 1 million in a calendar year (January to December). Wages, personal investment income and real estate investment income are not counted."),
+        ("Does a tax group file one return?", "Yes. A tax group is treated as a single taxable person represented by the parent company, which files the return and pays on behalf of the group. The parent company and each subsidiary are jointly and severally liable for the group's Corporate Tax (Article 40)."),
         ("What is the penalty for filing a Corporate Tax return late?", "AED 500 for each month or part of a month for the first twelve months, then AED 1,000 for each month or part of a month (Cabinet Decision No. 75 of 2023 as amended)."),
         ("What is the penalty for paying Corporate Tax late?", "A monthly penalty of 14% a year on the unpaid tax, for each month or part of a month, from the day after the due date."),
+        ("Can I correct a Corporate Tax return after filing it?", "Yes. If the error means the tax was understated, you must submit a voluntary disclosure; if it was overstated, you may. An error that does not change the tax is corrected by voluntary disclosure where the FTA requires it, otherwise through a tax return (Article 10, Federal Decree-Law No. 28 of 2022 on Tax Procedures, as amended). An incorrect return carries an AED 500 penalty unless corrected before the filing deadline."),
         ("Do I need audited financial statements?", "Yes if your revenue in the tax period is above AED 50 million, or if you are a Qualifying Free Zone Person (Ministerial Decision No. 84 of 2025)."),
         ("How long must I keep Corporate Tax records?", "Seven years after the end of the tax period they relate to (Article 56)."),
     ]
@@ -1087,7 +1101,7 @@ def ct_return_page():
         <div class="section-head">
           <p class="eyebrow" data-reveal>The rules</p>
           <h2 id="rules-title" data-reveal="mask">Filing a Corporate Tax return.</h2>
-          <p class="lead" data-reveal>Federal Decree-Law No. 47 of 2022, Cabinet Decision No. 75 of 2023 on penalties, and Ministry of Finance and FTA publications. Checked {e(CT_RETURN_CHECKED)}.</p>
+          <p class="lead" data-reveal>Federal Decree-Law No. 47 of 2022, Federal Decree-Law No. 28 of 2022 on Tax Procedures, Cabinet Decision No. 75 of 2023 on penalties, and Ministry of Finance and FTA publications. Checked {e(CT_RETURN_CHECKED)}.</p>
         </div>
         <dl class="facts-list" data-reveal-stagger>
 {fact_rows(rules)}

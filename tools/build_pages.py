@@ -80,6 +80,21 @@ PRIVACY = {"path": "/privacy/", "updated": "12 November 2026"}
 VAT_REG = {"path": "/vat-registration-uae/", "name": "VAT Registration Check",
            "card": "Do you have to register for UAE VAT, or can you choose to? Check the AED 375,000 and AED 187,500 thresholds, then see the documents and EmaraTax steps."}
 VAT_REG_CHECKED = "31 October 2026"
+VAT_ER = ("FTA: VAT Executive Regulation, Cabinet Decision No. 52 of 2017 as amended (unofficial translation, September 2026)",
+          "https://tax.gov.ae//Datafolder/Files/Legislation/2026/Law-No-8-of-2017-and-its-amendments--09-2026.pdf")
+VAT_REG_ANSWER = {
+    "lead": "You must register for UAE VAT when your taxable supplies and imports exceed AED 375,000 over the previous 12 months, or are expected to in the next 30 days. You may register voluntarily above AED 187,500.",
+    "points": [
+        "Mandatory: over AED 375,000, past 12 months or next 30 days",
+        "Voluntary: over AED 187,500, including on taxable expenses",
+        "Apply within 30 days of becoming required to register",
+        "Late registration: AED 10,000 penalty",
+        "Free, online on EmaraTax, about 45 minutes",
+        "Same rules in Dubai, Abu Dhabi, Sharjah and every emirate",
+    ],
+    "example": "A Dubai trading company with AED 380,000 of taxable sales over the last 12 months must apply within 30 days.",
+    "source": "FTA: Registration for VAT and the VAT registration service; Cabinet Decision No. 40 of 2017 as amended.",
+}
 CT_REG = {"path": "/corporate-tax-registration-uae/", "name": "Corporate Tax Registration Deadline",
           "card": "Find your UAE Corporate Tax registration deadline under FTA Decision No. 3 of 2024, then see the documents, EmaraTax steps and the late registration penalty waiver."}
 CT_REG_CHECKED = "31 October 2026"
@@ -1740,6 +1755,8 @@ def vat_registration_page():
         ("Late registration penalty", "AED 10,000 for not applying within the time the law allows.", FTA_PENALTIES),
         ("Fee and timing", "Registration is free. The application takes about 45 minutes, and the FTA aims to decide within 20 business days of receiving a complete application.", FTA_VAT_REG),
         ("Branches and sole establishments", "One TRN covers all branches of a company. All sole establishments of the same owner share one TRN, and their turnover is added together for the threshold.", FTA_VAT_REG),
+        ("Every emirate", "VAT is a federal tax administered by the FTA, so the same thresholds and the same EmaraTax registration apply in Dubai, Abu Dhabi, Sharjah and the other emirates.", FTA_VAT_TOPIC),
+        ("Exception for zero-rated supplies", "A business whose supplies are only zero-rated can apply to the FTA for an exception from registration. If it then makes a standard-rated supply or import, it must tell the FTA within 10 business days, and it must register once it no longer qualifies (Article 16).", VAT_ER),
     ]
     docs = [
         ("Company documents", "Certificate of incorporation, memorandum of association or partnership agreement, and the trade licence with any branch licences."),
@@ -1756,6 +1773,12 @@ def vat_registration_page():
     ]
     faq = [
         ("What is the VAT registration threshold in the UAE?", "AED 375,000 of taxable supplies and imports for mandatory registration, and AED 187,500 of taxable supplies and imports or taxable expenses for voluntary registration."),
+        ("Is VAT registration different in Dubai, Abu Dhabi or Sharjah?", "No. VAT is a federal tax administered by the FTA. The thresholds, documents and EmaraTax application are the same in every emirate."),
+        ("What documents are required for VAT registration in the UAE?", "For a company: the trade licence, certificate of incorporation and memorandum of association, Emirates ID and passport copies of the owners and authorised signatories, a signed turnover declaration letter, and invoices, contracts or purchase orders that support the turnover. Each is uploaded as a PDF on EmaraTax."),
+        ("When does a new company have to register for VAT?", "Once its taxable supplies and imports are expected to exceed AED 375,000 in the next 30 days, or have exceeded it over the previous 12 months, and within 30 days of that. A new company can also register voluntarily when expected supplies or expenses exceed AED 187,500, with signed purchase orders or contracts as evidence."),
+        ("What is the deadline to register for VAT?", "30 days from the date you become required to register. Missing it carries an AED 10,000 penalty."),
+        ("Do small businesses have to register for VAT?", "It depends on taxable supplies and imports, not on the size of the business: registration is required above AED 375,000 and optional above AED 187,500. Small Business Relief is a Corporate Tax election and does not change the VAT thresholds."),
+        ("Can I be excepted from VAT registration?", "Only if all your supplies are zero-rated. You can then apply to the FTA for an exception from registration, and you must tell the FTA within 10 business days if you make a standard-rated supply or import (Article 16 of the VAT Executive Regulation)."),
         ("How long does VAT registration take?", "About 45 minutes to submit online. The FTA aims to decide within 20 business days of receiving a complete application."),
         ("Is there a fee to register for VAT?", "No. VAT registration through EmaraTax is free."),
         ("What is the penalty for late VAT registration?", "AED 10,000 if you do not apply within 30 days of becoming required to register."),
@@ -1807,13 +1830,13 @@ def vat_registration_page():
         </div>
       </div>
     </section>
-
+{answer_box(VAT_REG_ANSWER)}
     <section class="section section--white" aria-labelledby="rules-title">
       <div class="container">
         <div class="section-head">
           <p class="eyebrow" data-reveal>The rules</p>
-          <h2 id="rules-title" data-reveal="mask">Thresholds, deadline and penalty.</h2>
-          <p class="lead" data-reveal>From the FTA's VAT registration pages and its published table of administrative penalties. Checked {e(VAT_REG_CHECKED)}.</p>
+          <h2 id="rules-title" data-reveal="mask">VAT registration threshold, deadline and penalty.</h2>
+          <p class="lead" data-reveal>From the FTA's VAT registration pages, the VAT Executive Regulation and the published table of administrative penalties. Checked {e(VAT_REG_CHECKED)}.</p>
         </div>
         <dl class="facts-list" data-reveal-stagger>
 {fact_rows(rules)}
@@ -1825,7 +1848,7 @@ def vat_registration_page():
       <div class="container">
         <div class="section-head">
           <p class="eyebrow" data-reveal>Documents</p>
-          <h2 id="docs-title" data-reveal="mask">What to have ready.</h2>
+          <h2 id="docs-title" data-reveal="mask">Documents required for VAT registration.</h2>
           <p class="lead" data-reveal>The FTA's list for a company; it varies by legal form. Upload each as a PDF.</p>
         </div>
         <ul class="incl-grid" data-reveal-stagger>
@@ -1864,7 +1887,7 @@ def vat_registration_page():
         "VAT Registration in UAE: Threshold, Documents & Steps | Accuminds",
         "Do you have to register for UAE VAT? Free check against the AED 375,000 and AED 187,500 thresholds, plus the documents, EmaraTax steps, deadline and penalty.",
         canonical, ld, "Free tool · VAT", "VAT registration in the UAE",
-        "Check whether you must register for VAT, or can choose to, then see the documents the FTA asks for and the four steps on EmaraTax.",
+        "Check whether you must register for VAT in Dubai, Abu Dhabi or anywhere in the UAE, or can choose to, then see the documents the FTA asks for and the four steps on EmaraTax.",
         ctas, inner, "VAT registration")
     out = ROOT / VAT_REG["path"].strip("/") / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
